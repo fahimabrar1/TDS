@@ -8,6 +8,10 @@ public class EnergyManager : MonoBehaviour
 
     public EnerygyGenerator enerygyGenerator;
 
+    public void OnClickCurrencyButton(int cost)
+    {
+    }
+
 
     /// <summary>
     /// Awake is called when the script instance is being loaded.

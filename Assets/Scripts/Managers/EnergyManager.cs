@@ -1,16 +1,31 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EnergyManager : MonoBehaviour
 {
+    [Tooltip("The singleton instance of the EnergyManager.")]
     public static EnergyManager instance;
+
+
+    [Tooltip("The energy generator component.")]
+    public EnergyGenerator energyGenerator;
+
+    [Tooltip("The prefab for the ability buttons.")]
+    public GameObject AbilityButtonPrefab;
+
+    [Tooltip("The parent transform for the ability buttons.")]
+    public Transform AbilityButtonParent;
+
+    [Tooltip("The scriptable object that holds the ability list.")]
+    public AbilityButtonHolderSO abilityButtonHolderSO;
+
+    [Tooltip("A list of ability buttons.")]
+    public List<AbilityButton> abilityButtons;
+
+
+    [Tooltip("An action that is invoked when the ability buttons need to be updated.")]
     public Action<int> OnUpdateButtonsAction;
-
-    public EnerygyGenerator enerygyGenerator;
-
-    public void OnClickCurrencyButton(int cost)
-    {
-    }
 
 
     /// <summary>
@@ -26,5 +41,32 @@ public class EnergyManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    /// <summary>
+    /// Initializes the ability buttons.
+    /// </summary>
+    private void Start()
+    {
+        abilityButtons = new();
+        for (int i = 0; i < abilityButtonHolderSO.abilityList.Count; i++)
+        {
+            var ButtonObj = Instantiate(AbilityButtonPrefab, AbilityButtonParent);
+            if (ButtonObj.TryGetComponent(out AbilityButton abilityButton))
+            {
+                abilityButton.Initialize(abilityButtonHolderSO.abilityList[i]);
+                OnUpdateButtonsAction += abilityButton.OnButtonActiveCheck;
+                abilityButtons.Add(abilityButton);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Called when an energy button is clicked.
+    /// </summary>
+    /// <param name="energyUsed">The amount of energy used.</param>
+    public void OnClickEnergyButton(int energyUsed)
+    {
+        energyGenerator.OnUseEnergy(energyUsed);
     }
 }

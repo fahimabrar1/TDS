@@ -66,7 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 1
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 125cb55b44b24c4393181402bc6200e6, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 6df5760f6e5eddf4caa8a1f63849da22, type: 2}
@@ -166,6 +166,7 @@ GameObject:
   - component: {fileID: 4446196071114094576}
   - component: {fileID: 1694357273026589076}
   - component: {fileID: 7498091907859544475}
+  - component: {fileID: 7365643072502557911}
   m_Layer: 5
   m_Name: Energy Generator
   m_TagString: Untagged
@@ -230,7 +231,25 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1.67
+  m_PixelsPerUnitMultiplier: 1.24
+--- !u!114 &7365643072502557911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1990600696057435081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f5da5450d85e974a8327cf5db55f2e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  totalenergyCount: 0
+  energyGenerationTime: 5
+  timeRemaining: 0
+  progressBar: {fileID: 5205314663470475597}
+  energyCounter: {fileID: 4525887478877203946}
+  currencyManager: {fileID: 0}
 --- !u!1 &2179143997817542761
 GameObject:
   m_ObjectHideFlags: 0
@@ -269,7 +288,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -12.651703, y: -12.615204}
+  m_SizeDelta: {x: -14.897095, y: -12.615204}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5628554355132049511
 CanvasRenderer:
@@ -572,7 +591,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 1
+  m_FillAmount: 0
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0

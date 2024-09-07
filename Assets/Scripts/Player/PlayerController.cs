@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour, IDamagable
     public void OnTakeDamage(int damage)
     {
         health -= damage;
-        Debug.Log($"Player took {damage} damage. Health: {health}");
+        MyDebug.Log($"Player took {damage} damage. Health: {health}");
 
         if (health <= 0)
         {
@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     private void Die()
     {
-        Debug.Log("Player died!");
+        MyDebug.Log("Player died!");
         // Handle player death (respawn or game over logic)
     }
 }

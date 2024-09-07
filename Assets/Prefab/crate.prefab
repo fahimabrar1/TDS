@@ -267,7 +267,7 @@ GameObject:
   - component: {fileID: 4498410881667484877}
   - component: {fileID: 2592024004047889713}
   m_Layer: 0
-  m_Name: crate
+  m_Name: Crate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -16,9 +16,6 @@ public abstract class Weapon : MonoBehaviour
     public SpriteRenderer shootingRadius;
 
 
-    [Tooltip("The rate of fire, in seconds between shots.")]
-    public float fireRate = 1f;
-
     /// <summary>
     /// Attacks a specific point.
     /// </summary>

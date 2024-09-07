@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour, IDamagable, IAttackable
 {
+    [Tooltip("The initial health of the enemy.")]
     public int Health { get; set; } = 50;  // Initial zombie health
 
     public virtual void OnTakeDamage(int damage)

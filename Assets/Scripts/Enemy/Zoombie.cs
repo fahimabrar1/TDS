@@ -2,29 +2,27 @@ using UnityEngine;
 
 public class Zombie : Enemy
 {
+    [Tooltip("The speed at which the zombie moves towards the player.")]
+    public float moveSpeed = 2f;
 
-    public override void OnTakeDamage(int damage)
+    private Transform target;
+
+    private void Start()
     {
-        Health -= damage;
-        MyDebug.Log($"Zombie took {damage} damage. Health remaining: {Health}");
+        Health = 100;
+        // target = GameObject.FindGameObjectWithTag("Player").transform;
+    }
 
-        if (Health <= 0)
+    private void Update()
+    {
+        if (target != null)
         {
-            Die();
+            MoveTowardsPlayer();
         }
     }
 
-    public override void OnAttack(IDamagable target)
+    private void MoveTowardsPlayer()
     {
-        int attackDamage = 15;  // Example damage value
-        target.OnTakeDamage(attackDamage);
-        MyDebug.Log("Zombie attacked!");
-    }
-
-    private void Die()
-    {
-        MyDebug.Log("Zombie has died!");
-        // Handle zombie death (e.g., despawn, play death animation)
-        Destroy(gameObject);  // Destroy the zombie when dead
+        transform.position = Vector2.MoveTowards(transform.position, target.position, moveSpeed * Time.deltaTime);
     }
 }

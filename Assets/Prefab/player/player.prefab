@@ -159,7 +159,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 621809393991410011, guid: 2fc5c92ed6a77d74f9d10071eb5b329a, type: 3}
       propertyPath: delayBetweenBullets
-      value: 0.1
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 6181710699624384378, guid: 2fc5c92ed6a77d74f9d10071eb5b329a, type: 3}
       propertyPath: m_Name

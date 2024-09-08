@@ -7,9 +7,11 @@ public class Zombie : Enemy
 
     private Transform target;
 
-    private void Start()
+    public override void Start()
     {
+        base.Start();
         Health = 100;
+        currentHealth = Health;
         // target = GameObject.FindGameObjectWithTag("Player").transform;
     }
 

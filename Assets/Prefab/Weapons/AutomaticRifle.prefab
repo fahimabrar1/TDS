@@ -100,11 +100,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firePoint: {fileID: 1164583984679874482}
   bulletPrefab: {fileID: 2285969427943925864, guid: d7a63631cf99dd84fa039d50483a62ce, type: 3}
+  poweredBulletPrefab: {fileID: 2285969427943925864, guid: 908065dda815dd74989016b2deab8e88, type: 3}
   shootingRadius: {fileID: 3990876730353070742}
-  fireRate: 1
   bulletsPerBurst: 4
   delayBetweenBullets: 0.2
   delayBetweenBursts: 2
+  poweredBulletsPerBurst: 1
+  poweredDelayBetweenBullets: 0
+  poweredDelayBetweenBursts: 0.2
+  poweredModeDuration: 5
 --- !u!1 &7810827486659020297
 GameObject:
   m_ObjectHideFlags: 0

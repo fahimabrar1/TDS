@@ -62,6 +62,13 @@ public class PlayerController : MonoBehaviour, IDamagable
         {
             ThrowGrenade();
         }
+
+
+        // Handle grenade throwing logic
+        if (Input.GetKeyUp(KeyCode.P))  // Press 'G' to throw a grenade
+        {
+            currentWeapon.ActivatePoweredMode();
+        }
     }
 
 

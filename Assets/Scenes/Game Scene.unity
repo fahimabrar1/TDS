@@ -360,10 +360,6 @@ PrefabInstance:
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 519420031}
-    - target: {fileID: 7065267188856928867, guid: 949bd2f5e978de24a83eb7e902b20ef3, type: 3}
-      propertyPath: currentWeapon
-      value: 
-      objectReference: {fileID: 2063620719}
     - target: {fileID: 9008869840025711098, guid: 949bd2f5e978de24a83eb7e902b20ef3, type: 3}
       propertyPath: m_Name
       value: Player
@@ -388,6 +384,7 @@ GameObject:
   m_Component:
   - component: {fileID: 412883101}
   - component: {fileID: 412883100}
+  - component: {fileID: 412883102}
   m_Layer: 0
   m_Name: Ground
   m_TagString: Untagged
@@ -464,6 +461,51 @@ Transform:
   - {fileID: 429234870}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &412883102
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 412883099}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &429234869
 GameObject:
   m_ObjectHideFlags: 0
@@ -1163,17 +1205,6 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
   m_EffectDistance: {x: 0, y: 4}
   m_UseGraphicAlpha: 1
---- !u!114 &2063620719 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 733131479274192465, guid: 949bd2f5e978de24a83eb7e902b20ef3, type: 3}
-  m_PrefabInstance: {fileID: 347388773}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c71cf49639529bb4b9d24f332ababcea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1898112472935263638
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1384,6 +1415,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Zoombie
       objectReference: {fileID: 0}
+    - target: {fileID: 276129212213280501, guid: 52bb083d5da6cd74f9c837ebc1ccbab3, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2424664019568597396, guid: 52bb083d5da6cd74f9c837ebc1ccbab3, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 5754963182326837337, guid: 52bb083d5da6cd74f9c837ebc1ccbab3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.841
@@ -1423,6 +1462,18 @@ PrefabInstance:
     - target: {fileID: 5754963182326837337, guid: 52bb083d5da6cd74f9c837ebc1ccbab3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6267479846233393008, guid: 52bb083d5da6cd74f9c837ebc1ccbab3, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6573014302943464648, guid: 52bb083d5da6cd74f9c837ebc1ccbab3, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7241357893354739008, guid: 52bb083d5da6cd74f9c837ebc1ccbab3, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

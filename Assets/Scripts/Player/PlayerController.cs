@@ -9,11 +9,30 @@ public class PlayerController : MonoBehaviour, IDamagable
     [Tooltip("The prefab for the crate that the player can spawn.")]
     public GameObject cratePrefab;
 
+    [Header("Throwable Data")]
+
+    [Tooltip("The prefab for the grenade that the player can throw.")]
+    public GameObject throwablePrefab;
+
+    [Tooltip("The force applied when the grenade is thrown.")]
+    public float throwableThrowForce = 4f;
+    [Tooltip("The force applied when the grenade is thrown to spin.")]
+    public float throwableSpinForce = 0.2f;
+
+    [Tooltip("The point from where the throwables is thrown")]
+    public Transform throwingPoint;
+
+
+
+    [Header("Weapon Data")]
     [Tooltip("The current weapon equipped by the player.")]
     public Weapon currentWeapon;
 
     [Tooltip("The main camera in the scene, used for touch input.")]
     public Camera mainCamera;
+
+
+
 
     [Tooltip("A list of all enemies in the scene.")]
     public List<Enemy> enemies = new List<Enemy>();
@@ -35,6 +54,13 @@ public class PlayerController : MonoBehaviour, IDamagable
         else
         {
             ShootClosestEnemy();  // Automatically shoot the closest enemy
+        }
+
+
+        // Handle grenade throwing logic
+        if (Input.GetKeyUp(KeyCode.G))  // Press 'G' to throw a grenade
+        {
+            ThrowGrenade();
         }
     }
 
@@ -76,6 +102,34 @@ public class PlayerController : MonoBehaviour, IDamagable
         currentWeapon.AimAt(point);
         currentWeapon.Attack(point);
     }
+
+    /// <summary>
+    /// Throws a grenade from the player's throwing point at a 45-degree angle with a spin.
+    /// </summary>
+    private void ThrowGrenade()
+    {
+        if (throwablePrefab == null || throwingPoint == null) return;
+        MyDebug.Log($"Throwing Grenade.");
+
+        // Instantiate the grenade at the throwing point
+        GameObject grenade = Instantiate(throwablePrefab, throwingPoint.position, Quaternion.identity);
+
+        // Get the Rigidbody2D of the grenade to apply force and torque (spin)
+        if (grenade.TryGetComponent<Rigidbody2D>(out var rb2d))
+        {
+            // Calculate the 45-degree direction
+            float angleInRadians = 45 * Mathf.Deg2Rad;
+            Vector2 throwDirection = new(Mathf.Cos(angleInRadians), Mathf.Sin(angleInRadians));
+
+            // Apply a forward force to throw the grenade
+            rb2d.AddForce(throwDirection * throwableThrowForce, ForceMode2D.Impulse);
+
+            // Apply a random spin to the grenade (adjust the value for more or less spin)
+            float spinForce = Random.Range(-throwableSpinForce, throwableSpinForce);
+            rb2d.AddTorque(spinForce, ForceMode2D.Impulse);
+        }
+    }
+
 
 
     /// <summary>

@@ -42,8 +42,9 @@ GameObject:
   - component: {fileID: 3554930196717512276}
   - component: {fileID: 721900670616923598}
   - component: {fileID: 5817317680305390515}
-  - component: {fileID: 7065267188856928867}
   - component: {fileID: 3271433860789895392}
+  - component: {fileID: 7065267188856928867}
+  - component: {fileID: 2751702698146447319}
   m_Layer: 0
   m_Name: player
   m_TagString: Untagged
@@ -155,7 +156,7 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0.42666668}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0}
+    pivot: {x: 0.5, y: -0.01}
     oldSize: {x: 0.85333335, y: 0.85333335}
     newSize: {x: 5.12, y: 5.12}
     adaptiveTilingThreshold: 0.5
@@ -165,27 +166,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.31, y: 0.85333335}
   m_EdgeRadius: 0
---- !u!114 &7065267188856928867
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9008869840025711098}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d58fa74b4a8f9d428241b82ea7e3d22, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 100
-  cratePrefab: {fileID: 8707320287387669689, guid: dc629c7c1fdefae478a734727abcf190, type: 3}
-  throwablePrefab: {fileID: 2500419892296461657, guid: 920a81343c2589340a04f5e69268a14d, type: 3}
-  throwableThrowForce: 2
-  throwableSpinForce: 0.06
-  throwingPoint: {fileID: 7287438719349238183}
-  currentWeapon: {fileID: 733131479274192465}
-  mainCamera: {fileID: 0}
-  enemies: []
 --- !u!50 &3271433860789895392
 Rigidbody2D:
   serializedVersion: 4
@@ -213,6 +193,42 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 5
+--- !u!114 &7065267188856928867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9008869840025711098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d58fa74b4a8f9d428241b82ea7e3d22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
+  throwablePrefab: {fileID: 2500419892296461657, guid: 920a81343c2589340a04f5e69268a14d, type: 3}
+  throwableThrowForce: 2
+  throwableSpinForce: 0.06
+  throwingPoint: {fileID: 7287438719349238183}
+  currentWeapon: {fileID: 733131479274192465}
+  mainCamera: {fileID: 0}
+  enemies: []
+--- !u!114 &2751702698146447319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9008869840025711098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87b230d6916794e498aa0b85534ef05c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cratePrefab: {fileID: 8707320287387669689, guid: dc629c7c1fdefae478a734727abcf190, type: 3}
+  crateFinalScale: {x: 0.2, y: 0.2, z: 0.2}
+  crateScaleDuration: 0.2
+  playerMoveDuration: 0.2
 --- !u!1001 &183952054984679178
 PrefabInstance:
   m_ObjectHideFlags: 0

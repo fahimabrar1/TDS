@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour, IDamagable
     public int health = 100;
 
     [Tooltip("The prefab for the crate that the player can spawn.")]
-    public GameObject cratePrefab;
+    public ICrateSpawner crateSpawner;
 
     [Header("Throwable Data")]
 
@@ -37,9 +37,17 @@ public class PlayerController : MonoBehaviour, IDamagable
     [Tooltip("A list of all enemies in the scene.")]
     public List<Enemy> enemies = new List<Enemy>();
 
-    [Tooltip("A list of all crates spawned by the player.")]
-    private readonly List<GameObject> spawnedCrates = new();
 
+    /// <summary>
+    /// Awake is called when the script instance is being loaded.
+    /// </summary>
+    void Awake()
+    {
+        if (TryGetComponent(out CrateSpawner crateSpawner))
+        {
+            this.crateSpawner = crateSpawner;
+        }
+    }
 
     /// <summary>
     /// Updates the player's state every frame.
@@ -170,17 +178,7 @@ public class PlayerController : MonoBehaviour, IDamagable
     [Button("Spawn Crate")]
     public void SpawnCrate()
     {
-        Vector3 spawnPosition = transform.position;
-
-        // If there's already a crate, stack the new one on top
-        if (spawnedCrates.Count > 0)
-        {
-            GameObject topCrate = spawnedCrates[^1];  // ^1 is the same as .Last()
-            spawnPosition = new Vector3(topCrate.transform.position.x, topCrate.transform.position.y + topCrate.transform.localScale.y, topCrate.transform.position.z);
-        }
-
-        GameObject newCrate = Instantiate(cratePrefab, spawnPosition, Quaternion.identity);
-        spawnedCrates.Add(newCrate);
+        crateSpawner.SpawnCrate(transform);
     }
 
 

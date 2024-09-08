@@ -167,6 +167,7 @@ public class PlayerController : MonoBehaviour, IDamagable
     /// <summary>
     /// Spawns a crate at the player's feet or on top of existing crates.
     /// </summary>
+    [Button("Spawn Crate")]
     public void SpawnCrate()
     {
         Vector3 spawnPosition = transform.position;

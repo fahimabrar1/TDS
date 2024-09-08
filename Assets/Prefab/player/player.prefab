@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 721900670616923598}
   - component: {fileID: 5817317680305390515}
   - component: {fileID: 7065267188856928867}
+  - component: {fileID: 3271433860789895392}
   m_Layer: 0
   m_Name: player
   m_TagString: Untagged
@@ -181,10 +182,37 @@ MonoBehaviour:
   throwablePrefab: {fileID: 2500419892296461657, guid: 920a81343c2589340a04f5e69268a14d, type: 3}
   throwableThrowForce: 2
   throwableSpinForce: 0.06
+  throwingPoint: {fileID: 7287438719349238183}
   currentWeapon: {fileID: 733131479274192465}
   mainCamera: {fileID: 0}
-  throwingPoint: {fileID: 7287438719349238183}
   enemies: []
+--- !u!50 &3271433860789895392
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9008869840025711098}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 5
 --- !u!1001 &183952054984679178
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -66,17 +66,10 @@ public class CrateSpawner : MonoBehaviour, ICrateSpawner
 
     private Vector3 GetTopPosition(Transform playerFeet)
     {
-        if (spawnedCrates.Count == 0)
-        {
-            // If no crates exist, spawn the first one directly under the player
-            return new Vector3(playerFeet.position.x, playerFeet.position.y - crateFinalScale.y / 2, playerFeet.position.z);
-        }
-        else
-        {
-            // Get the position on top of the last crate, taking its scale into account
-            GameObject topCrate = spawnedCrates.First();
-            return new Vector3(topCrate.transform.position.x, playerFeet.position.y, topCrate.transform.position.z);
-        }
+
+        // If no crates exist, spawn the first one directly under the player
+        return new Vector3(playerFeet.position.x, playerFeet.position.y, playerFeet.position.z);
+
     }
 
 

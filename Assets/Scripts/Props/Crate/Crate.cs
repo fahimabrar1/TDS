@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -5,31 +6,43 @@ public class Crate : MonoBehaviour, IDamagable
 {
     public int Health { get; set; } = 30;  // Crate health
 
-    public int currentHealth;
-    public Image progressBar;
+    public int currentHealth; [Header("Health")]
+    public GameObject HealthBar;
+    public Image healthProgressBar;
+
+    public Tween healthTween;
+
+    private bool showHealthBar = false;
+
 
 
     /// <summary>
     /// Start is called on the frame when a script is enabled just before
     /// any of the Update methods is called the first time.
     /// </summary>
-    void Start()
+    public virtual void Start()
     {
         currentHealth = Health;
-        OnUpdateHealth();
+
+        healthProgressBar.fillAmount = 1;
+        HealthBar.SetActive(showHealthBar);
     }
 
 
-
-    public void OnTakeDamage(int damage)
+    public virtual void OnTakeDamage(int damage)
     {
-        Health -= damage;
-        OnUpdateHealth();
-        MyDebug.Log($"Crate took {damage} damage. Health remaining: {Health}");
+        currentHealth -= damage;
+        showHealthBar = true;
+        ShowHealthbar();
+        MyDebug.Log($"Zombie took {damage} damage. Health remaining: {currentHealth}");
 
-        if (Health <= 0)
+        if (currentHealth <= 0)
         {
             DestroyCrate();
+        }
+        else
+        {
+            UpdateHealthbar();
         }
     }
 
@@ -41,9 +54,22 @@ public class Crate : MonoBehaviour, IDamagable
     }
 
 
-    private void OnUpdateHealth()
+
+
+
+
+    public void ShowHealthbar()
     {
-        if (currentHealth >= 0)
-            progressBar.fillAmount = currentHealth / Health;
+        if (!HealthBar.activeInHierarchy && showHealthBar)
+            HealthBar.SetActive(showHealthBar);
+    }
+
+
+    public void UpdateHealthbar()
+    {
+        float newFillAmount = currentHealth / (float)Health;
+
+        // Use DOTween to animate the fill amount over time
+        healthTween = healthProgressBar.DOFillAmount(newFillAmount, 0.2f);
     }
 }

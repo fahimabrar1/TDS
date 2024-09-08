@@ -1,16 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-
+    [Tooltip("The singleton instance of the game manager.")]
     public static GameManager instance;
 
-
-    /// <summary>
-    /// Awake is called when the script instance is being loaded.
-    /// </summary>
     void Awake()
     {
         if (instance != null)
@@ -22,16 +19,7 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this);
         }
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        DOTween.Init();
     }
 }

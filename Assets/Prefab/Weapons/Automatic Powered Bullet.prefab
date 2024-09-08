@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7194241285706110110}
   - component: {fileID: 1065367854812272242}
   m_Layer: 0
-  m_Name: Automatic Bulletbullet
+  m_Name: Automatic Powered Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,8 +30,8 @@ Transform:
   m_GameObject: {fileID: 2285969427943925864}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.12501307, y: -2.4968724, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalPosition: {x: 0, y: 1.067, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -100,8 +100,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05f61932b33c7e5418cf5f1a7a84130d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 15
-  damage: 10
+  speed: 10
+  damage: 70
 --- !u!70 &1093720701361598128
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -189,7 +189,7 @@ TrailRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.025310516
+        value: 0.06
         inSlope: 0
         outSlope: 0
         tangentMode: 0

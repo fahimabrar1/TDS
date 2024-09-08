@@ -12,6 +12,10 @@ public abstract class Weapon : MonoBehaviour
     public GameObject bulletPrefab;
 
 
+    [Tooltip("The prefab for the powerred bullet to be fired.")]
+    public GameObject poweredBulletPrefab;
+
+
     [Tooltip("The renderer for the shooting radius.")]
     public SpriteRenderer shootingRadius;
 
@@ -41,5 +45,14 @@ public abstract class Weapon : MonoBehaviour
     {
         if (shootingRadius.enabled != value)
             shootingRadius.enabled = value;
+    }
+
+
+
+    /// <summary>
+    /// Enables powered mode for a set duration.
+    /// </summary>
+    public virtual void ActivatePoweredMode()
+    {
     }
 }

@@ -1,9 +1,9 @@
 using UnityEngine;
 using System.Collections;
 
-
 public class AutomaticRifle : Weapon
 {
+    [Header("Basic")]
     [Tooltip("The number of shots in a burst.")]
     public int bulletsPerBurst = 4;
 
@@ -13,7 +13,22 @@ public class AutomaticRifle : Weapon
     [Tooltip("The delay between bursts, in seconds.")]
     public float delayBetweenBursts = 2f;
 
+
+    [Header("Powered")]
+    [Tooltip("The number of powered shots in a burst.")]
+    public int poweredBulletsPerBurst = 1;
+
+    [Tooltip("The delay between powered bullets in a burst, in seconds.")]
+    public float poweredDelayBetweenBullets = 0.1f;
+
+    [Tooltip("The delay between powered bursts, in seconds.")]
+    public float poweredDelayBetweenBursts = 0.5f;
+
+    [Tooltip("Duration of the powered mode in seconds.")]
+    public float poweredModeDuration = 5f;
+
     private bool isShooting = false;
+    private bool isPoweredMode = false; // Tracks whether powered mode is active
 
     /// <summary>
     /// Attacks a specific point with the automatic rifle.
@@ -23,12 +38,12 @@ public class AutomaticRifle : Weapon
     {
         if (!isShooting)
         {
-            StartCoroutine(ShootBurst());
+            StartCoroutine(isPoweredMode ? PoweredShootBurst() : ShootBurst());
         }
     }
 
     /// <summary>
-    /// Coroutine to shoot a burst of bullets in the firePoint's direction.
+    /// Coroutine to shoot a burst of regular bullets.
     /// </summary>
     private IEnumerator ShootBurst()
     {
@@ -36,7 +51,7 @@ public class AutomaticRifle : Weapon
 
         for (int i = 0; i < bulletsPerBurst; i++)
         {
-            ShootBulletInFirePointDirection();
+            ShootBulletInFirePointDirection(bulletPrefab);
             yield return new WaitForSeconds(delayBetweenBullets);
         }
 
@@ -45,18 +60,62 @@ public class AutomaticRifle : Weapon
     }
 
     /// <summary>
+    /// Coroutine to shoot a burst of powered bullets.
+    /// </summary>
+    private IEnumerator PoweredShootBurst()
+    {
+        isShooting = true;
+
+        for (int i = 0; i < poweredBulletsPerBurst; i++)
+        {
+            ShootBulletInFirePointDirection(poweredBulletPrefab);
+            yield return new WaitForSeconds(poweredDelayBetweenBullets);
+        }
+
+        yield return new WaitForSeconds(poweredDelayBetweenBursts);
+        isShooting = false;
+    }
+
+    /// <summary>
     /// Shoot a bullet in the direction the firePoint is facing.
     /// </summary>
-    private void ShootBulletInFirePointDirection()
+    /// <param name="bulletPrefab">The prefab for the bullet to shoot (either normal or powered).</param>
+    private void ShootBulletInFirePointDirection(GameObject bulletPrefab)
     {
         // Add 90 degrees to the current firePoint rotation if needed
         Quaternion newRotation = firePoint.rotation * Quaternion.Euler(0, 0, -90);
 
-        // Instantiate the bullet at the firePoint's position and with the adjusted rotation
+        // Instantiate the bullet at the firePoint's position with the adjusted rotation
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, newRotation);
         Bullet bulletComponent = bullet.GetComponent<Bullet>();
 
-        // Set the bullet's direction to the firePoint's forward direction (or up for 2D)
+        // Set the bullet's direction to the firePoint's right direction (or up for 2D)
         bulletComponent.SetDirection(firePoint.right);  // firePoint.right for 2D, firePoint.forward for 3D
+    }
+
+    /// <summary>
+    /// Enables powered mode for a set duration.
+    /// </summary>
+    public override void ActivatePoweredMode()
+    {
+        if (!isPoweredMode)
+        {
+            StartCoroutine(PoweredModeRoutine());
+        }
+    }
+
+    /// <summary>
+    /// Coroutine to manage powered mode duration.
+    /// </summary>
+    private IEnumerator PoweredModeRoutine()
+    {
+        isPoweredMode = true;
+        MyDebug.Log("Powered mode activated!");
+
+        // Wait for the duration of the powered mode
+        yield return new WaitForSeconds(poweredModeDuration);
+
+        isPoweredMode = false;
+        MyDebug.Log("Powered mode ended!");
     }
 }

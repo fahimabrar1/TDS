@@ -19,7 +19,8 @@ public abstract class Enemy : MonoBehaviour, IEnemyDamagable, IAttackable
     protected CircleCollider2D detectionCollider;  // Collider for detection
 
     // A list to track all targets in range
-    protected List<IPlayerDamagable> targetsInRange = new List<IPlayerDamagable>();
+    protected List<IPlayerDamagable> targetsInRange = new();
+    protected Coroutine attackEnumurator;
 
 
 
@@ -94,8 +95,9 @@ public abstract class Enemy : MonoBehaviour, IEnemyDamagable, IAttackable
     /// </summary>
     public virtual void OnTriggerEnter2D(Collider2D other)
     {
+        MyDebug.Log($"Entered {other.name}");
         // Add valid player targets to the list
-        if (other.TryGetComponent<IPlayerDamagable>(out var playerTarget))
+        if (other.TryGetComponent(out IPlayerDamagable playerTarget))
         {
             targetsInRange.Add(playerTarget);
             CheckAndAttackClosestTarget();
@@ -108,10 +110,14 @@ public abstract class Enemy : MonoBehaviour, IEnemyDamagable, IAttackable
     /// </summary>
     public virtual void OnTriggerExit2D(Collider2D other)
     {
+
+        MyDebug.Log($"Exited {other.name}");
         // Remove the target from the list when it exits the trigger
-        if (other.TryGetComponent<IPlayerDamagable>(out var playerTarget))
+        if (other.TryGetComponent(out IPlayerDamagable playerTarget))
         {
             targetsInRange.Remove(playerTarget);
+            if (attackEnumurator != null)
+                StopCoroutine(attackEnumurator);
             CheckAndAttackClosestTarget();
         }
     }
@@ -134,7 +140,7 @@ public abstract class Enemy : MonoBehaviour, IEnemyDamagable, IAttackable
         if (!isAttacking && closestTarget != null)
         {
             // If not already attacking, start attacking the closest target
-            StartCoroutine(AttackRoutine(closestTarget));
+            attackEnumurator = StartCoroutine(AttackRoutine(closestTarget));
             isAttacking = true;
         }
     }
@@ -150,7 +156,12 @@ public abstract class Enemy : MonoBehaviour, IEnemyDamagable, IAttackable
 
         foreach (var target in targetsInRange)
         {
-            float distance = Vector2.Distance(transform.position, ((MonoBehaviour)target).transform.position);
+            if (target == null)
+            {
+                targetsInRange.Remove(target);
+                continue;
+            }
+            float distance = Vector2.Distance(transform.position, target.GetTransform().position);
 
             if (distance < closestDistance)
             {
@@ -160,5 +171,14 @@ public abstract class Enemy : MonoBehaviour, IEnemyDamagable, IAttackable
         }
 
         return closestTarget;
+    }
+
+
+
+
+
+    public Transform GetTransform()
+    {
+        return transform;
     }
 }

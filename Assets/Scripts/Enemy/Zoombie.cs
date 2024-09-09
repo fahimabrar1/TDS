@@ -1,12 +1,16 @@
 using UnityEngine;
 using System.Collections;
 using DG.Tweening;
+using Unity.VisualScripting;
 
 public class Zombie : Enemy
 {
     [Tooltip("The speed at which the zombie moves towards the player or crate.")]
     public float moveSpeed = 2f;
 
+
+    [Tooltip("Time delay between each attack in seconds.")]
+    public float attackRange = 1f;
 
     [Tooltip("Time delay between each attack in seconds.")]
     public float attackDelay = 1f;
@@ -34,12 +38,29 @@ public class Zombie : Enemy
 
     private void Update()
     {
-        if (target != null)
+        // Find the closest target
+        var closestTarget = FindClosestTarget();
+
+        // If there are no targets or the closest target is null
+        if (closestTarget == null)
         {
-            if (targetsInRange.Count == 0 && !isAttacking)
+            // Move forward if not attacking
+            if (!isAttacking)
             {
                 MoveForward();
             }
+        }
+        else
+        {
+            // Calculate distance to the closest target
+            var distance = Vector3.Distance(transform.position, closestTarget.GetTransform().position);
+
+            // If the distance is greater than the attack range and the zombie is not attacking, move forward
+            if (distance > attackRange && !isAttacking)
+            {
+                MoveForward();
+            }
+
         }
     }
 
@@ -61,14 +82,7 @@ public class Zombie : Enemy
                 .SetEase(Ease.OutQuad);
     }
 
-    /// <summary>
-    /// Called when a trigger collider exits the detection zone in front of the zombie.
-    /// </summary>
-    public override void OnTriggerExit2D(Collider2D other)
-    {
-        // Stop attacking when the target leaves the detection zone
-        isAttacking = false;
-    }
+
 
     /// <summary>
     /// Coroutine for repeatedly attacking the target with a bounce animation.

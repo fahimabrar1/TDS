@@ -2,12 +2,13 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Crate : MonoBehaviour, IDamagable
+public class Crate : MonoBehaviour, IPlayerDamagable
 {
     public int Health { get; set; } = 30;  // Crate health
 
-    public int currentHealth; [Header("Health")]
-    public GameObject HealthBar;
+    [Header("Health")]
+
+    public HealthBar healthBar;
     public Image healthProgressBar;
 
     public Tween healthTween;
@@ -22,27 +23,23 @@ public class Crate : MonoBehaviour, IDamagable
     /// </summary>
     public virtual void Start()
     {
-        currentHealth = Health;
-
-        healthProgressBar.fillAmount = 1;
-        HealthBar.SetActive(showHealthBar);
+        healthBar.InitializeHealthBar(Health);
     }
 
 
     public virtual void OnTakeDamage(int damage)
     {
-        currentHealth -= damage;
-        showHealthBar = true;
-        ShowHealthbar();
-        MyDebug.Log($"Zombie took {damage} damage. Health remaining: {currentHealth}");
+        healthBar.DeduceHealth(damage);
+        healthBar.ShowHealthbar();
+        MyDebug.Log($"Zombie took {damage} damage. Health remaining: {healthBar.currentHealth}");
 
-        if (currentHealth <= 0)
+        if (healthBar.currentHealth <= 0)
         {
             DestroyCrate();
         }
         else
         {
-            UpdateHealthbar();
+            healthBar.UpdateHealthbar();
         }
     }
 
@@ -53,23 +50,4 @@ public class Crate : MonoBehaviour, IDamagable
         Destroy(gameObject);
     }
 
-
-
-
-
-
-    public void ShowHealthbar()
-    {
-        if (!HealthBar.activeInHierarchy && showHealthBar)
-            HealthBar.SetActive(showHealthBar);
-    }
-
-
-    public void UpdateHealthbar()
-    {
-        float newFillAmount = currentHealth / (float)Health;
-
-        // Use DOTween to animate the fill amount over time
-        healthTween = healthProgressBar.DOFillAmount(newFillAmount, 0.2f);
-    }
 }

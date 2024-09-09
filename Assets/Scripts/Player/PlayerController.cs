@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour, IDamagable
+public class PlayerController : MonoBehaviour, IPlayerDamagable
 {
     [Tooltip("The player's initial health.")]
-    public int health = 100;
+    private int health = 100;
+    public HealthBar healthBar;
 
     [Tooltip("The prefab for the crate that the player can spawn.")]
     public ICrateSpawner crateSpawner;
@@ -48,6 +49,17 @@ public class PlayerController : MonoBehaviour, IDamagable
             this.crateSpawner = crateSpawner;
         }
     }
+
+
+    /// <summary>
+    /// Start is called on the frame when a script is enabled just before
+    /// any of the Update methods is called the first time.
+    /// </summary>
+    void Start()
+    {
+        healthBar.InitializeHealthBar(health);
+    }
+
 
     /// <summary>
     /// Updates the player's state every frame.
@@ -188,12 +200,18 @@ public class PlayerController : MonoBehaviour, IDamagable
     /// <param name="damage">The amount of damage taken.</param>
     public void OnTakeDamage(int damage)
     {
-        health -= damage;
-        MyDebug.Log($"Player took {damage} damage. Health: {health}");
+        healthBar.DeduceHealth(damage);
 
-        if (health <= 0)
+        healthBar.ShowHealthbar();
+        MyDebug.Log($"Player took {damage} damage. Health: {healthBar.currentHealth}");
+
+        if (healthBar.currentHealth <= 0)
         {
             Die();
+        }
+        else
+        {
+            healthBar.UpdateHealthbar();
         }
     }
 
@@ -203,6 +221,8 @@ public class PlayerController : MonoBehaviour, IDamagable
     /// </summary>
     private void Die()
     {
+        // Handle  death (e.g., despawn, play death animation)
+        healthBar.KillHealthTween();
         MyDebug.Log("Player died!");
         // Handle player death (respawn or game over logic)
     }

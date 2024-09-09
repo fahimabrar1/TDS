@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 public class LevelManager : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class LevelManager : MonoBehaviour
 
     [Tooltip("The list of crates in the level.")]
     public List<Transform> crates = new List<Transform>();
+
+
 
     private void Awake()
     {
@@ -22,5 +25,11 @@ public class LevelManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+
+    public void RemoveCrate(Transform transform)
+    {
+        crates.Remove(transform);
     }
 }

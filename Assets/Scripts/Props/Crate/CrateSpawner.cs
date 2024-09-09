@@ -56,6 +56,8 @@ public class CrateSpawner : MonoBehaviour, ICrateSpawner
         // Add the new crate to the spawned crates list
         spawnedCrates.Add(newCrate);
 
+        LevelManager.instance.crates.Add(newCrate.transform);
+
         // Animate the crate's scale using DOTween
         newCrate.transform.DOScale(crateFinalScale, crateScaleDuration).OnComplete(() =>
         {
@@ -112,6 +114,9 @@ public class CrateSpawner : MonoBehaviour, ICrateSpawner
     public void OnCrateDestroyed(GameObject destroyedCrate, Transform playerFeet)
     {
         spawnedCrates.Remove(destroyedCrate);
+
+        LevelManager.instance.crates.Add(destroyedCrate.transform);
+
 
         if (spawnedCrates.Count > 0)
         {

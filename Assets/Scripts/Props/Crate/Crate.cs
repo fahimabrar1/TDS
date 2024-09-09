@@ -43,7 +43,12 @@ public class Crate : MonoBehaviour, IPlayerDamagable
         // Handle kill (e.g., despawn, play death animation)
         healthBar.KillHealthTween();
         // Handle crate destruction (e.g., play destruction animation, drop items)
+        LevelManager.instance.RemoveCrate(transform);
         Destroy(gameObject);
     }
 
+    public Transform GetTransform()
+    {
+        return transform;
+    }
 }

@@ -226,4 +226,10 @@ public class PlayerController : MonoBehaviour, IPlayerDamagable
         MyDebug.Log("Player died!");
         // Handle player death (respawn or game over logic)
     }
+
+
+    public Transform GetTransform()
+    {
+        return transform;
+    }
 }

@@ -4,16 +4,10 @@ using UnityEngine.UI;
 
 public class Crate : MonoBehaviour, IPlayerDamagable
 {
-    public int Health { get; set; } = 30;  // Crate health
+    public int Health { get; set; } = 200;  // Crate health
 
     [Header("Health")]
-
     public HealthBar healthBar;
-    public Image healthProgressBar;
-
-    public Tween healthTween;
-
-    private bool showHealthBar = false;
 
 
 
@@ -46,6 +40,8 @@ public class Crate : MonoBehaviour, IPlayerDamagable
     private void DestroyCrate()
     {
         MyDebug.Log("Crate has been destroyed!");
+        // Handle kill (e.g., despawn, play death animation)
+        healthBar.KillHealthTween();
         // Handle crate destruction (e.g., play destruction animation, drop items)
         Destroy(gameObject);
     }

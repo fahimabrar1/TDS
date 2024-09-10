@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5754963182326837337}
   - component: {fileID: 6477400451348477883}
-  - component: {fileID: 8062425926382834958}
+  - component: {fileID: 1316367739895573453}
   - component: {fileID: 8502688895543336854}
+  - component: {fileID: -8952800144242914343}
   - component: {fileID: 7498233861762104984}
   m_Layer: 6
   m_Name: Zoombie
@@ -88,8 +89,8 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &8062425926382834958
-BoxCollider2D:
+--- !u!70 &1316367739895573453
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -117,22 +118,12 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0.35852462}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.07985399}
-    oldSize: {x: 0.85333335, y: 0.85333335}
-    newSize: {x: 0.85333335, y: 0.85333335}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.28, y: 0.85333335}
-  m_EdgeRadius: 0
+  m_Size: {x: 0.22, y: 0.85333335}
+  m_Direction: 0
 --- !u!58 &8502688895543336854
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -167,7 +158,34 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0.35852462}
   serializedVersion: 2
-  m_Radius: 0.42666668
+  m_Radius: 0.25
+--- !u!50 &-8952800144242914343
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 276129212213280501}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!114 &7498233861762104984
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -177,18 +195,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 276129212213280501}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f167b108d58b1647906eed481c565c3, type: 3}
+  m_Script: {fileID: 11500000, guid: 757cae3c61095bc449ddcf92bfa0d9e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 3693276898277578916}
   target: {fileID: 0}
   isAttacking: 0
-  moveSpeed: 0.5
+  moveSpeed: 0.4
+  attackRange: 0.25
   attackDelay: 1
-  shakeDuration: 0.1
-  shakeStrength: {x: 0.03, y: 0.03, z: 0}
-  shakeVibrato: 2
-  shakeRandomness: 0
+  shakeDuration: 0.05
+  shakeStrength: {x: 0.05, y: 0.05, z: 0}
+  shakeVibrato: 1
+  shakeRandomness: 10
+  canMoveForward: 0
+  enemyInFront: {fileID: 0}
+  enemyBehind: {fileID: 0}
+  enemyOnTop: {fileID: 0}
 --- !u!1001 &3211838435641349708
 PrefabInstance:
   m_ObjectHideFlags: 0

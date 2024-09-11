@@ -1,6 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
-using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -24,6 +22,7 @@ public abstract class Enemy : MonoBehaviour, IEnemyDamagable, IAttackable
 
     [SerializeField]
     protected bool isGrounded = false;
+
     [SerializeField]
     protected bool isAttacking = false;
 
@@ -42,6 +41,8 @@ public abstract class Enemy : MonoBehaviour, IEnemyDamagable, IAttackable
     /// </summary>
     void Awake()
     {
+        rb = GetComponent<Rigidbody2D>(); // Initialize Rigidbody2D
+
         // Initialize the detection collider (assumed to be attached to the zombie)
         detectionCollider = GetComponent<CircleCollider2D>();
 

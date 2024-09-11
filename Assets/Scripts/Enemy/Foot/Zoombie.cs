@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using DG.Tweening;
+using UnityEngine.Scripting.APIUpdating;
 
 public class Zombie : Enemy
 {
@@ -75,7 +76,7 @@ public class Zombie : Enemy
             // Move forward if not attacking
             if (!isAttacking)
             {
-                MoveDDirection();
+                MoveDirection();
             }
         }
         else if (closestTarget != null)
@@ -86,7 +87,7 @@ public class Zombie : Enemy
             // If the distance is greater than the attack range and the zombie is not attacking, move forward
             if (distance > attackRange && !isAttacking && canMoveForward)
             {
-                MoveDDirection();
+                MoveDirection();
             }
 
         }
@@ -123,7 +124,7 @@ public class Zombie : Enemy
     /// <summary>
     /// Moves the zombie forward in the direction it is facing.
     /// </summary>
-    private void MoveDDirection()
+    private void MoveDirection()
     {
         // Move in the direction the zombie is facing
         transform.Translate(moveSpeed * Time.deltaTime * movementDirection * Vector2.right, Space.Self);
@@ -171,7 +172,7 @@ public class Zombie : Enemy
     public override void OnDetectEnemyInFront(GameObject enemyObj)
     {
 
-        MoveUpByFixedValue();
+        StartCoroutine(PerformJumpSequence());
     }
 
     /// <summary>
@@ -196,10 +197,48 @@ public class Zombie : Enemy
     public void SetEnemyOnTop(Zombie enemy)
     {
         enemyOnTop = enemy;
-        HandleQueue();
     }
 
 
+
+
+    /// <summary>
+    /// Perform a sequence of movements: move up, jump forward, then move forward.
+    /// </summary>
+    private IEnumerator PerformJumpSequence()
+    {
+        if (!hasJumped)
+        {
+            hasJumped = true;
+            // Move up
+            Vector3 initialPosition = transform.position;
+            Vector3 upwardPosition = initialPosition + new Vector3(0, 0.3f, 0);
+            float moveDuration = 0.2f; // Duration of the move up
+
+            float elapsedTime = 0f;
+            while (elapsedTime < moveDuration)
+            {
+                transform.position = Vector3.Lerp(initialPosition, upwardPosition, elapsedTime / moveDuration);
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+            transform.position = upwardPosition;
+
+            // Perform jump
+            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+
+            // Wait for a bit to let the jump complete
+            yield return new WaitForSeconds(0.2f);
+
+            hasJumped = true;
+            movementDirection = -1;
+            // Move forward
+            MoveDirection();
+        }
+
+
+
+    }
 
     /// <summary>
     /// Handles the queue logic and communication between enemies.

@@ -9,7 +9,7 @@ public class UnityColliderTrigger2DEvent : UnityEvent<Collider2D> { }
 [Serializable]
 public class UnityColliderCollision2DEvent : UnityEvent<Collision2D> { }
 
-public class PTGCollider2D : MonoBehaviour
+public class MyCollider2D : MonoBehaviour
 {
     public UnityColliderTrigger2DEvent OnTriggerEnter2DEvent;
     public UnityColliderTrigger2DEvent OnTriggerStay2DEvent;

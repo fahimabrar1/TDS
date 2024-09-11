@@ -11,8 +11,19 @@ public abstract class Enemy : MonoBehaviour, IEnemyDamagable, IAttackable
     public HealthBar healthBar;
 
     [SerializeField]
+    protected Transform body;
+
+    [SerializeField]
+    public Transform jumpPoint;
+
+    [SerializeField]
     protected Transform target;
 
+    [SerializeField]
+    protected Rigidbody2D rb;
+
+    [SerializeField]
+    protected bool isGrounded = false;
     [SerializeField]
     protected bool isAttacking = false;
 
@@ -22,7 +33,9 @@ public abstract class Enemy : MonoBehaviour, IEnemyDamagable, IAttackable
     protected List<IPlayerDamagable> targetsInRange = new();
     protected Coroutine attackEnumurator;
 
-
+    public MyCollider2D frontCollier;
+    public MyCollider2D backCollier;
+    public MyCollider2D bottomCollider;
 
     /// <summary>
     /// Awake is called when the script instance is being loaded.
@@ -42,6 +55,9 @@ public abstract class Enemy : MonoBehaviour, IEnemyDamagable, IAttackable
     {
         healthBar.InitializeHealthBar(Health);
 
+        // // front collider
+        // frontCollier.OnTriggerEnter2DEvent.AddListener((col) => OnTriggerEnterFront2D(col));
+        // frontCollier.OnTriggerExit2DEvent.AddListener(OnTriggerExitFront2D);
     }
 
 
@@ -90,37 +106,6 @@ public abstract class Enemy : MonoBehaviour, IEnemyDamagable, IAttackable
     /// <param name="damagableTarget">The target to attack.</param>
     public abstract IEnumerator AttackRoutine(IDamagable damagableTarget);
 
-    /// <summary>
-    /// Detects when a player enters the attack zone and initiates the attack routine on the closest one.
-    /// </summary>
-    public virtual void OnTriggerEnter2D(Collider2D other)
-    {
-        MyDebug.Log($"Entered {other.name}");
-        // Add valid player targets to the list
-        if (other.TryGetComponent(out IPlayerDamagable playerTarget))
-        {
-            targetsInRange.Add(playerTarget);
-            CheckAndAttackClosestTarget();
-        }
-    }
-
-    /// <summary>
-    /// Called when a trigger collider exits the detection zone.
-    /// Removes the target from the list and checks if another one should be attacked.
-    /// </summary>
-    public virtual void OnTriggerExit2D(Collider2D other)
-    {
-
-        MyDebug.Log($"Exited {other.name}");
-        // Remove the target from the list when it exits the trigger
-        if (other.TryGetComponent(out IPlayerDamagable playerTarget))
-        {
-            targetsInRange.Remove(playerTarget);
-            if (attackEnumurator != null)
-                StopCoroutine(attackEnumurator);
-            CheckAndAttackClosestTarget();
-        }
-    }
 
     /// <summary>
     /// Finds the closest target and initiates the attack.
@@ -181,4 +166,53 @@ public abstract class Enemy : MonoBehaviour, IEnemyDamagable, IAttackable
     {
         return transform;
     }
+
+
+    #region Colliders
+
+    /// <summary>
+    /// Detects when a player enters the attack zone and initiates the attack routine on the closest one.
+    /// </summary>
+    public virtual void OnTriggerEnterFront2D(Collider2D other)
+    {
+        MyDebug.Log($"Entered {other.name}");
+        // Add valid player targets to the list
+        if (other.TryGetComponent(out IPlayerDamagable playerTarget))
+        {
+            targetsInRange.Add(playerTarget);
+            CheckAndAttackClosestTarget();
+        }
+        else if (other.gameObject.CompareTag("Enemy"))
+        {
+            OnDetectEnemyInFront(other.gameObject);
+        }
+    }
+
+    /// <summary>
+    /// Called when a trigger collider exits the detection zone.
+    /// Removes the target from the list and checks if another one should be attacked.
+    /// </summary>
+    public virtual void OnTriggerExitFront2D(Collider2D other)
+    {
+
+        MyDebug.Log($"Exited {other.name}");
+        // Remove the target from the list when it exits the trigger
+        if (other.TryGetComponent(out IPlayerDamagable playerTarget))
+        {
+            targetsInRange.Remove(playerTarget);
+            if (attackEnumurator != null)
+                StopCoroutine(attackEnumurator);
+            CheckAndAttackClosestTarget();
+        }
+    }
+
+
+
+
+    public virtual void OnDetectEnemyInFront(GameObject enemyObj)
+    {
+
+    }
+
+    #endregion
 }

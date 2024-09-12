@@ -26,7 +26,7 @@ public class UpgradeButton : MonoBehaviour
     public TMP_Text valueText;
 
     public UpgradeValueType upgradeValueType;
-    public IApplyUpgradable applyUpgradable;
+    public BaseUpgradeData applyUpgradable;
 
 
 
@@ -37,6 +37,12 @@ public class UpgradeButton : MonoBehaviour
     {
         if (TryGetComponent(out Button btn))
             button = btn;
+
+    }
+    public void Initialize(BaseUpgradeData upgradeData)
+    {
+        applyUpgradable = upgradeData;
+        UpdateButtonUI();
     }
 
 
@@ -47,15 +53,18 @@ public class UpgradeButton : MonoBehaviour
 
     public void ApplyUpgrade()
     {
+        MyDebug.Log("Apply Upgrade From  Button");
         applyUpgradable.ApplyUpgrade();
+        UpdateButtonUI();
     }
 
-    internal void Initialize(BaseUpgradeData upgradeData)
+    private void UpdateButtonUI()
     {
         if (levelText != null)
-            levelText.text = $"Lv {upgradeData.level}";
-        costText.text = upgradeData.defaultCost.ToString();
-        valueText.text = upgradeValueType == UpgradeValueType.fixedValue ? upgradeData.GetValueRounded().ToString() : $"{upgradeData.GetValue()}/s";
+            levelText.text = $"Lv {applyUpgradable.level}";
+        costText.text = applyUpgradable.defaultCost.ToString();
+        valueText.text = upgradeValueType == UpgradeValueType.fixedValue ? applyUpgradable.GetValueRounded().ToString() : $"{applyUpgradable.GetValue()}/s";
     }
+
 
 }

@@ -13,6 +13,7 @@ public class BaseUpgradeData : IApplyUpgradable
 
     public void ApplyUpgrade()
     {
+        MyDebug.Log($"Apply Upgrade {nameof(BaseUpgradeData)}");
         defaultValue += valueIncrementBy;
         defaultCost += costIncrementBy;
         level++;
@@ -21,7 +22,7 @@ public class BaseUpgradeData : IApplyUpgradable
 
     public float GetValue()
     {
-        return defaultValue;
+        return Mathf.Round(defaultValue * 100f) / 100f;
     }
 
 

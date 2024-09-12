@@ -38,4 +38,12 @@ public class HealthData
     {
         return defaulthealthCost;
     }
+
+
+    // Method to get the cost of upgrading the health
+    public void ResetData()
+    {
+        defaultHealth = 500;    // The default health value
+        defaulthealthCost = 150;       // The cost of upgrading the health
+    }
 }

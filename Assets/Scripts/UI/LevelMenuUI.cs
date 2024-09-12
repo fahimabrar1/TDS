@@ -55,12 +55,31 @@ public class LevelMenuUI : MonoBehaviour
     }
 
     // Upgrade method, called when the button is pressed
-    public void OnUpgradeButtonPressed()
+    public void OnUpgradeHealthButton()
     {
         if (CurrencyManager.Instance != null && GameManager.instance.healthData != null && CurrencyManager.Instance.Coins >= GameManager.instance.healthData.defaultCost)
         {
             int cost = GameManager.instance.healthData.defaultCost;
             healthUpgradeButton.ApplyUpgrade();
+
+            CurrencyManager.Instance.SpendCoins(cost);
+
+            MyDebug.Log("Upgrade successful.");
+        }
+        else
+        {
+            MyDebug.Log("Not enough coins for upgrade.");
+        }
+    }
+
+
+    // Upgrade method, called when the button is pressed
+    public void OnUpgradeEnergyButton()
+    {
+        if (CurrencyManager.Instance != null && GameManager.instance.energyGenerateData != null && CurrencyManager.Instance.Coins >= GameManager.instance.energyGenerateData.defaultCost)
+        {
+            int cost = GameManager.instance.energyGenerateData.defaultCost;
+            energyUpgradeButton.ApplyUpgrade();
 
             CurrencyManager.Instance.SpendCoins(cost);
 

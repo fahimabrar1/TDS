@@ -599,9 +599,59 @@ Transform:
   m_LocalPosition: {x: -1.5, y: -1.5, z: 0.03706727}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1579956451}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &449130932
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 432141504}
+    m_Modifications:
+    - target: {fileID: 3554930196717512276, guid: 949bd2f5e978de24a83eb7e902b20ef3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554930196717512276, guid: 949bd2f5e978de24a83eb7e902b20ef3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554930196717512276, guid: 949bd2f5e978de24a83eb7e902b20ef3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554930196717512276, guid: 949bd2f5e978de24a83eb7e902b20ef3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554930196717512276, guid: 949bd2f5e978de24a83eb7e902b20ef3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554930196717512276, guid: 949bd2f5e978de24a83eb7e902b20ef3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554930196717512276, guid: 949bd2f5e978de24a83eb7e902b20ef3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554930196717512276, guid: 949bd2f5e978de24a83eb7e902b20ef3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9008869840025711098, guid: 949bd2f5e978de24a83eb7e902b20ef3, type: 3}
+      propertyPath: m_Name
+      value: player
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 949bd2f5e978de24a83eb7e902b20ef3, type: 3}
 --- !u!1 &501996677
 GameObject:
   m_ObjectHideFlags: 0
@@ -1582,12 +1632,19 @@ MonoBehaviour:
     defaultCost: 150
     costIncrementBy: 50
     level: 1
+    levelIncrementBy: 0
   energyGenerateData:
     defaultValue: 0.2
     valueIncrementBy: 0.02
     defaultCost: 50
     costIncrementBy: 50
     level: 1
+    levelIncrementBy: 0
+--- !u!4 &1579956451 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3554930196717512276, guid: 949bd2f5e978de24a83eb7e902b20ef3, type: 3}
+  m_PrefabInstance: {fileID: 449130932}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1724841974
 GameObject:
   m_ObjectHideFlags: 0

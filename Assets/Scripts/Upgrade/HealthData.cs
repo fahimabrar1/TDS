@@ -11,10 +11,10 @@ public class HealthData : BaseUpgradeData
 
 
     // Constructor to initialize HealthData with default values
-    public HealthData(int defaultValue, int defaultCost)
+    public HealthData(float defaultValue, int defaultCost)
     {
 
-        this.defaultValue = defaultValue;
+        DefaultValue = defaultValue;
         this.defaultCost = defaultCost;
     }
 
@@ -22,7 +22,7 @@ public class HealthData : BaseUpgradeData
     // Method to get the cost of upgrading the health
     public override void ResetData()
     {
-        defaultValue = 500;
+        DefaultValue = 500;
         valueIncrementBy = 100;
         defaultCost = 150;
         costIncrementBy = 50;

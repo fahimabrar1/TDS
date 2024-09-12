@@ -61,7 +61,7 @@ Transform:
   m_GameObject: {fileID: 9008869840025711098}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.863, y: -1.495, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -207,6 +207,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 6201194975426267886}
+  healthData:
+    defaultValue: 500
+    valueIncrementBy: 100
+    defaultCost: 150
+    costIncrementBy: 50
+    level: 1
+    levelIncrementBy: 0
   throwablePrefab: {fileID: 2500419892296461657, guid: 920a81343c2589340a04f5e69268a14d, type: 3}
   throwableThrowForce: 2
   throwableSpinForce: 0.06

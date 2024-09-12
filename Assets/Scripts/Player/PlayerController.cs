@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -52,13 +53,43 @@ public class PlayerController : MonoBehaviour, IPlayerDamagable
         mainCamera = Camera.main;
     }
 
+    /// <summary>
+    /// This function is called when the object becomes enabled and active.
+    /// </summary>
+    void OnEnable()
+    {
+        StartCoroutine(WaitForHealthData());
+    }
+
+    IEnumerator WaitForHealthData()
+    {
+        while (GameManager.instance == null || GameManager.instance.healthData == null)
+        {
+            yield return null; // Wait until healthData is assigned
+        }
+        GameManager.instance.healthData.OnUpdateDDefaultValue += OnUpdateHealth;
+        OnUpdateHealth();
+    }
+
+
 
     /// <summary>
-    /// Start is called on the frame when a script is enabled just before
-    /// any of the Update methods is called the first time.
+    /// This function is called when the behaviour becomes disabled or inactive.
     /// </summary>
-    void Start()
+    void OnDisable()
     {
+        if (GameManager.instance != null && GameManager.instance.healthData != null)
+        {
+            GameManager.instance.healthData.OnUpdateDDefaultValue -= OnUpdateHealth;
+        }
+    }
+
+
+
+
+    public void OnUpdateHealth()
+    {
+        health = Mathf.RoundToInt(GameManager.instance.healthData.DefaultValue);
         healthBar.InitializeHealthBar(health);
     }
 

@@ -9,8 +9,15 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
 
+    [Tooltip("The Health Data")]
+
     public HealthData healthData;
     public FileProcessorr<HealthData> healthDataProcessor = new();
+
+    [Tooltip("The Energy Data")]
+
+    public EnergyGenerateData energyGenerateData;
+    public FileProcessorr<EnergyGenerateData> energyGenerateDataProcessor = new();
 
 
 
@@ -29,6 +36,7 @@ public class GameManager : MonoBehaviour
 
         DOTween.Init();
         healthData = new();
+        energyGenerateData = new();
         LoadData();
     }
 
@@ -40,6 +48,7 @@ public class GameManager : MonoBehaviour
     async void LoadData()
     {
         await healthDataProcessor.OnLoadAsync(healthData);
+        await energyGenerateDataProcessor.OnLoadAsync(energyGenerateData);
     }
 
 
@@ -51,5 +60,6 @@ public class GameManager : MonoBehaviour
     void OnDestroy()
     {
         healthDataProcessor.OnSaveAsync(healthData);
+        energyGenerateDataProcessor.OnSaveAsync(energyGenerateData);
     }
 }

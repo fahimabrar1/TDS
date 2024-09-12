@@ -7,6 +7,12 @@ public class HealthData
     public int healthCostIncrement = 50;       // The cost of upgrading the health
 
     // Constructor to initialize HealthData with default values
+    public HealthData()
+    {
+    }
+
+
+    // Constructor to initialize HealthData with default values
     public HealthData(int defaultHealth, int defaulthealthCost)
     {
 

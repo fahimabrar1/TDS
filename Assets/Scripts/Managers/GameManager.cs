@@ -12,12 +12,12 @@ public class GameManager : MonoBehaviour
     [Tooltip("The Health Data")]
 
     public HealthData healthData;
-    public FileProcessorr<HealthData> healthDataProcessor = new();
+    public FileProcessorr<HealthData> healthDataProcessor;
 
     [Tooltip("The Energy Data")]
 
     public EnergyGenerateData energyGenerateData;
-    public FileProcessorr<EnergyGenerateData> energyGenerateDataProcessor = new();
+    public FileProcessorr<EnergyGenerateData> energyGenerateDataProcessor;
 
 
 
@@ -35,8 +35,13 @@ public class GameManager : MonoBehaviour
         }
 
         DOTween.Init();
+
         healthData = new();
+        healthDataProcessor = new();
+
         energyGenerateData = new();
+        energyGenerateDataProcessor = new();
+
         LoadData();
     }
 

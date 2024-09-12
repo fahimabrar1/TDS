@@ -10,7 +10,7 @@ public class LevelManager : MonoBehaviour
     public Transform playerTransform;
 
     [Tooltip("The list of crates in the level.")]
-    public List<Transform> crates = new List<Transform>();
+    public List<Transform> crates = new();
 
 
 

@@ -1,10 +1,12 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour, IDamagable
+public class PlayerController : MonoBehaviour, IPlayerDamagable
 {
     [Tooltip("The player's initial health.")]
-    public int health = 100;
+    private int health = 100;
+    public HealthBar healthBar;
 
     [Tooltip("The prefab for the crate that the player can spawn.")]
     public ICrateSpawner crateSpawner;
@@ -47,7 +49,50 @@ public class PlayerController : MonoBehaviour, IDamagable
         {
             this.crateSpawner = crateSpawner;
         }
+
+        mainCamera = Camera.main;
     }
+
+    /// <summary>
+    /// This function is called when the object becomes enabled and active.
+    /// </summary>
+    void OnEnable()
+    {
+        StartCoroutine(WaitForHealthData());
+    }
+
+    IEnumerator WaitForHealthData()
+    {
+        while (GameManager.instance == null || GameManager.instance.healthData == null)
+        {
+            yield return null; // Wait until healthData is assigned
+        }
+        GameManager.instance.healthData.OnUpdateDDefaultValue += OnUpdateHealth;
+        OnUpdateHealth();
+    }
+
+
+
+    /// <summary>
+    /// This function is called when the behaviour becomes disabled or inactive.
+    /// </summary>
+    void OnDisable()
+    {
+        if (GameManager.instance != null && GameManager.instance.healthData != null)
+        {
+            GameManager.instance.healthData.OnUpdateDDefaultValue -= OnUpdateHealth;
+        }
+    }
+
+
+
+
+    public void OnUpdateHealth()
+    {
+        health = Mathf.RoundToInt(GameManager.instance.healthData.DefaultValue);
+        healthBar.InitializeHealthBar(health);
+    }
+
 
     /// <summary>
     /// Updates the player's state every frame.
@@ -188,12 +233,18 @@ public class PlayerController : MonoBehaviour, IDamagable
     /// <param name="damage">The amount of damage taken.</param>
     public void OnTakeDamage(int damage)
     {
-        health -= damage;
-        MyDebug.Log($"Player took {damage} damage. Health: {health}");
+        healthBar.DeduceHealth(damage);
 
-        if (health <= 0)
+        healthBar.ShowHealthbar();
+        MyDebug.Log($"Player took {damage} damage. Health: {healthBar.currentHealth}");
+
+        if (healthBar.currentHealth <= 0)
         {
             Die();
+        }
+        else
+        {
+            healthBar.UpdateHealthbar();
         }
     }
 
@@ -203,7 +254,15 @@ public class PlayerController : MonoBehaviour, IDamagable
     /// </summary>
     private void Die()
     {
+        // Handle  death (e.g., despawn, play death animation)
+        healthBar.KillHealthTween();
         MyDebug.Log("Player died!");
         // Handle player death (respawn or game over logic)
+    }
+
+
+    public Transform GetTransform()
+    {
+        return transform;
     }
 }

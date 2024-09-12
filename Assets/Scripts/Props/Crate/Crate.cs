@@ -2,17 +2,12 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Crate : MonoBehaviour, IDamagable
+public class Crate : MonoBehaviour, IPlayerDamagable
 {
-    public int Health { get; set; } = 30;  // Crate health
+    public int Health { get; set; } = 200;  // Crate health
 
-    public int currentHealth; [Header("Health")]
-    public GameObject HealthBar;
-    public Image healthProgressBar;
-
-    public Tween healthTween;
-
-    private bool showHealthBar = false;
+    [Header("Health")]
+    public HealthBar healthBar;
 
 
 
@@ -22,54 +17,38 @@ public class Crate : MonoBehaviour, IDamagable
     /// </summary>
     public virtual void Start()
     {
-        currentHealth = Health;
-
-        healthProgressBar.fillAmount = 1;
-        HealthBar.SetActive(showHealthBar);
+        healthBar.InitializeHealthBar(Health);
     }
 
 
     public virtual void OnTakeDamage(int damage)
     {
-        currentHealth -= damage;
-        showHealthBar = true;
-        ShowHealthbar();
-        MyDebug.Log($"Zombie took {damage} damage. Health remaining: {currentHealth}");
+        healthBar.DeduceHealth(damage);
+        healthBar.ShowHealthbar();
+        MyDebug.Log($"Zombie took {damage} damage. Health remaining: {healthBar.currentHealth}");
 
-        if (currentHealth <= 0)
+        if (healthBar.currentHealth <= 0)
         {
             DestroyCrate();
         }
         else
         {
-            UpdateHealthbar();
+            healthBar.UpdateHealthbar();
         }
     }
 
     private void DestroyCrate()
     {
         MyDebug.Log("Crate has been destroyed!");
+        // Handle kill (e.g., despawn, play death animation)
+        healthBar.KillHealthTween();
         // Handle crate destruction (e.g., play destruction animation, drop items)
+        LevelManager.instance.RemoveCrate(transform);
         Destroy(gameObject);
     }
 
-
-
-
-
-
-    public void ShowHealthbar()
+    public Transform GetTransform()
     {
-        if (!HealthBar.activeInHierarchy && showHealthBar)
-            HealthBar.SetActive(showHealthBar);
-    }
-
-
-    public void UpdateHealthbar()
-    {
-        float newFillAmount = currentHealth / (float)Health;
-
-        // Use DOTween to animate the fill amount over time
-        healthTween = healthProgressBar.DOFillAmount(newFillAmount, 0.2f);
+        return transform;
     }
 }

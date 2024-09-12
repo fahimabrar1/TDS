@@ -44,7 +44,8 @@ public class Bullet : MonoBehaviour
             hitEnemy.OnTakeDamage(damage);  // Deal damage to the enemy
             Destroy(gameObject);  // Destroy bullet after hitting
         }
-        else if (other.CompareTag("Ground") || other.CompareTag("Boundary"))
+        else
+        //  if (other.CompareTag("Ground") || other.CompareTag("Boundary"))
         {
             Destroy(gameObject);  // Destroy bullet if it hits the ground or boundary
         }

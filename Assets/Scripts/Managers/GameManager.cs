@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 
@@ -10,7 +8,6 @@ public class GameManager : MonoBehaviour
 
 
     [Tooltip("The Health Data")]
-
     public HealthData healthData;
     public FileProcessorr<HealthData> healthDataProcessor;
 
@@ -27,7 +24,7 @@ public class GameManager : MonoBehaviour
 
         if (instance != null)
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
         else
         {
@@ -41,7 +38,6 @@ public class GameManager : MonoBehaviour
 
         energyGenerateData = new();
         energyGenerateDataProcessor = new();
-
         LoadData();
     }
 

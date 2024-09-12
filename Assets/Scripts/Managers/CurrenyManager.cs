@@ -54,7 +54,7 @@ public class CurrencyManager : MonoBehaviour
 
     private void LoadCurrency()
     {
-        Coins = PlayerPrefs.GetInt(GameConstants.COIN, 0);
+        coins = PlayerPrefs.GetInt(GameConstants.COIN, 0);
     }
 
     private void SaveCurrency()

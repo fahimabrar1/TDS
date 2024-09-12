@@ -6,6 +6,7 @@ public class CurrencyManager : MonoBehaviour
 {
     public static CurrencyManager Instance { get; private set; }
 
+    [SerializeField]
     private int coins;
 
     public Action OnCurrencyChanged;
@@ -79,6 +80,14 @@ public class CurrencyManager : MonoBehaviour
     public void AddCoins(int amount = 1)
     {
         Coins += amount;
+    }
+
+
+    // Add coins and notify
+    [Button("Add Coins")]
+    public void AddCustomCoins()
+    {
+        Coins += 1000;
     }
 
     // Spend coins only if sufficient

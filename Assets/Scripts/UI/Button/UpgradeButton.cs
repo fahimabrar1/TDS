@@ -1,15 +1,32 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+public interface IApplyUpgradable
+{
+    public void ApplyUpgrade();
+}
+
+
+[RequireComponent(typeof(Button))]
 public class UpgradeButton : MonoBehaviour
 {
 
-    private Button button;
+    public enum UpgradeValueType
+    {
+        fixedValue,
+        rate,
+    }
+
+    public Button button;
 
     public TMP_Text levelText;
     public TMP_Text costText;
     public TMP_Text valueText;
+
+    public UpgradeValueType upgradeValueType;
+    public IApplyUpgradable applyUpgradable;
 
 
 
@@ -23,6 +40,22 @@ public class UpgradeButton : MonoBehaviour
     }
 
 
+    public void ToggleButtonInteractable(bool value)
+    {
+        button.interactable = value;
+    }
 
+    public void ApplyUpgrade()
+    {
+        applyUpgradable.ApplyUpgrade();
+    }
+
+    internal void Initialize(BaseUpgradeData upgradeData)
+    {
+        if (levelText != null)
+            levelText.text = $"Lv {upgradeData.level}";
+        costText.text = upgradeData.defaultCost.ToString();
+        valueText.text = upgradeValueType == UpgradeValueType.fixedValue ? upgradeData.GetValueRounded().ToString() : $"{upgradeData.GetValue()}/s";
+    }
 
 }

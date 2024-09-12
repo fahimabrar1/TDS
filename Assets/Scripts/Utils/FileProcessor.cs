@@ -55,22 +55,25 @@ public class FileProcessorr<T> where T : class
     {
         string path = Application.persistentDataPath + "/" + fileName + GameConstants.SAVE_FILE_EXTENSION;
 
-
-        await Task.Run(() =>
+        // Check if the file exists before attempting to load
+        if (File.Exists(path))
         {
-            BinaryFormatter bf = new();
-            using FileStream stream = new(path, FileMode.OpenOrCreate);
-            try
+            await Task.Run(() =>
             {
-                string json = (string)bf.Deserialize(stream);
-                JsonUtility.FromJsonOverwrite(json, target);
-                MyDebug.Log(json);
-            }
-            catch (Exception e)
-            {
-                MyDebug.LogError("Failed to load data: " + e.Message);
-            }
-        });
+                BinaryFormatter bf = new();
+                using FileStream stream = new(path, FileMode.Open);
+                try
+                {
+                    string json = (string)bf.Deserialize(stream);
+                    JsonUtility.FromJsonOverwrite(json, target);
+                    MyDebug.Log(json);
+                }
+                catch (Exception e)
+                {
+                    MyDebug.LogError("Failed to load data: " + e.Message);
+                }
+            });
+        }
     }
 
 
@@ -83,23 +86,25 @@ public class FileProcessorr<T> where T : class
     public async Task OnLoadAsync(T target)
     {
         string path = Application.persistentDataPath + "/" + nameof(HealthData).ToLower() + GameConstants.SAVE_FILE_EXTENSION;
-
-
-        await Task.Run(() =>
+        // Check if the file exists before attempting to load
+        if (File.Exists(path))
         {
-            BinaryFormatter bf = new();
-            using FileStream stream = new(path, FileMode.OpenOrCreate);
-            try
+            await Task.Run(() =>
             {
-                string json = (string)bf.Deserialize(stream);
-                JsonUtility.FromJsonOverwrite(json, target);
-                MyDebug.Log(json);
-            }
-            catch (Exception e)
-            {
-                MyDebug.LogError("Failed to load data: " + e.Message);
-            }
-        });
+                BinaryFormatter bf = new();
+                using FileStream stream = new(path, FileMode.Open);
+                try
+                {
+                    string json = (string)bf.Deserialize(stream);
+                    JsonUtility.FromJsonOverwrite(json, target);
+                    MyDebug.Log(json);
+                }
+                catch (Exception e)
+                {
+                    MyDebug.LogError("Failed to load data: " + e.Message);
+                }
+            });
+        }
     }
 
 }

@@ -34,7 +34,7 @@ public class FileProcessorr<T> where T : class
     /// <param name="data">The data to save.</param>
     public void OnSaveAsync(T data)
     {
-        string path = Application.persistentDataPath + "/" + nameof(HealthData).ToLower() + GameConstants.SAVE_FILE_EXTENSION;
+        string path = Application.persistentDataPath + "/" + typeof(T).Name.ToLower() + GameConstants.SAVE_FILE_EXTENSION;
 
 
         BinaryFormatter bf = new();
@@ -85,7 +85,7 @@ public class FileProcessorr<T> where T : class
     /// <param name="target">The object to populate with loaded data.</param>
     public async Task OnLoadAsync(T target)
     {
-        string path = Application.persistentDataPath + "/" + nameof(HealthData).ToLower() + GameConstants.SAVE_FILE_EXTENSION;
+        string path = Application.persistentDataPath + "/" + typeof(T).Name.ToLower() + GameConstants.SAVE_FILE_EXTENSION;
         // Check if the file exists before attempting to load
         if (File.Exists(path))
         {

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using TMPro;
 
 public class CurrencyManager : MonoBehaviour
 {
@@ -7,15 +8,33 @@ public class CurrencyManager : MonoBehaviour
 
     private int coins;
 
-    public event Action OnCurrencyChanged;
+    public Action OnCurrencyChanged;
+
+    public TMP_Text coinText;  // TextMeshPro text component to display coins
+
+    /// <summary>
+    /// This function is called when the object becomes enabled and active.
+    /// </summary>
+    void OnEnable()
+    {
+        OnCurrencyChanged += UpdateCoinText; // Corrected typo
+    }
+
+    /// <summary>
+    /// This function is called when the behaviour becomes disabled or inactive.
+    /// </summary>
+    void OnDisable()
+    {
+        OnCurrencyChanged -= UpdateCoinText; // Corrected typo
+    }
 
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(this);
             LoadCurrency();
+
         }
         else
         {
@@ -23,15 +42,24 @@ public class CurrencyManager : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    /// Start is called on the frame when a script is enabled just before
+    /// any of the Update methods is called the first time.
+    /// </summary>
+    void Start()
+    {
+        OnCurrencyChanged?.Invoke();  // Ensure the UI updates immediately after loading the currency
+    }
+
     private void LoadCurrency()
     {
-        coins = PlayerPrefs.GetInt(GameConstants.COIN, 0);
-        OnCurrencyChanged?.Invoke();  // Notify UI of currency changes
+        Coins = PlayerPrefs.GetInt(GameConstants.COIN, 0);
     }
 
     private void SaveCurrency()
     {
-        PlayerPrefs.SetInt(GameConstants.COIN, coins);
+        PlayerPrefs.SetInt(GameConstants.COIN, Coins);
         PlayerPrefs.Save();
     }
 
@@ -51,7 +79,6 @@ public class CurrencyManager : MonoBehaviour
     public void AddCoins(int amount = 1)
     {
         Coins += amount;
-        MyDebug.Log("Coins added.");
     }
 
     // Spend coins only if sufficient
@@ -60,7 +87,6 @@ public class CurrencyManager : MonoBehaviour
         if (Coins >= amount)
         {
             Coins -= amount;
-            MyDebug.Log("Coins spent.");
         }
         else
         {
@@ -68,4 +94,16 @@ public class CurrencyManager : MonoBehaviour
         }
     }
 
+    // Method to update the UI text when coins change
+    public void UpdateCoinText()
+    {
+        if (coinText != null)
+        {
+            coinText.text = Coins.ToString();
+        }
+        else
+        {
+            MyDebug.LogWarning("Coin text reference is missing!");
+        }
+    }
 }

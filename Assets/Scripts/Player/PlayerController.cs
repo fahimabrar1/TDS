@@ -48,6 +48,8 @@ public class PlayerController : MonoBehaviour, IPlayerDamagable
         {
             this.crateSpawner = crateSpawner;
         }
+
+        mainCamera = Camera.main;
     }
 
 

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 
@@ -18,7 +19,7 @@ public class CustomEnemyBehavior : MonoBehaviour
 
     public bool canMove = true;
 
-    Collider2D ignoreColliders;
+    List<Collider2D> ignoreColliders = new();
 
     void Awake()
     {
@@ -44,7 +45,7 @@ public class CustomEnemyBehavior : MonoBehaviour
             foreach (var hit in hits)
             {
                 var hitCollider = hit.collider;
-                if (hitCollider != null && hitCollider != boxCollider2D && hitCollider != ignoreColliders && hitCollider.gameObject.CompareTag("Enemy"))
+                if (hitCollider != null && hitCollider != boxCollider2D && !ignoreColliders.Contains(hitCollider) && hitCollider.transform.position.y >= transform.position.y && hitCollider.gameObject.CompareTag("Enemy"))
                 {
                     float distanceToEnemy = Vector2.Distance(transform.position, hitCollider.transform.position);
 
@@ -56,7 +57,7 @@ public class CustomEnemyBehavior : MonoBehaviour
                     {
                         currentSpeed = 0f; // Stop completely
                         canMove = false; // Disable movement
-                        ignoreColliders = hit.collider;
+                        ignoreColliders.Add(hit.collider);
                         Climb(new Vector3(hit.transform.position.x, hit.transform.position.y + (Mathf.Abs(capsuleCollider2D.offset.y) + capsuleCollider2D.size.y / 4) / 2, hit.transform.position.z));
                         break;
                     }
@@ -68,6 +69,7 @@ public class CustomEnemyBehavior : MonoBehaviour
                     }
                 }
             }
+
 
             // If no enemy is detected, reset to normal speed
             if (!enemyDetected)

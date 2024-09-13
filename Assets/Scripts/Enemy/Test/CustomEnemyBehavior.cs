@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class CustomEnemyBehavior : MonoBehaviour
@@ -11,6 +12,7 @@ public class CustomEnemyBehavior : MonoBehaviour
     public MyCollider2D frontCollider;
 
     public BoxCollider2D boxCollider2D;
+    public CapsuleCollider2D capsuleCollider2D;
     private float currentSpeed;
 
     public bool canMove = true;
@@ -47,10 +49,12 @@ public class CustomEnemyBehavior : MonoBehaviour
                     enemyDetected = true;
 
                     // If the enemy is within stop distance, stop movement
-                    if (distanceToEnemy <= stopDistance)
+                    if ((distanceToEnemy - stopDistance) < .03f)
                     {
                         currentSpeed = 0f; // Stop completely
                         canMove = false; // Disable movement
+
+                        Climb(new Vector3(hit.transform.position.x, hit.transform.position.y + (Mathf.Abs(capsuleCollider2D.offset.y) + capsuleCollider2D.size.y / 4) / 2, hit.transform.position.z));
                         break;
                     }
                     else
@@ -78,6 +82,33 @@ public class CustomEnemyBehavior : MonoBehaviour
         // Apply the calculated speed to move the enemy left
         rb.velocity = Vector2.left * currentSpeed;
     }
+
+
+
+    public void Climb(Vector3 targetPosition)
+    {
+        // Create a path with a curve
+        Vector3[] path = { transform.position,
+        new((transform.position.x + targetPosition.x) / 2, transform.position.y + 0.15f, transform.position.z),
+        targetPosition };
+
+        // Disable physics during the animation to avoid conflicts
+        rb.isKinematic = true;
+
+        // Use DOTween to animate the path
+        transform.DOPath(path, 1, PathType.CatmullRom)
+            .SetEase(Ease.InOutQuad)
+            .OnComplete(() =>
+            {
+                // After completing the path, reset the position and re-enable physics
+                transform.position = targetPosition;
+                rb.isKinematic = false;
+
+                // Set velocity to zero to prevent jumping or unwanted movement
+                rb.velocity = Vector2.zero;
+            });
+    }
+
 
     private void OnTriggerEnter2DFront(Collider2D col)
     {

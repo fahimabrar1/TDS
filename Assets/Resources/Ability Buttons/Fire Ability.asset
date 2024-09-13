@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: AbilityButtonSO 1
+  m_Script: {fileID: 11500000, guid: a8d3fed41841b9246b480960f10be48c, type: 3}
+  m_Name: Fire Ability
   m_EditorClassIdentifier: Assembly-CSharp::AbilityButtonSO
-  cost: 8
-  sprite: {fileID: 21300000, guid: 58d72f2e44f933646910b9071e17590f, type: 3}
-  abilityButtonType: 0
+  cost: 5
+  sprite: {fileID: 21300000, guid: 6c1fcdfb6828fb04fad5303f918f696a, type: 3}
+  abilityButtonType: 1

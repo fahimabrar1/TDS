@@ -8,6 +8,7 @@ public class CustomEnemyBehavior : MonoBehaviour
     public float stopDistance = 0.18f; // Distance to completely stop
     public float brakingFactor = 0.5f; // Speed reduction factor when braking
     public float stopThreshold = 0.1f; // Minimum speed threshold for stopping
+    public float acceleration = 2f; // Acceleration rate
     public Rigidbody2D rb;
     public MyCollider2D frontCollider;
 
@@ -16,6 +17,8 @@ public class CustomEnemyBehavior : MonoBehaviour
     private float currentSpeed;
 
     public bool canMove = true;
+
+    Collider2D ignoreColliders;
 
     void Awake()
     {
@@ -41,7 +44,7 @@ public class CustomEnemyBehavior : MonoBehaviour
             foreach (var hit in hits)
             {
                 var hitCollider = hit.collider;
-                if (hitCollider != null && hitCollider != boxCollider2D && hitCollider.gameObject.CompareTag("Enemy"))
+                if (hitCollider != null && hitCollider != boxCollider2D && hitCollider != ignoreColliders && hitCollider.gameObject.CompareTag("Enemy"))
                 {
                     float distanceToEnemy = Vector2.Distance(transform.position, hitCollider.transform.position);
 
@@ -49,11 +52,11 @@ public class CustomEnemyBehavior : MonoBehaviour
                     enemyDetected = true;
 
                     // If the enemy is within stop distance, stop movement
-                    if ((distanceToEnemy - stopDistance) < .03f)
+                    if ((distanceToEnemy - stopDistance) < .1f)
                     {
                         currentSpeed = 0f; // Stop completely
                         canMove = false; // Disable movement
-
+                        ignoreColliders = hit.collider;
                         Climb(new Vector3(hit.transform.position.x, hit.transform.position.y + (Mathf.Abs(capsuleCollider2D.offset.y) + capsuleCollider2D.size.y / 4) / 2, hit.transform.position.z));
                         break;
                     }
@@ -69,7 +72,15 @@ public class CustomEnemyBehavior : MonoBehaviour
             // If no enemy is detected, reset to normal speed
             if (!enemyDetected)
             {
-                currentSpeed = moveSpeed;
+                // Gradually increase speed to the target moveSpeed
+                if (currentSpeed < moveSpeed)
+                {
+                    currentSpeed += acceleration * Time.fixedDeltaTime;
+                    if (currentSpeed > moveSpeed)
+                    {
+                        currentSpeed = moveSpeed;
+                    }
+                }
                 canMove = true;
             }
 
@@ -83,32 +94,35 @@ public class CustomEnemyBehavior : MonoBehaviour
         rb.velocity = Vector2.left * currentSpeed;
     }
 
-
-
     public void Climb(Vector3 targetPosition)
     {
         // Create a path with a curve
-        Vector3[] path = { transform.position,
-        new((transform.position.x + targetPosition.x) / 2, transform.position.y + 0.15f, transform.position.z),
-        targetPosition };
+        Vector3[] path = {
+            transform.position,
+            new Vector3((transform.position.x + targetPosition.x) / 2, transform.position.y + 0.15f, transform.position.z),
+            targetPosition
+        };
 
         // Disable physics during the animation to avoid conflicts
         rb.isKinematic = true;
+        rb.velocity = Vector2.zero; // Stop any velocity during the animation
 
         // Use DOTween to animate the path
         transform.DOPath(path, 1, PathType.CatmullRom)
             .SetEase(Ease.InOutQuad)
             .OnComplete(() =>
             {
-                // After completing the path, reset the position and re-enable physics
+                // After completing the path, reset the position
                 transform.position = targetPosition;
-                rb.isKinematic = false;
 
-                // Set velocity to zero to prevent jumping or unwanted movement
-                rb.velocity = Vector2.zero;
+                // Re-enable physics and start accelerating
+                rb.isKinematic = false;
+                rb.velocity = Vector2.zero; // Reset velocity to avoid sudden jumps
+
+                // Set canMove to true to allow movement after the climb
+                canMove = true;
             });
     }
-
 
     private void OnTriggerEnter2DFront(Collider2D col)
     {

@@ -211,7 +211,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 0.15
+  m_GravityScale: 2
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -240,6 +240,7 @@ MonoBehaviour:
   stopDistance: 0.18
   brakingFactor: 0.5
   stopThreshold: 0.1
+  acceleration: 2
   rb: {fileID: 0}
   frontCollider: {fileID: 2788358386584908524}
   boxCollider2D: {fileID: 2758209266064644173}

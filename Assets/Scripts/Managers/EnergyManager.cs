@@ -43,10 +43,12 @@ public class EnergyManager : MonoBehaviour
         }
     }
 
+
+
     /// <summary>
     /// Initializes the ability buttons.
     /// </summary>
-    private void Start()
+    public void SpawnAbilityButtons()
     {
         abilityButtons = new();
         for (int i = 0; i < abilityButtonHolderSO.abilityList.Count; i++)
@@ -68,5 +70,17 @@ public class EnergyManager : MonoBehaviour
     public void OnClickEnergyButton(int energyUsed)
     {
         energyGenerator.OnUseEnergy(energyUsed);
+    }
+
+
+
+    internal void DestroyAbilityButtons()
+    {
+        var childCount = abilityButtons.Count;
+
+        for (int i = childCount - 1; i >= 0; i--)
+        {
+            Destroy(abilityButtons[i].gameObject);
+        }
     }
 }

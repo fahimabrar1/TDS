@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: AbilityButtonSO_L1_2
   m_EditorClassIdentifier: 
   cost: 7
-  delayForNextUse: 5
+  delayForNextUse: 10
   sprite: {fileID: 21300000, guid: 6c1fcdfb6828fb04fad5303f918f696a, type: 3}
   abilityButtonType: 1

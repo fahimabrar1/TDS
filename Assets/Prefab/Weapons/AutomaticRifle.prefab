@@ -110,7 +110,7 @@ MonoBehaviour:
   poweredBulletsPerBurst: 1
   poweredDelayBetweenBullets: 0
   poweredDelayBetweenBursts: 0.2
-  poweredModeDuration: 5
+  poweredModeDuration: 10
 --- !u!1 &7810827486659020297
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,0 +1,78 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7171638289862788573
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5299282020165544358}
+  - component: {fileID: 9079183510299553091}
+  m_Layer: 0
+  m_Name: LevelAudioPlayer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5299282020165544358
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7171638289862788573}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.0050032, y: -1.2202947, z: -0.0055747745}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9079183510299553091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7171638289862788573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72ebaabf6a4c24a41854c79d59420692, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioManager: {fileID: 0}
+  AllAudios:
+  - name: click
+    clip: {fileID: 8300000, guid: 32c62ac0dd51a60419c83302f763bf5c, type: 3}
+    audioSource: {fileID: 0}
+    Volume: 1
+    Pitch: 1
+  - name: place
+    clip: {fileID: 8300000, guid: a8e0e0fd10b298e4987041751918ea6b, type: 3}
+    audioSource: {fileID: 0}
+    Volume: 1
+    Pitch: 1
+  - name: fire
+    clip: {fileID: 8300000, guid: 59c1375905c80764f96a15713ae0b162, type: 3}
+    audioSource: {fileID: 0}
+    Volume: 1
+    Pitch: 1
+  - name: fire-heavy
+    clip: {fileID: 8300000, guid: 920b64ee1d3d45242b4172a9d15200d2, type: 3}
+    audioSource: {fileID: 0}
+    Volume: 1
+    Pitch: 1
+  - name: grenade
+    clip: {fileID: 8300000, guid: d651856d7ed894c42ac40f4039167822, type: 3}
+    audioSource: {fileID: 0}
+    Volume: 1
+    Pitch: 1
+  - name: box-crash
+    clip: {fileID: 8300000, guid: 102160965ac6da74d8a033839ae38da5, type: 3}
+    audioSource: {fileID: 0}
+    Volume: 1
+    Pitch: 1

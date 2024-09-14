@@ -9,18 +9,6 @@ public class Crate : MonoBehaviour, IPlayerDamagable
     [Header("Health")]
     public HealthBar healthBar;
 
-    public LevelAudioPlayer levelAudioPlayer;
-
-
-
-
-    /// <summary>
-    /// Awake is called when the script instance is being loaded.
-    /// </summary>
-    void Awake()
-    {
-        levelAudioPlayer = FindAnyObjectByType<LevelAudioPlayer>();
-    }
 
 
     /// <summary>
@@ -28,7 +16,7 @@ public class Crate : MonoBehaviour, IPlayerDamagable
     /// </summary>
     void OnEnable()
     {
-        levelAudioPlayer.OnPlayAudioByName("place");
+        LevelAudioPlayer.instance.OnPlayAudioByName("place");
     }
 
 
@@ -37,7 +25,7 @@ public class Crate : MonoBehaviour, IPlayerDamagable
     /// </summary>
     void OnDisable()
     {
-        levelAudioPlayer.OnPlayAudioByName("box-crash");
+        LevelAudioPlayer.instance.OnPlayAudioByName("box-crash");
     }
 
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour, IPlayerDamagable
 {
@@ -130,6 +131,8 @@ public class PlayerController : MonoBehaviour, IPlayerDamagable
     /// </summary>
     private void HandleTouchInput()
     {
+        if (EventSystem.current.IsPointerOverGameObject())
+            return;
         Vector3 touchPosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
         touchPosition.z = 0; // Keep the z-position at 0 for 2D
 

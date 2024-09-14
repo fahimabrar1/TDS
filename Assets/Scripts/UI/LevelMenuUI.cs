@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,11 +10,11 @@ public class LevelMenuUI : MonoBehaviour
     public UpgradeButton energyUpgradeButton; // Example button for upgrading
 
 
+    public List<GameObject> UiButtons;
+    public GameObject InGamePanel;
 
     private void OnEnable()
     {
-
-
         // Subscribe to currency change events
         if (CurrencyManager.Instance != null)
         {
@@ -92,4 +94,26 @@ public class LevelMenuUI : MonoBehaviour
     }
 
 
+    public void OnClickStart()
+    {
+        foreach (var button in UiButtons)
+        {
+            button.SetActive(false);
+        }
+
+        InGamePanel.SetActive(true);
+        EnergyManager.instance.SpawnAbilityButtons();
+
+    }
+
+
+    public void OnShowButtons()
+    {
+        foreach (var button in UiButtons)
+        {
+            button.SetActive(true);
+        }
+        InGamePanel.SetActive(false);
+        EnergyManager.instance.DestroyAbilityButtons();
+    }
 }

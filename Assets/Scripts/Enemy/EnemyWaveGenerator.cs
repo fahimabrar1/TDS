@@ -9,14 +9,11 @@ public class EnemyWaveGenerator : MonoBehaviour
     [Tooltip("Prefab of the enemy to spawn.")]
     public GameObject enemyPrefab;
 
-    [Tooltip("Spawn points for the enemies.")]
-    public List<Transform> spawnPoints;
-
     [Tooltip("Time delay between each wave.")]
     public float waveDelay = 4f;
     public Transform wavePosition;
 
-    private List<Enemy> enemyList = new(); // Queue to store enemies in a wave
+    public List<Enemy> enemyList = new(); // Queue to store enemies in a wave
 
     private Enemy currentEnemy;
 
@@ -73,7 +70,13 @@ public class EnemyWaveGenerator : MonoBehaviour
         canGenerateEnemies = false;
         for (int i = enemyList.Count - 1; i >= 0; i--)
         {
-            Destroy(enemyList[i].gameObject);
+            try
+            {
+                Destroy(enemyList[i].gameObject);
+            }
+            catch (System.Exception)
+            {
+            }
         }
     }
 

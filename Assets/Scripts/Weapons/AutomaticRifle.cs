@@ -116,6 +116,8 @@ public class AutomaticRifle : Weapon
     {
         if (!isPoweredMode)
         {
+            StopCoroutine(ShootBurst());
+
             StartCoroutine(PoweredModeRoutine());
         }
     }
@@ -127,7 +129,7 @@ public class AutomaticRifle : Weapon
     {
         isPoweredMode = true;
         MyDebug.Log("Powered mode activated!");
-
+        StartCoroutine(PoweredShootBurst());
         // Wait for the duration of the powered mode
         yield return new WaitForSeconds(poweredModeDuration);
 

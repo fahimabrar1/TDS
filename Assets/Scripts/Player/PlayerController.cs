@@ -31,7 +31,8 @@ public class PlayerController : MonoBehaviour, IPlayerDamagable
 
 
     [Tooltip("A list of all enemies in the scene.")]
-    public List<Enemy> enemies = new List<Enemy>();
+    public List<Enemy> enemies = new();
+    private EnemyWaveGenerator enemyWaveGenerator;
 
 
     /// <summary>
@@ -44,7 +45,7 @@ public class PlayerController : MonoBehaviour, IPlayerDamagable
             this.crateSpawner = crateSpawner;
         }
         mainCamera = Camera.main;
-
+        enemyWaveGenerator = FindAnyObjectByType<EnemyWaveGenerator>();
     }
 
     /// <summary>
@@ -194,19 +195,26 @@ public class PlayerController : MonoBehaviour, IPlayerDamagable
         Vector3 closestEnemy = Vector3.zero;
         float closestDistance = Mathf.Infinity;
 
-        foreach (var enemy in enemies)
+        if (enemyWaveGenerator.enemyList.Count > 0)
         {
-            if (enemy == null) continue;
-
-            float distance = Vector2.Distance(transform.position, enemy.transform.position);
-            if (distance < closestDistance)
+            foreach (var enemy in enemyWaveGenerator.enemyList)
             {
-                closestEnemy = enemy.transform.position;
-                closestDistance = distance;
-            }
-        }
+                if (enemy == null) continue;
 
-        return closestEnemy;
+                float distance = Vector2.Distance(transform.position, enemy.transform.position);
+                if (distance < closestDistance)
+                {
+                    closestEnemy = enemy.transform.position;
+                    closestDistance = distance;
+                }
+            }
+            MyDebug.Log($"Closet Enemy Pos:{closestEnemy}");
+            return closestEnemy;
+        }
+        else
+        {
+            return Vector3.zero;
+        }
     }
 
 

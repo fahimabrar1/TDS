@@ -55,6 +55,7 @@ public class LevelManager : MonoBehaviour
     public async void OnPlayerDeath()
     {
         isGameStarted = false;
+        levelMenuUI.SetStartButtonIntereactable(false);
 
         enemyWaveGenerator.StopGenerateEnemies();
         levelMenuUI.OnShowButtons();
@@ -70,6 +71,8 @@ public class LevelManager : MonoBehaviour
         var obj = Instantiate(plaeyrObj, playerSpawnPoint.position, Quaternion.identity, playerSpawnPoint);
         playerTransform = obj.transform;
         playerController = playerTransform.GetComponent<PlayerController>();
+
+        levelMenuUI.SetStartButtonIntereactable(true);
     }
 
 
@@ -77,6 +80,8 @@ public class LevelManager : MonoBehaviour
 
     public void OnStart()
     {
+        levelMenuUI.SetStartButtonIntereactable(false);
+
         isGameStarted = true;
         enemyWaveGenerator.StartGenerateEnemies();
     }

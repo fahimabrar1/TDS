@@ -140,8 +140,8 @@ public abstract class Enemy : MonoBehaviour, IEnemyDamagable, IAttackable
         healthBar.InitializeHealthBar(Health);
 
         // // front collider
-        // frontCollier.OnTriggerEnter2DEvent.AddListener((col) => OnTriggerEnterFront2D(col));
-        // frontCollier.OnTriggerExit2DEvent.AddListener(OnTriggerExitFront2D);
+        frontCollider.OnTriggerEnter2DEvent.AddListener((col) => OnTriggerEnterFront2D(col));
+        frontCollider.OnTriggerExit2DEvent.AddListener(OnTriggerExitFront2D);
     }
 
 

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -37,10 +38,12 @@ public class LevelMenuUI : MonoBehaviour
     /// Start is called on the frame when a script is enabled just before
     /// any of the Update methods is called the first time.
     /// </summary>
-    void Start()
+    public void InitialzieUI()
     {
+
         healthUpgradeButton.Initialize(GameManager.instance.healthData);
         energyUpgradeButton.Initialize(GameManager.instance.energyGenerateData);
+        CurrencyManager.Instance.OnCurrencyChanged?.Invoke();
     }
 
 

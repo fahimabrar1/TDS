@@ -47,7 +47,7 @@ MonoBehaviour:
   audioManager: {fileID: 0}
   AllAudios:
   - name: click
-    clip: {fileID: 8300000, guid: 32c62ac0dd51a60419c83302f763bf5c, type: 3}
+    clip: {fileID: 8300000, guid: 45c10279ff988dd49a2cf769852d39fc, type: 3}
     audioSource: {fileID: 0}
     PlayOnAwake: 0
     Volume: 1
@@ -68,8 +68,8 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 920b64ee1d3d45242b4172a9d15200d2, type: 3}
     audioSource: {fileID: 0}
     PlayOnAwake: 0
-    Volume: 1
-    Pitch: 1
+    Volume: 0.05
+    Pitch: 1.05
   - name: grenade
     clip: {fileID: 8300000, guid: d651856d7ed894c42ac40f4039167822, type: 3}
     audioSource: {fileID: 0}

@@ -21,7 +21,8 @@ public class LevelManager : MonoBehaviour
     [Tooltip("The list of crates in the level.")]
     public List<Transform> crates = new();
 
-
+    [SerializeField]
+    private PlayerController playerController;
 
     private void Awake()
     {
@@ -64,6 +65,7 @@ public class LevelManager : MonoBehaviour
     {
         var obj = Instantiate(plaeyrObj, playerSpawnPoint.position, Quaternion.identity, playerSpawnPoint);
         playerTransform = obj.transform;
+        playerController = playerTransform.GetComponent<PlayerController>();
     }
 
 
@@ -72,5 +74,12 @@ public class LevelManager : MonoBehaviour
     public void OnStart()
     {
         enemyWaveGenerator.StartGenerateEnemies();
+    }
+
+
+
+    public PlayerController GetPlayer()
+    {
+        return playerController;
     }
 }

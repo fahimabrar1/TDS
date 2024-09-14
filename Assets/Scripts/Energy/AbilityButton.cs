@@ -43,13 +43,6 @@ public class AbilityButton : MonoBehaviour
     public int coolDown;
 
 
-    /// <summary>
-    /// This function is called wh en the behaviour becomes disabled or inactive.
-    /// </summary>
-    void OnDisable()
-    {
-        EnergyManager.instance.OnUpdateButtonsAction -= OnUpdateButtons;
-    }
 
     /// <summary>
     /// Start is called on the frame when a script is enabled just before

@@ -101,6 +101,8 @@ public class EnergyManager : MonoBehaviour
 
         for (int i = childCount - 1; i >= 0; i--)
         {
+            OnUpdateButtonsAction -= abilityButtons[i].OnButtonActiveCheck;
+
             Destroy(abilityButtons[i].gameObject);
         }
     }

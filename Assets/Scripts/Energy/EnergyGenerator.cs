@@ -20,14 +20,6 @@ public class EnergyGenerator : MonoBehaviour
     [Tooltip("Reference to the energy count UI.")]
     public TMP_Text energyCounter;
 
-    /// <summary>
-    /// Start is called before the first frame update.
-    /// </summary>
-    void Start()
-    {
-        timeRemaining = energyGenerationTime;
-        UpdateEnergyText();
-    }
 
 
 
@@ -42,12 +34,18 @@ public class EnergyGenerator : MonoBehaviour
 
     IEnumerator WaitForHealthData()
     {
+
         while (GameManager.instance == null || GameManager.instance.energyGenerateData == null)
         {
             yield return null; // Wait until healthData is assigned
         }
         GameManager.instance.energyGenerateData.OnUpdateDDefaultValue += OnUpddateDelay;
         OnUpddateDelay();
+        totalEnergyCount = 0;
+        timeRemaining = energyGenerationTime;
+
+        UpdateEnergyText();
+
     }
 
 

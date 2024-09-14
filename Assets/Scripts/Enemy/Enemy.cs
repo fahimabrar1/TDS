@@ -6,11 +6,6 @@ using System;
 public abstract class Enemy : MonoBehaviour, IEnemyDamagable, IAttackable
 {
 
-    [Header("Health Data")]
-    [Tooltip("The initial health of the enemy.")]
-    public int Health = 50;  // Initial zombie health
-
-
     public HealthBar healthBar;
 
     [Header("Assign Data")]
@@ -24,9 +19,6 @@ public abstract class Enemy : MonoBehaviour, IEnemyDamagable, IAttackable
     [SerializeField]
     protected Transform target;
 
-    [Header("Attack Data")]
-    public float attackDelay = 1f;
-    public int attackDamage = 50;
 
 
     [Header("Custom Colliders")]
@@ -34,8 +26,8 @@ public abstract class Enemy : MonoBehaviour, IEnemyDamagable, IAttackable
     public BoxCollider2D boxCollider2D;
     public CapsuleCollider2D capsuleCollider2D;
     public MyCollider2D frontCollider;
-    public MyCollider2D backCollfier;
-    public MyCollider2D bottomCollider;
+    // public MyCollider2D backCollfier;
+    // public MyCollider2D bottomCollider;
 
 
 
@@ -141,8 +133,6 @@ public abstract class Enemy : MonoBehaviour, IEnemyDamagable, IAttackable
     /// </summary>
     public virtual void Start()
     {
-        healthBar.InitializeHealthBar(Health);
-
         // // front collider
         frontCollider.OnTriggerEnter2DEvent.AddListener((col) => OnTriggerEnterFront2D(col));
         frontCollider.OnTriggerExit2DEvent.AddListener(OnTriggerExitFront2D);
@@ -171,7 +161,7 @@ public abstract class Enemy : MonoBehaviour, IEnemyDamagable, IAttackable
     public virtual void OnAttack(IDamagable target)
     {
         MyDebug.Log("Zombie attacked!");
-        target.OnTakeDamage(attackDamage);
+        target.OnTakeDamage(15);
     }
 
     private void Die()

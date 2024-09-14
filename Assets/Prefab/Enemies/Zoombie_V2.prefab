@@ -236,16 +236,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20be8cd1ef39c6d45a45f0e01b094143, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 100
   healthBar: {fileID: 4727008546298369090}
   body: {fileID: 4213814994733672981}
   jumpPoint: {fileID: 4376197656413380994}
   target: {fileID: 0}
+  attackDelay: 1
+  attackDamage: 50
   boxCollider2D: {fileID: 2758209266064644173}
   capsuleCollider2D: {fileID: 7468857253504410170}
   frontCollider: {fileID: 2788358386584908524}
-  backCollfier: {fileID: 7795905153762873961}
-  bottomCollider: {fileID: 3585536633230959282}
   rb: {fileID: 7907520318861747050}
   moveDirection: 1
   isGrounded: 0
@@ -256,18 +255,7 @@ MonoBehaviour:
   enemyBehind: {fileID: 0}
   enemyOnTop: {fileID: 0}
   enemyOnBottom: {fileID: 0}
-  forwardSpeed: 1
-  backwardSpeed: 0.2
-  stopDistance: 0.18
-  brakingFactor: 0.5
-  stopThreshold: 0.2
-  acceleration: 2
-  raycastDistance: 0.4
-  attackDelay: 1
-  shakeDuration: 0.2
-  shakeStrength: {x: 0.3, y: 0.3, z: 0}
-  shakeVibrato: 10
-  shakeRandomness: 90
+  zombieDataSO: {fileID: 11400000, guid: 83f178a5ceae5c64a9538f9363e8d446, type: 2}
   currentForwardSpeed: 0
 --- !u!1 &2002329950175999498
 GameObject:

@@ -5,21 +5,11 @@ using System.Collections.Generic;
 
 public class Zombie : Enemy
 {
-    [Header("Move Data")]
-    public float forwardSpeed = 2f; // Initial movement speed
-    public float backwardSpeed = .2f; // Initial movement speed
-    public float stopDistance = 0.18f; // Distance to completely stop
-    public float brakingFactor = 0.5f; // Speed reduction factor when braking
-    public float stopThreshold = 0.1f; // Minimum speed threshold for stopping
-    public float acceleration = 2f; // Acceleration rate
-    public float raycastDistance = 1f; // How far to check for other enemies
 
 
-    [Header("Shake Effect on Attack")]
-    public float shakeDuration = 0.2f;
-    public Vector3 shakeStrength = new Vector3(0.3f, 0.3f, 0);
-    public int shakeVibrato = 10;
-    public float shakeRandomness = 90f;
+    public ZombieDataSO zombieDataSO;
+
+
 
     [Header("Debug Values")]
     [SerializeField]
@@ -45,7 +35,8 @@ public class Zombie : Enemy
     public override void Start()
     {
         base.Start();
-        currentForwardSpeed = forwardSpeed; // Set current speed to the initial move speed
+        healthBar.InitializeHealthBar(zombieDataSO.Health);
+        currentForwardSpeed = zombieDataSO.forwardSpeed; // Set current speed to the initial move speed
     }
 
     void FixedUpdate()
@@ -55,14 +46,14 @@ public class Zombie : Enemy
             RaycastForEnemies();
 
             // Gradually increase speed to the target moveSpeed only when there is no enemy in front
-            if (EnemyInFront == null || Vector2.Distance(transform.position, EnemyInFront.transform.position) > stopDistance)
+            if (EnemyInFront == null || Vector2.Distance(transform.position, EnemyInFront.transform.position) > zombieDataSO.stopDistance)
             {
-                if (currentForwardSpeed < forwardSpeed)
+                if (currentForwardSpeed < zombieDataSO.forwardSpeed)
                 {
-                    currentForwardSpeed += acceleration * Time.fixedDeltaTime;
-                    if (currentForwardSpeed > forwardSpeed)
+                    currentForwardSpeed += zombieDataSO.acceleration * Time.fixedDeltaTime;
+                    if (currentForwardSpeed > zombieDataSO.forwardSpeed)
                     {
-                        currentForwardSpeed = forwardSpeed;
+                        currentForwardSpeed = zombieDataSO.forwardSpeed;
                     }
                 }
             }
@@ -81,8 +72,8 @@ public class Zombie : Enemy
     private void RaycastForEnemies()
     {
         // Raycast in front
-        RaycastHit2D[] hitsFront = Physics2D.RaycastAll(transform.position, Vector2.left, raycastDistance, LayerMask.GetMask("Enemy"));
-        Debug.DrawRay(transform.position, Vector3.left * raycastDistance, Color.white);
+        RaycastHit2D[] hitsFront = Physics2D.RaycastAll(transform.position, Vector2.left, zombieDataSO.raycastDistance, LayerMask.GetMask("Enemy"));
+        Debug.DrawRay(transform.position, Vector3.left * zombieDataSO.raycastDistance, Color.white);
 
         foreach (RaycastHit2D hit in hitsFront)
         {
@@ -105,8 +96,8 @@ public class Zombie : Enemy
         }
 
         // Raycast behind
-        RaycastHit2D[] hitsBack = Physics2D.RaycastAll(transform.position, Vector2.right, raycastDistance, LayerMask.GetMask("Enemy"));
-        Debug.DrawRay(transform.position, Vector3.right * raycastDistance, Color.white);
+        RaycastHit2D[] hitsBack = Physics2D.RaycastAll(transform.position, Vector2.right, zombieDataSO.raycastDistance, LayerMask.GetMask("Enemy"));
+        Debug.DrawRay(transform.position, Vector3.right * zombieDataSO.raycastDistance, Color.white);
 
         foreach (RaycastHit2D hit in hitsBack)
         {
@@ -128,8 +119,8 @@ public class Zombie : Enemy
         }
 
         // Raycast below
-        RaycastHit2D[] hitsBottom = Physics2D.RaycastAll(transform.position, Vector2.down, raycastDistance, LayerMask.GetMask("Ground", "Enemy"));
-        Debug.DrawRay(transform.position, Vector3.down * raycastDistance, Color.white);
+        RaycastHit2D[] hitsBottom = Physics2D.RaycastAll(transform.position, Vector2.down, zombieDataSO.raycastDistance, LayerMask.GetMask("Ground", "Enemy"));
+        Debug.DrawRay(transform.position, Vector3.down * zombieDataSO.raycastDistance, Color.white);
 
         bool foundGround = false;
         foreach (RaycastHit2D hit in hitsBottom)
@@ -202,7 +193,7 @@ public class Zombie : Enemy
         // If the enemy is within the range of 0.4f and 0.2f, start slowing down
 
         // Stop the enemy when within stopDistance (0.2f)
-        if (distanceToEnemy - stopDistance < .05f)
+        if (distanceToEnemy - zombieDataSO.stopDistance < .05f)
         {
             currentForwardSpeed = 0f;
             canMove = false;
@@ -217,11 +208,11 @@ public class Zombie : Enemy
                     (Mathf.Abs(capsuleCollider2D.offset.y) + capsuleCollider2D.size.y / 4) / 2, EnemyOnBottom.transform.position.z));
             }
         }
-        else if (distanceToEnemy <= raycastDistance && distanceToEnemy >= stopDistance)
+        else if (distanceToEnemy <= zombieDataSO.raycastDistance && distanceToEnemy >= zombieDataSO.stopDistance)
         {
             // Linearly reduce speed based on the distance (slows down as it gets closer)
-            float t = (distanceToEnemy - stopDistance) / (raycastDistance - stopDistance); // Normalizes between 0.4f and 0.2f
-            currentForwardSpeed = Mathf.Lerp(0f, forwardSpeed, t);
+            float t = (distanceToEnemy - zombieDataSO.stopDistance) / (zombieDataSO.raycastDistance - zombieDataSO.stopDistance); // Normalizes between 0.4f and 0.2f
+            currentForwardSpeed = Mathf.Lerp(0f, zombieDataSO.forwardSpeed, t);
         }
     }
 
@@ -242,7 +233,7 @@ public class Zombie : Enemy
 
     private void MoveToDirection()
     {
-        float newSpeed = moveDirection == -1 ? backwardSpeed * moveDirection : currentForwardSpeed * moveDirection;
+        float newSpeed = moveDirection == -1 ? zombieDataSO.backwardSpeed * moveDirection : currentForwardSpeed * moveDirection;
         rb.velocity = newSpeed * Vector2.left;
     }
 
@@ -256,14 +247,20 @@ public class Zombie : Enemy
                 OnAttack(damagableTarget);
                 ShakeOnAttack();
             }
-            yield return new WaitForSeconds(attackDelay);
+            yield return new WaitForSeconds(zombieDataSO.attackDelay);
         }
         isAttacking = false;
     }
 
+
+    public override void OnAttack(IDamagable target)
+    {
+        target.OnTakeDamage(zombieDataSO.attackDamage);
+
+    }
     private void ShakeOnAttack()
     {
-        body.DOShakeScale(shakeDuration, shakeStrength, shakeVibrato, shakeRandomness).SetEase(Ease.OutQuad);
+        body.DOShakeScale(zombieDataSO.shakeDuration, zombieDataSO.shakeStrength, zombieDataSO.shakeVibrato, zombieDataSO.shakeRandomness).SetEase(Ease.OutQuad);
     }
 
     public void Climb(Vector3 targetPosition)

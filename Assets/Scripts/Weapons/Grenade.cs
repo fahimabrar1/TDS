@@ -41,11 +41,12 @@ public class Grenade : MonoBehaviour
         if (hasExploded) return; // Prevent multiple explosions
 
         hasExploded = true;
-
+        LevelAudioPlayer.instance.OnPlayAudioByName("grenade");
         // Optionally, instantiate an explosion effect at the grenade's position
         if (explosionEffectPrefab)
         {
-            Instantiate(explosionEffectPrefab, transform.position, Quaternion.identity);
+            var Obj = Instantiate(explosionEffectPrefab, transform.position, Quaternion.identity);
+            Destroy(Obj, 3);
         }
 
         // Detect all enemies within the explosion radius

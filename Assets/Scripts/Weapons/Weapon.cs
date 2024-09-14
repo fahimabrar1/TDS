@@ -20,12 +20,6 @@ public abstract class Weapon : MonoBehaviour
     public SpriteRenderer shootingRadius;
 
 
-    [Tooltip("The name of the shooting audio.")]
-
-    public string shootingAudio;
-
-    [Tooltip("The name of the heavy shooting audio.")]
-    public string shootingHeavyAudio;
 
 
     /// <summary>

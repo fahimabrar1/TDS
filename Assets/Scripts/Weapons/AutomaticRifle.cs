@@ -3,29 +3,8 @@ using System.Collections;
 
 public class AutomaticRifle : Weapon
 {
-    [Header("Basic")]
-    [Tooltip("The number of shots in a burst.")]
-    public int bulletsPerBurst = 4;
 
-    [Tooltip("The delay between bullets in a burst, in seconds.")]
-    public float delayBetweenBullets = 0.1f;
-
-    [Tooltip("The delay between bursts, in seconds.")]
-    public float delayBetweenBursts = 2f;
-
-
-    [Header("Powered")]
-    [Tooltip("The number of powered shots in a burst.")]
-    public int poweredBulletsPerBurst = 1;
-
-    [Tooltip("The delay between powered bullets in a burst, in seconds.")]
-    public float poweredDelayBetweenBullets = 0.1f;
-
-    [Tooltip("The delay between powered bursts, in seconds.")]
-    public float poweredDelayBetweenBursts = 0.5f;
-
-    [Tooltip("Duration of the powered mode in seconds.")]
-    public float poweredModeDuration = 5f;
+    public AutomaticRifleDataS0 automaticRifleDataS0;
 
     private bool isShooting = false;
     private bool isPoweredMode = false; // Tracks whether powered mode is active
@@ -63,14 +42,14 @@ public class AutomaticRifle : Weapon
     {
         isShooting = true;
 
-        for (int i = 0; i < bulletsPerBurst; i++)
+        for (int i = 0; i < automaticRifleDataS0.bulletsPerBurst; i++)
         {
-            levelAudioPlayer.OnPlayAudioByName(shootingAudio);
+            levelAudioPlayer.OnPlayAudioByName(automaticRifleDataS0.shootingAudio);
             ShootBulletInFirePointDirection(bulletPrefab);
-            yield return new WaitForSeconds(delayBetweenBullets);
+            yield return new WaitForSeconds(automaticRifleDataS0.delayBetweenBullets);
         }
 
-        yield return new WaitForSeconds(delayBetweenBursts);
+        yield return new WaitForSeconds(automaticRifleDataS0.delayBetweenBursts);
         isShooting = false;
     }
 
@@ -81,14 +60,14 @@ public class AutomaticRifle : Weapon
     {
         isShooting = true;
 
-        for (int i = 0; i < poweredBulletsPerBurst; i++)
+        for (int i = 0; i < automaticRifleDataS0.poweredBulletsPerBurst; i++)
         {
-            levelAudioPlayer.OnPlayAudioByName(shootingHeavyAudio);
+            levelAudioPlayer.OnPlayAudioByName(automaticRifleDataS0.shootingHeavyAudio);
             ShootBulletInFirePointDirection(poweredBulletPrefab);
-            yield return new WaitForSeconds(poweredDelayBetweenBullets);
+            yield return new WaitForSeconds(automaticRifleDataS0.poweredDelayBetweenBullets);
         }
 
-        yield return new WaitForSeconds(poweredDelayBetweenBursts);
+        yield return new WaitForSeconds(automaticRifleDataS0.poweredDelayBetweenBursts);
         isShooting = false;
     }
 
@@ -131,7 +110,7 @@ public class AutomaticRifle : Weapon
         MyDebug.Log("Powered mode activated!");
         StartCoroutine(PoweredShootBurst());
         // Wait for the duration of the powered mode
-        yield return new WaitForSeconds(poweredModeDuration);
+        yield return new WaitForSeconds(automaticRifleDataS0.poweredModeDuration);
 
         isPoweredMode = false;
         MyDebug.Log("Powered mode ended!");

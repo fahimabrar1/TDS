@@ -236,7 +236,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20be8cd1ef39c6d45a45f0e01b094143, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 50
+  Health: 100
   healthBar: {fileID: 4727008546298369090}
   body: {fileID: 4213814994733672981}
   jumpPoint: {fileID: 4376197656413380994}

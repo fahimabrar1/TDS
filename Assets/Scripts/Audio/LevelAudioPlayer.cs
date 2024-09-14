@@ -3,9 +3,15 @@ using UnityEngine;
 
 public class LevelAudioPlayer : MonoBehaviour
 {
+    public static LevelAudioPlayer instance;
+
     public AudioManager audioManager;
 
     public List<AudioModel> AllAudios;
+
+
+
+
 
 
     /// <summary>
@@ -13,6 +19,14 @@ public class LevelAudioPlayer : MonoBehaviour
     /// </summary>
     void Awake()
     {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
         audioManager = FindAnyObjectByType<AudioManager>();
     }
 
@@ -36,8 +50,7 @@ public class LevelAudioPlayer : MonoBehaviour
     public void OnPlayAudioByName(string name)
     {
         MyDebug.Log($"On {name} audio played");
-        if (PlayerPrefs.GetInt(GameConstants.SoundOnName) == 0)
-            return;
+
         var foundModel = AllAudios.Find((model) => model.name.Equals(name));
         foundModel.Play();
     }
@@ -46,8 +59,7 @@ public class LevelAudioPlayer : MonoBehaviour
     public void OnStopAudioByName(string name)
     {
         MyDebug.Log("On Token Move audio played");
-        if (PlayerPrefs.GetInt(GameConstants.SoundOnName) == 0)
-            return;
+
         var foundModel = AllAudios.Find((model) => model.name.Equals(name));
         foundModel.Stop();
     }

@@ -16,12 +16,13 @@ public class GameManager : MonoBehaviour
     public EnergyGenerateData energyGenerateData;
     public FileProcessorr<EnergyGenerateData> energyGenerateDataProcessor;
 
-
+    public LevelMenuUI levelMenuUI;
 
 
     void Awake()
     {
 
+        levelMenuUI = FindAnyObjectByType<LevelMenuUI>();
         if (instance != null)
         {
             Destroy(gameObject);
@@ -50,6 +51,7 @@ public class GameManager : MonoBehaviour
     {
         await healthDataProcessor.OnLoadAsync(healthData);
         await energyGenerateDataProcessor.OnLoadAsync(energyGenerateData);
+        levelMenuUI.InitialzieUI();
     }
 
 

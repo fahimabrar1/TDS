@@ -51,8 +51,8 @@ public class PlayerController : MonoBehaviour, IPlayerDamagable
         {
             this.crateSpawner = crateSpawner;
         }
-
         mainCamera = Camera.main;
+
     }
 
     /// <summary>
@@ -126,8 +126,11 @@ public class PlayerController : MonoBehaviour, IPlayerDamagable
     /// </summary>
     private void HandleTouchInput()
     {
-        if (EventSystem.current.IsPointerOverGameObject())
+        if (EventSystem.current.IsPointerOverGameObject() || !LevelManager.instance.isGameStarted)
             return;
+
+
+
         Vector3 touchPosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
         touchPosition.z = 0; // Keep the z-position at 0 for 2D
 

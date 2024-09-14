@@ -30,6 +30,20 @@ public class AutomaticRifle : Weapon
     private bool isShooting = false;
     private bool isPoweredMode = false; // Tracks whether powered mode is active
 
+
+    private LevelAudioPlayer levelAudioPlayer;
+
+
+
+    /// <summary>
+    /// Awake is called when the script instance is being loaded.
+    /// </summary>
+    void Awake()
+    {
+        levelAudioPlayer = FindObjectOfType<LevelAudioPlayer>();
+    }
+
+
     /// <summary>
     /// Attacks a specific point with the automatic rifle.
     /// </summary>
@@ -51,6 +65,7 @@ public class AutomaticRifle : Weapon
 
         for (int i = 0; i < bulletsPerBurst; i++)
         {
+            levelAudioPlayer.OnPlayAudioByName(shootingAudio);
             ShootBulletInFirePointDirection(bulletPrefab);
             yield return new WaitForSeconds(delayBetweenBullets);
         }
@@ -68,6 +83,7 @@ public class AutomaticRifle : Weapon
 
         for (int i = 0; i < poweredBulletsPerBurst; i++)
         {
+            levelAudioPlayer.OnPlayAudioByName(shootingHeavyAudio);
             ShootBulletInFirePointDirection(poweredBulletPrefab);
             yield return new WaitForSeconds(poweredDelayBetweenBullets);
         }

@@ -14,8 +14,6 @@ public class Zombie : Enemy
     public float acceleration = 2f; // Acceleration rate
     public float raycastDistance = 1f; // How far to check for other enemies
 
-    [Header("Attack Data")]
-    public float attackDelay = 1f;
 
     [Header("Shake Effect on Attack")]
     public float shakeDuration = 0.2f;

@@ -24,6 +24,10 @@ public abstract class Enemy : MonoBehaviour, IEnemyDamagable, IAttackable
     [SerializeField]
     protected Transform target;
 
+    [Header("Attack Data")]
+    public float attackDelay = 1f;
+    public int attackDamage = 50;
+
 
     [Header("Custom Colliders")]
 
@@ -166,9 +170,8 @@ public abstract class Enemy : MonoBehaviour, IEnemyDamagable, IAttackable
 
     public virtual void OnAttack(IDamagable target)
     {
-        int attackDamage = 15;  // Example damage value
-        target.OnTakeDamage(attackDamage);
         MyDebug.Log("Zombie attacked!");
+        target.OnTakeDamage(attackDamage);
     }
 
     private void Die()

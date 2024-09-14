@@ -45,9 +45,9 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 1384878c9104a3446be067686b2aaf54, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.3
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -143,5 +143,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicSource: {fileID: 4982728515078269617}
   musicClip: {fileID: 8300000, guid: 1384878c9104a3446be067686b2aaf54, type: 3}
-  soundOn: 1
-  musicOn: 1

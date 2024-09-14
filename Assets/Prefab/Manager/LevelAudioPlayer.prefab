@@ -49,30 +49,36 @@ MonoBehaviour:
   - name: click
     clip: {fileID: 8300000, guid: 32c62ac0dd51a60419c83302f763bf5c, type: 3}
     audioSource: {fileID: 0}
+    PlayOnAwake: 0
     Volume: 1
     Pitch: 1
   - name: place
     clip: {fileID: 8300000, guid: a8e0e0fd10b298e4987041751918ea6b, type: 3}
     audioSource: {fileID: 0}
+    PlayOnAwake: 0
     Volume: 1
     Pitch: 1
   - name: fire
     clip: {fileID: 8300000, guid: 59c1375905c80764f96a15713ae0b162, type: 3}
     audioSource: {fileID: 0}
-    Volume: 1
-    Pitch: 1
+    PlayOnAwake: 0
+    Volume: 0.05
+    Pitch: 0.9
   - name: fire-heavy
     clip: {fileID: 8300000, guid: 920b64ee1d3d45242b4172a9d15200d2, type: 3}
     audioSource: {fileID: 0}
+    PlayOnAwake: 0
     Volume: 1
     Pitch: 1
   - name: grenade
     clip: {fileID: 8300000, guid: d651856d7ed894c42ac40f4039167822, type: 3}
     audioSource: {fileID: 0}
+    PlayOnAwake: 0
     Volume: 1
     Pitch: 1
   - name: box-crash
     clip: {fileID: 8300000, guid: 102160965ac6da74d8a033839ae38da5, type: 3}
     audioSource: {fileID: 0}
+    PlayOnAwake: 0
     Volume: 1
     Pitch: 1

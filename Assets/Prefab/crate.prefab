@@ -173,6 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 2760052258322244609}
+  levelAudioPlayer: {fileID: 9079183510299553091, guid: bcc8857df5570fd48a65f074fe8f2e7b, type: 3}
 --- !u!1001 &4151814356430711529
 PrefabInstance:
   m_ObjectHideFlags: 0

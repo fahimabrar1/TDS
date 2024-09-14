@@ -11,6 +11,7 @@ public class UnityColliderCollision2DEvent : UnityEvent<Collision2D> { }
 
 public class MyCollider2D : MonoBehaviour
 {
+    public Collider2D collider2D;
     public UnityColliderTrigger2DEvent OnTriggerEnter2DEvent;
     public UnityColliderTrigger2DEvent OnTriggerStay2DEvent;
     public UnityColliderTrigger2DEvent OnTriggerExit2DEvent;
@@ -19,6 +20,18 @@ public class MyCollider2D : MonoBehaviour
     public UnityColliderCollision2DEvent OnCollisionExit2DEvent;
 
 
+
+
+    /// <summary>
+    /// Awake is called when the script instance is being loaded.
+    /// </summary>
+    void Awake()
+    {
+        if (TryGetComponent(out Collider2D component))
+        {
+            collider2D = component;
+        }
+    }
     /// <summary>
     /// Sent when another object enters a trigger collider attached to this
     /// object (2D physics only).
@@ -26,7 +39,6 @@ public class MyCollider2D : MonoBehaviour
     /// <param name="other">The other Collider2D involved in this collision.</param>
     void OnTriggerEnter2D(Collider2D other)
     {
-        MyDebug.Log("Trigger Enter");
         OnTriggerEnter2DEvent?.Invoke(other);
     }
 

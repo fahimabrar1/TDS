@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4b196384f6b210942a973bb617cfa2cf, type: 3}
-  m_Name: AbilityButtonHolderrSO
-  m_EditorClassIdentifier: 
+  m_Name: AbilityButtonHolderrSO 1
+  m_EditorClassIdentifier: Assembly-CSharp::AbilityButtonHolderSO
   abilityList:
-  - {fileID: 11400000, guid: 2b446b413610d1640a2189f51004f80c, type: 2}
-  - {fileID: 11400000, guid: ad6d61ac33cb6e74e9131f945f003599, type: 2}
+  - {fileID: 11400000, guid: 415692b3f64abc44aa8af1b7ce4ea677, type: 2}
+  - {fileID: 11400000, guid: 2e8c9acce3951c348bcc796be50b9830, type: 2}
+  - {fileID: 11400000, guid: bce736ab711c6ec4f886995214870bed, type: 2}

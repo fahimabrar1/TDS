@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a8d3fed41841b9246b480960f10be48c, type: 3}
-  m_Name: AbilityButtonSO_L1_1
-  m_EditorClassIdentifier: 
-  cost: 3
-  sprite: {fileID: 21300000, guid: 58d72f2e44f933646910b9071e17590f, type: 3}
-  abilityButtonType: 0
+  m_Name: Granade Ability
+  m_EditorClassIdentifier: Assembly-CSharp::AbilityButtonSO
+  cost: 2
+  sprite: {fileID: 21300000, guid: ccab0c16d7b3b5b4486332d24dd8bd57, type: 3}
+  abilityButtonType: 2

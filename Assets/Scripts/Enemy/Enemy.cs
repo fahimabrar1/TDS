@@ -1,12 +1,19 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 public abstract class Enemy : MonoBehaviour, IEnemyDamagable, IAttackable
 {
+
+    [Header("Health Data")]
     [Tooltip("The initial health of the enemy.")]
-    public int Health { get; set; } = 50;  // Initial zombie health
+    public int Health = 50;  // Initial zombie health
+
+
     public HealthBar healthBar;
+
+    [Header("Assign Data")]
 
     [SerializeField]
     protected Transform body;
@@ -17,24 +24,100 @@ public abstract class Enemy : MonoBehaviour, IEnemyDamagable, IAttackable
     // [SerializeField]
     // protected Transform target;
 
-    [SerializeField]
-    protected Rigidbody2D rb;
 
-    [SerializeField]
-    protected bool isGrounded = false;
+    [Header("Custom Colliders")]
 
-    [SerializeField]
-    protected bool isAttacking = false;
+    public BoxCollider2D boxCollider2D;
+    public CapsuleCollider2D capsuleCollider2D;
+    public MyCollider2D frontCollider;
+    public MyCollider2D backCollfier;
+    public MyCollider2D bottomCollider;
 
-    protected CircleCollider2D detectionCollider;  // Collider for detection
+
 
     // A list to track all targets in range
     protected List<IPlayerDamagable> targetsInRange = new();
     protected Coroutine attackEnumurator;
+    protected CircleCollider2D detectionCollider;  // Collider for detection
+    [Header("Debug Values")]
 
-    public MyCollider2D frontCollier;
-    public MyCollider2D backCollier;
-    public MyCollider2D bottomCollider;
+    [SerializeField]
+    protected Rigidbody2D rb;
+    public int moveDirection = 1;
+    [SerializeField]
+    protected bool isGrounded = false;
+    public bool canMove = true;
+    public bool isInAir = false;
+
+
+    [SerializeField]
+    protected bool isAttacking = false;
+
+    [SerializeField]
+    private Enemy enemyInFront;  // Enemy directly in front
+
+    // Property to safely manipulate coins
+    public Enemy EnemyInFront
+    {
+        get => enemyInFront;
+        protected set
+        {
+            enemyInFront = value;
+            // OnSetInFrontEnemyEvent?.Invoke();
+        }
+    }
+
+    [SerializeField]
+    private Enemy enemyBehind;   // Enemy directly behind
+
+    // Property to safely manipulate coins
+    public Enemy EnemyBehind
+    {
+        get => enemyBehind;
+        protected set
+        {
+            enemyBehind = value;
+            // OnSetInBehindEnemyEvent?.Invoke();
+        }
+    }
+
+    [SerializeField]
+    private Enemy enemyOnTop;    // Enemy stacked on top
+
+    // Property to safely manipulate coins
+    public Enemy EnemyOnTop
+    {
+        get => enemyOnTop;
+        set
+        {
+            enemyOnTop = value;
+            // OnSetInTopEnemyEvent?.Invoke();
+        }
+    }
+
+
+    [SerializeField]
+    private Enemy enemyOnBottom;    // Enemy stacked on bottom
+
+    // Property to safely manipulate coins
+    public Enemy EnemyOnBottom
+    {
+        get => enemyOnBottom;
+        protected set
+        {
+            enemyOnBottom = value;
+            // OnSetInBottomEnemyEvent?.Invoke();
+        }
+    }
+
+
+    public Action OnMoveForwarwEvent;
+    public Action OnSetInTopEnemyEvent;
+    public Action OnMoveBackwardEvent;
+
+
+
+
 
     public EnemyWaveGenerator enemyWaveGenerator;
 
@@ -230,13 +313,11 @@ public abstract class Enemy : MonoBehaviour, IEnemyDamagable, IAttackable
         // Add valid player targets to the list
         if (other.TryGetComponent(out IPlayerDamagable playerTarget))
         {
+            canMove = true;
             targetsInRange.Add(playerTarget);
             CheckAndAttackClosestTarget();
         }
-        else if (other.gameObject.CompareTag("Enemy"))
-        {
-            OnDetectEnemyInFront(other.gameObject);
-        }
+
     }
 
     /// <summary>
@@ -265,10 +346,27 @@ public abstract class Enemy : MonoBehaviour, IEnemyDamagable, IAttackable
 
     }
 
-
-    public void SetWaveGenerator(EnemyWaveGenerator enemyWaveGenerator)
+    public virtual void MoveBackward()
     {
-        this.enemyWaveGenerator = enemyWaveGenerator;
+        if (EnemyBehind != null)
+            EnemyBehind.OnMoveBackwardEvent?.Invoke();
+        canMove = true;
+        moveDirection = -1;
+        isAttacking = false;
+    }
+
+    public virtual void MoveForwad()
+    {
+        if (enemyBehind == null)
+        {
+            moveDirection = 1;
+            canMove = true;
+        }
+    }
+
+    public virtual void SetEnemyOnTop(Enemy mate)
+    {
+        EnemyOnTop = mate;
     }
 
     #endregion

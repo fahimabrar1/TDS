@@ -24,9 +24,16 @@ public class AudioModel
     }
     internal void Play()
     {
-        if (audioSource.isPlaying)
-            audioSource.Stop();
-        audioSource.PlayOneShot(clip);
+        try
+        {
+            if (audioSource.isPlaying)
+                audioSource.Stop();
+            audioSource.PlayOneShot(clip);
+        }
+        catch (System.Exception)
+        {
+            Debug.Log("Unable to play due to missing audio source?");
+        }
     }
 
     internal void Stop()

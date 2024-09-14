@@ -21,8 +21,8 @@ public abstract class Enemy : MonoBehaviour, IEnemyDamagable, IAttackable
     [SerializeField]
     public Transform jumpPoint;
 
-    // [SerializeField]
-    // protected Transform target;
+    [SerializeField]
+    protected Transform target;
 
 
     [Header("Custom Colliders")]
@@ -116,15 +116,7 @@ public abstract class Enemy : MonoBehaviour, IEnemyDamagable, IAttackable
     public Action OnMoveBackwardEvent;
 
 
-
-
-
-    public EnemyWaveGenerator enemyWaveGenerator;
-
-
-
-
-    public float movementDirection = -1;
+    private EnemyWaveGenerator enemyWaveGenerator;
 
 
     /// <summary>
@@ -181,11 +173,12 @@ public abstract class Enemy : MonoBehaviour, IEnemyDamagable, IAttackable
 
     private void Die()
     {
-        enemyWaveGenerator.EnemyDeathNotify(this);
         MyDebug.Log("Zombie has died!");
-        CurrencyManager.Instance.AddCoins(5);
+
         // Handle zombie death (e.g., despawn, play death animation)
         healthBar.KillHealthTween();
+
+        Destroy(gameObject);  // Destroy the zombie when dead
     }
 
 
@@ -230,20 +223,13 @@ public abstract class Enemy : MonoBehaviour, IEnemyDamagable, IAttackable
         IPlayerDamagable closestTarget = null;
         float closestDistance = Mathf.Infinity;
 
-        for (int i = targetsInRange.Count - 1; i >= 0; i--)
+        foreach (var target in targetsInRange)
         {
-            var target = targetsInRange[i];
-
-            try
+            if (target == null)
             {
-                var t = target.GetTransform();
-            }
-            catch (System.Exception)
-            {
-                targetsInRange.RemoveAt(i); // Safely remove invalid targets
+                targetsInRange.Remove(target);
                 continue;
             }
-
             float distance = Vector2.Distance(transform.position, target.GetTransform().position);
 
             if (distance < closestDistance)
@@ -260,28 +246,10 @@ public abstract class Enemy : MonoBehaviour, IEnemyDamagable, IAttackable
 
 
 
-
     public Transform GetTransform()
     {
         return transform;
     }
-
-    /// <summary>
-    /// Set the enemy directly in front of this one.
-    /// </summary>
-    public void SetEnemyInFront(Enemy enemy)
-    {
-        enemyInFront = enemy;
-    }
-
-    /// <summary>
-    /// Set the enemy directly behind this one.
-    /// </summary>
-    public void SetEnemyBehind(Enemy enemy)
-    {
-        enemyBehind = enemy;
-    }
-
 
 
     #region Colliders
@@ -328,11 +296,6 @@ public abstract class Enemy : MonoBehaviour, IEnemyDamagable, IAttackable
 
     }
 
-
-
-    /// <summary>
-    /// Move this zombie backwards.
-    /// </summary>
     public virtual void MoveBackward()
     {
         if (EnemyBehind != null)
@@ -344,20 +307,21 @@ public abstract class Enemy : MonoBehaviour, IEnemyDamagable, IAttackable
 
     public virtual void MoveForwad()
     {
-        if (EnemyBehind == null)
+        if (enemyBehind == null)
         {
             moveDirection = 1;
             canMove = true;
         }
     }
 
-
-    /// <summary>
-    /// Set the enemy stacked on top of this one.
-    /// </summary>
     public virtual void SetEnemyOnTop(Enemy mate)
     {
         EnemyOnTop = mate;
+    }
+
+    public void SetWaveGenerator(EnemyWaveGenerator enemyWaveGenerator)
+    {
+        this.enemyWaveGenerator = enemyWaveGenerator;
     }
 
     #endregion

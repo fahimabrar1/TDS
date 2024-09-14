@@ -13680,6 +13680,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3c30cd468445204492073e61b2d5e18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healthData:
+    defaultValue: 500
+    valueIncrementBy: 100
+    defaultCost: 150
+    costIncrementBy: 50
+    level: 1
+  energyGenerateData:
+    defaultValue: 0.2
+    valueIncrementBy: 0.02
+    defaultCost: 50
+    costIncrementBy: 50
+    level: 1
+  levelMenuUI: {fileID: 0}
 --- !u!1 &1557247280
 GameObject:
   m_ObjectHideFlags: 0
@@ -15496,15 +15509,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 276129212213280501, guid: 52bb083d5da6cd74f9c837ebc1ccbab3, type: 3}
-  initialWaveDelay: 4
-  waveAcceleration: 0.1
-  minimumWaveDelay: 1
-  wavesBeforeBreak: 5
-  breakDuration: 6
-  initialEnemiesPerWave: 1
+  spawnPoints: []
+  waveDelay: 4
   wavePosition: {fileID: 595318939}
-  minSpawnDelay: 0.1
-  maxSpawnDelay: 1
 --- !u!4 &1724841976
 Transform:
   m_ObjectHideFlags: 0
@@ -16919,8 +16926,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 069cc82543569fb4da9285138139ae76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  plaeyrObj: {fileID: 0}
+  enemyWaveGenerator: {fileID: 0}
+  levelMenuUI: {fileID: 0}
+  playerSpawnPoint: {fileID: 0}
   playerTransform: {fileID: 0}
   crates: []
+  playerController: {fileID: 0}
 --- !u!4 &1994821391
 Transform:
   m_ObjectHideFlags: 0

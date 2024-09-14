@@ -34,11 +34,7 @@ public class EnemyWaveGenerator : MonoBehaviour
             Enemy enemy = enemyObj.GetComponent<Enemy>();
             enemy.SetWaveGenerator(this);
 
-            if (currentEnemy != null)
-            {
-                currentEnemy.SetEnemyBehind(enemy);
-                enemy.SetEnemyInFront(currentEnemy);
-            }
+
             currentEnemy = enemy;
 
             // Add to the queue
@@ -48,8 +44,6 @@ public class EnemyWaveGenerator : MonoBehaviour
             if (enemyList.Count > 1)
             {
                 Enemy enemyInFront = enemyList[enemyList.Count - 2];
-
-                enemy.SetEnemyInFront(enemyInFront);
             }
         }
     }

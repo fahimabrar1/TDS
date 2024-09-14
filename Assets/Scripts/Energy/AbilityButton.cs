@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Threading.Tasks;
 
 public class AbilityButton : MonoBehaviour
 {
@@ -12,6 +13,9 @@ public class AbilityButton : MonoBehaviour
         fire,
         granade
     }
+
+    public EnergyGenerator energyGenerator;
+
 
     [Tooltip("The button component.")]
     public Button button;
@@ -32,17 +36,15 @@ public class AbilityButton : MonoBehaviour
     [Tooltip("The cost of the ability.")]
     public int cost;
 
+    [Tooltip("The cost of the ability.")]
+    public float ActivationDuration = 0f;
+
+    public bool canUseAbility;
+    public int coolDown;
+
 
     /// <summary>
-    /// This function is called when the object becomes enabled and active.
-    /// </summary>
-    public void SetOnUpdateButtonsAction()
-    {
-        EnergyManager.instance.OnUpdateButtonsAction += OnUpdateButtons;
-    }
-
-    /// <summary>
-    /// This function is called when the behaviour becomes disabled or inactive.
+    /// This function is called wh en the behaviour becomes disabled or inactive.
     /// </summary>
     void OnDisable()
     {
@@ -55,6 +57,7 @@ public class AbilityButton : MonoBehaviour
     /// </summary>
     void Start()
     {
+        canUseAbility = true;
         interactable = false;
         costText.text = cost.ToString();
     }
@@ -64,20 +67,33 @@ public class AbilityButton : MonoBehaviour
     /// </summary>
     public void OnClickButton()
     {
-        EnergyManager.instance.OnClickEnergyButton(cost);
+        canUseAbility = false;
+        EnergyManager.instance.OnClickEnergyButton(cost, abilityButtonType);
+
         // GameManager.instance.battleManager.playerbase.SpawnSoldier();
+    }
+
+
+    public async void OnUpdateAbilityButotn()
+    {
+        await Task.Delay(coolDown * 1000);
+        canUseAbility = true;
+        OnUpdateButtons(energyGenerator.totalEnergyCount);
     }
 
     /// <summary>
     /// Initializes the ability button with the given ability button scriptable object.
     /// </summary>
     /// <param name="abilityButtonSO">The ability button scriptable object.</param>
-    internal void Initialize(AbilityButtonSO abilityButtonSO)
+    internal void Initialize(AbilityButtonSO abilityButtonSO, EnergyGenerator energyGenerator)
     {
+        this.energyGenerator = energyGenerator;
         cost = abilityButtonSO.cost;
         abilityButtonType = abilityButtonSO.abilityButtonType;
         contentIcon.sprite = abilityButtonSO.sprite;
+        coolDown = abilityButtonSO.coolDown;
     }
+
 
     /// <summary>
     /// Updates the button.
@@ -104,6 +120,7 @@ public class AbilityButton : MonoBehaviour
     /// <param name="energyValue">The current energy count.</param>
     private void OnUpdateButtons(int energyValue)
     {
-        button.interactable = energyValue >= cost;
+        button.interactable = energyValue >= cost && canUseAbility;
     }
+
 }

@@ -88,7 +88,7 @@ public abstract class Enemy : MonoBehaviour, IEnemyDamagable, IAttackable
     public Enemy EnemyOnTop
     {
         get => enemyOnTop;
-        protected set
+        set
         {
             enemyOnTop = value;
             // OnSetInTopEnemyEvent?.Invoke();

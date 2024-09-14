@@ -260,8 +260,9 @@ MonoBehaviour:
   backwardSpeed: 0.2
   stopDistance: 0.18
   brakingFactor: 0.5
-  stopThreshold: 0.1
+  stopThreshold: 0.2
   acceleration: 2
+  raycastDistance: 0.4
   attackDelay: 1
   shakeDuration: 0.2
   shakeStrength: {x: 0.3, y: 0.3, z: 0}

@@ -2,12 +2,9 @@ using UnityEngine;
 using System.Collections;
 using DG.Tweening;
 using System.Collections.Generic;
-using UnityEditor.ShaderGraph.Drawing.Inspector.PropertyDrawers;
-using System;
 
 public class Zombie : Enemy
 {
-
     [Header("Move Data")]
     public float forwardSpeed = 2f; // Initial movement speed
     public float backwardSpeed = .2f; // Initial movement speed
@@ -15,56 +12,32 @@ public class Zombie : Enemy
     public float brakingFactor = 0.5f; // Speed reduction factor when braking
     public float stopThreshold = 0.1f; // Minimum speed threshold for stopping
     public float acceleration = 2f; // Acceleration rate
-
+    public float raycastDistance = 1f; // How far to check for other enemies
 
     [Header("Attack Data")]
-    [Tooltip("Time delay between each attack in seconds.")]
     public float attackDelay = 1f;
 
     [Header("Shake Effect on Attack")]
-    [Tooltip("The duration of the shake effect when the zombie attacks.")]
     public float shakeDuration = 0.2f;
-
-    [Tooltip("The strength of the shake in each axis.")]
     public Vector3 shakeStrength = new Vector3(0.3f, 0.3f, 0);
-
-    [Tooltip("The number of shakes during the attack effect.")]
     public int shakeVibrato = 10;
-
-    [Tooltip("The randomness factor for the shake.")]
     public float shakeRandomness = 90f;
 
-
-
-
-
     [Header("Debug Values")]
-    // [SerializeField]
-    // private List<Collider2D> ignoreColliders = new();
     [SerializeField]
     private float currentForwardSpeed;
 
-
-    /// <summary>
-    /// This function is called when the object becomes enabled and active.
-    /// </summary>
-    public void OnEnable()
+    private void OnEnable()
     {
         OnSetInTopEnemyEvent += MoveBackward;
         OnMoveBackwardEvent += MoveBackward;
         OnMoveForwarwEvent += MoveForwad;
     }
 
-
-
-    /// <summary>
-    /// This function is called when the behaviour becomes disabled or inactive.
-    /// </summary>
-    public void OnDisable()
+    private void OnDisable()
     {
         OnSetInTopEnemyEvent -= MoveBackward;
     }
-
 
     void Awake()
     {
@@ -74,116 +47,154 @@ public class Zombie : Enemy
     public override void Start()
     {
         base.Start();
-        frontCollider.OnTriggerEnter2DEvent.AddListener((col) => OnTriggerEnter2DFront(col));
-        frontCollider.OnTriggerExit2DEvent.AddListener((col) => OnTriggerExit2DFront(col));
-        backCollfier.OnTriggerEnter2DEvent.AddListener((col) => OnTriggerEnter2DBack(col));
-        backCollfier.OnTriggerExit2DEvent.AddListener((col) => OnTriggerExit2DBack(col));
-        bottomCollider.OnTriggerEnter2DEvent.AddListener((col) => OnTriggerEnter2DBottom(col));
-        bottomCollider.OnTriggerExit2DEvent.AddListener((col) => OnTriggerExit2DBottom(col));
-
         currentForwardSpeed = forwardSpeed; // Set current speed to the initial move speed
     }
-
 
     void FixedUpdate()
     {
         if (canMove)
         {
-            if (EnemyInFront != null && !EnemyInFront.isInAir)
+            RaycastForEnemies();
+
+            // Gradually increase speed to the target moveSpeed only when there is no enemy in front
+            if (EnemyInFront == null || Vector2.Distance(transform.position, EnemyInFront.transform.position) > stopDistance)
             {
-                float distanceToEnemy = Vector2.Distance(transform.position, EnemyInFront.transform.position);
-
-                MyDebug.Log("Detected Enemy: " + EnemyInFront.name + " at distance: " + distanceToEnemy);
-
-                // If the enemy is within stop distance, stop movement
-                if ((distanceToEnemy - stopDistance) < 0.1f)
+                if (currentForwardSpeed < forwardSpeed)
                 {
-                    currentForwardSpeed = 0f; // Stop completely
-                    canMove = false; // Disable movement
-                    // ignoreColliders.Add(EnemyInFront.boxCollider2D); // Ignore this collider from now on
-
-
-                    // Call Climb function if needed
-                    if (EnemyInFront.EnemyOnTop == null && EnemyOnTop == null)
+                    currentForwardSpeed += acceleration * Time.fixedDeltaTime;
+                    if (currentForwardSpeed > forwardSpeed)
                     {
-                        EnemyOnBottom = EnemyInFront;
-                        MyDebug.Log($"Nulling {EnemyInFront.name} by {gameObject.name}");
-                        EnemyInFront = null;
-                        EnemyOnBottom.SetEnemyOnTop(this);
-
-                        Climb(new Vector3(EnemyOnBottom.transform.position.x, EnemyOnBottom.transform.position.y + (Mathf.Abs(capsuleCollider2D.offset.y) + capsuleCollider2D.size.y / 4) / 2, EnemyOnBottom.transform.position.z));
+                        currentForwardSpeed = forwardSpeed;
                     }
-                    else
-                    {
-                        canMove = false;
-                    }
-                }  // else
-                   // {
-                   //     // If the enemy is within detectDistance but further than stopDistance, start braking
-                   //     float brakeFactor = Mathf.Clamp01((distanceToEnemy - stopDistance) / stopDistance);
-                   //     currentSpeed = moveSpeed * brakeFactor; // Slow down based on proximity
-                   // }
-            }
-            // Gradually increase speed to the target moveSpeed
-            if (currentForwardSpeed < forwardSpeed)
-            {
-                currentForwardSpeed += acceleration * Time.fixedDeltaTime;
-                if (currentForwardSpeed > forwardSpeed)
-                {
-                    currentForwardSpeed = forwardSpeed;
                 }
             }
 
-            // Move the zombie to the left
+            // Move the zombie
             MoveToDirection();
         }
     }
 
-
-    public void Climb(Vector3 targetPosition)
+    /// <summary>
+    /// Performs raycasts to detect enemies in front, behind, and below using RaycastAll.
+    /// </summary>
+    private void RaycastForEnemies()
     {
-        isInAir = true;
-        // Create a path with a curve
-        Vector3[] path = {
-            transform.position,
-            new((transform.position.x + targetPosition.x) / 2, transform.position.y + 0.15f, transform.position.z),
-            targetPosition
-        };
+        // Raycast in front
+        RaycastHit2D[] hitsFront = Physics2D.RaycastAll(transform.position, Vector2.left, raycastDistance, LayerMask.GetMask("Enemy"));
+        Debug.DrawRay(transform.position, Vector3.left * raycastDistance, Color.white);
 
-        // Disable physics during the animation to avoid conflicts
-        rb.isKinematic = true;
-        rb.velocity = Vector2.zero; // Stop any velocity during the animation
+        // Filter out self and find the closest enemy in front
+        foreach (RaycastHit2D hit in hitsFront)
+        {
 
-        // Use DOTween to animate the path
-        transform.DOPath(path, 1, PathType.CatmullRom)
-            .SetEase(Ease.InOutQuad)
-            .OnComplete(() =>
+            if (hit.collider.TryGetComponent(out Enemy mate))
+            {
+                if (mate != this)
+                {
+                    MyDebug.Log("Detected Enemy in Front: " + mate.name);
+                    HandleFrontEnemy(mate);
+                }
+            }
+        }
+
+        // Raycast behind
+        RaycastHit2D[] hitsBack = Physics2D.RaycastAll(transform.position, Vector2.right, raycastDistance, LayerMask.GetMask("Enemy"));
+        Debug.DrawRay(transform.position, Vector3.right * raycastDistance, Color.white);
+
+        foreach (RaycastHit2D hit in hitsBack)
+        {
+
+            if (hit.collider.TryGetComponent(out Enemy mateBehind))
+            {
+                if (mateBehind != this)
+                {
+                    MyDebug.Log("Detected Enemy Behind: " + mateBehind.name);
+                    HandleBackEnemy(mateBehind);
+                }
+            }
+        }
+
+        // Raycast below
+        RaycastHit2D[] hitsBottom = Physics2D.RaycastAll(transform.position, Vector2.down, raycastDistance, LayerMask.GetMask("Ground", "Enemy"));
+        Debug.DrawRay(transform.position, Vector3.down * raycastDistance, Color.white);
+
+        bool foundGround = false;
+        foreach (RaycastHit2D hit in hitsBottom)
+        {
+            if (hit.collider.CompareTag("Ground"))
             {
                 isInAir = false;
-                // After completing the path, reset the position
-                transform.position = targetPosition;
-                // Re-enable physics and start accelerating
-                rb.isKinematic = false;
-                rb.velocity = Vector2.zero; // Reset velocity to avoid sudden jumps
+                foundGround = true;
+                MyDebug.Log("Zombie is on the ground");
+            }
+            else if (hit.collider.CompareTag("Enemy") && hit.collider.TryGetComponent(out Enemy mateBelow))
+            {
+                if (mateBelow != this)
+                {
+                    MyDebug.Log("Detected Enemy Below: " + mateBelow.name);
+                    HandleBottomEnemy(mateBelow);
+                }
+            }
+        }
 
-                // Set canMove to true to allow movement after the climb
-                canMove = true;
-                EnemyOnBottom.OnMoveBackwardEvent.Invoke();
-            });
+        if (!foundGround)
+        {
+            isInAir = true;
+        }
     }
 
+
+    private void HandleFrontEnemy(Enemy mate)
+    {
+        EnemyInFront = mate;
+        float distanceToEnemy = Vector2.Distance(transform.position, EnemyInFront.transform.position);
+        MyDebug.Log($"Distance between {transform.name}, {EnemyInFront.transform.name} :{distanceToEnemy}");
+        // If the enemy is within the range of 0.4f and 0.2f, start slowing down
+
+        // Stop the enemy when within stopDistance (0.2f)
+        if (distanceToEnemy - stopDistance < .05f)
+        {
+            currentForwardSpeed = 0f;
+            canMove = false;
+
+            // If no one is on top, perform climb
+            if (EnemyInFront.EnemyOnTop == null && EnemyOnTop == null)
+            {
+                EnemyOnBottom = EnemyInFront;
+                EnemyInFront = null;
+                EnemyOnBottom.EnemyOnTop = this;
+                Climb(new Vector3(EnemyOnBottom.transform.position.x, EnemyOnBottom.transform.position.y +
+                    (Mathf.Abs(capsuleCollider2D.offset.y) + capsuleCollider2D.size.y / 4) / 2, EnemyOnBottom.transform.position.z));
+            }
+        }
+        else if (distanceToEnemy <= raycastDistance && distanceToEnemy >= stopDistance)
+        {
+            // Linearly reduce speed based on the distance (slows down as it gets closer)
+            float t = (distanceToEnemy - stopDistance) / (raycastDistance - stopDistance); // Normalizes between 0.4f and 0.2f
+            currentForwardSpeed = Mathf.Lerp(0f, forwardSpeed, t);
+        }
+    }
+
+
+
+    private void HandleBackEnemy(Enemy mate)
+    {
+        if (EnemyOnBottom == mate) return;
+        EnemyBehind = mate;
+        if (EnemyBehind.EnemyOnTop == this)
+            EnemyBehind.EnemyOnTop.SetEnemyOnTop(null);
+    }
+
+    private void HandleBottomEnemy(Enemy mate)
+    {
+        EnemyOnBottom = mate;
+    }
 
     private void MoveToDirection()
     {
-        float newSpeed = 0;
-        if (moveDirection == -1)
-            newSpeed = backwardSpeed * moveDirection;
-        else
-            newSpeed = currentForwardSpeed * moveDirection;
-        // Apply the calculated speed to move the enemy left
+        float newSpeed = moveDirection == -1 ? backwardSpeed * moveDirection : currentForwardSpeed * moveDirection;
         rb.velocity = newSpeed * Vector2.left;
     }
-
 
     public override IEnumerator AttackRoutine(IDamagable damagableTarget)
     {
@@ -192,150 +203,52 @@ public class Zombie : Enemy
         {
             if (damagableTarget != null)
             {
-                // Attack and bounce when in range
                 OnAttack(damagableTarget);
                 ShakeOnAttack();
             }
-            // Wait for the attack delay before attacking again
             yield return new WaitForSeconds(attackDelay);
         }
         isAttacking = false;
     }
 
-    /// <summary>
-    /// Creates a shake effect using DOTween when the zombie attacks.
-    /// </summary>
     private void ShakeOnAttack()
     {
-        body.DOShakeScale(shakeDuration, shakeStrength, shakeVibrato, shakeRandomness)
-                .SetEase(Ease.OutQuad);
+        body.DOShakeScale(shakeDuration, shakeStrength, shakeVibrato, shakeRandomness).SetEase(Ease.OutQuad);
     }
 
-    #region Collierrs
-    private void OnTriggerEnter2DFront(Collider2D col)
+    public void Climb(Vector3 targetPosition)
     {
-        // Detect when another enemy enters the front collider
-        // if (col.CompareTag("Enemy") && !ignoreColliders.Contains(col))
-        if (col.CompareTag("Enemy"))
-        {
-            if (col.gameObject.TryGetComponent(out Enemy mate) && col.gameObject.layer != LayerMask.NameToLayer("IgnorableEnemyCollider"))
-            {
-                MyDebug.Log($"On Ad Front Enemt for {gameObject.name} by {mate.gameObject.name}");
-                EnemyInFront = mate;
-                if (EnemyBehind != null)
-                    EnemyBehind.OnMoveForwarwEvent?.Invoke();
-            }
-        }
-        else
-        {
-            base.OnTriggerEnterFront2D(col);
-        }
+        isInAir = true;
+        Vector3[] path = {
+            transform.position,
+            new((transform.position.x + targetPosition.x) / 2, transform.position.y + 0.15f, transform.position.z),
+            targetPosition
+        };
 
-    }
-    private void OnTriggerExit2DFront(Collider2D col)
-    {
-        if (col.CompareTag("Enemy"))
-        {
-            if (col.gameObject.TryGetComponent(out Enemy mate) && col.gameObject.layer != LayerMask.NameToLayer("IgnorableEnemyCollider"))
-            {
-                MyDebug.Log($"On Remove Front Enemt for {gameObject.name} by {mate.gameObject.name}");
-                if (mate == EnemyInFront)
-                {
-                    OnMoveForwarwEvent?.Invoke();
-                }
-            }
-        }
-    }
+        rb.isKinematic = true;
+        rb.velocity = Vector2.zero;
 
-
-
-
-
-    private void OnTriggerEnter2DBack(Collider2D col)
-    {
-        // Detect when another enemy enters the front collider
-        // if (col.CompareTag("Enemy") && !ignoreColliders.Contains(col))
-        if (col.CompareTag("Enemy"))
-        {
-            if (col.gameObject.TryGetComponent(out Enemy mate))
-            {
-
-                MyDebug.Log($"{gameObject.name} EnemyOnBottom == mate: {EnemyBehind == mate}, (EnemyOnBottom == null && moveDirection == -1): {(EnemyBehind == null && moveDirection == -1)}");
-                if (EnemyBehind == mate || (EnemyBehind == null && moveDirection == 1))
-                {
-                    MyDebug.Log($"On Ad Requesting to move back");
-                    mate.OnMoveBackwardEvent?.Invoke();
-                }
-                MyDebug.Log($"On Ad Back Enemt for {gameObject.name} by {mate.gameObject.name} ");
-
-                EnemyBehind = mate;
-                if (EnemyBehind.EnemyOnTop == this)
-                    EnemyBehind.EnemyOnTop.SetEnemyOnTop(null);
-
-
-
-            }
-        }
-    }
-
-    private void OnTriggerExit2DBack(Collider2D col)
-    {
-        if (col.CompareTag("Enemy"))
-        {
-            if (col.gameObject.TryGetComponent(out Enemy mate))
-            {
-                if (EnemyBehind == mate)
-                    EnemyBehind = null;
-            }
-        }
-    }
-
-
-
-
-
-    private void OnTriggerExit2DBottom(Collider2D col)
-    {
-        if (col.CompareTag("Ground"))
+        transform.DOPath(path, 1, PathType.CatmullRom).SetEase(Ease.InOutQuad).OnComplete(() =>
         {
             isInAir = false;
-            // EnemyOnBottom = null;
-        }
-        else if (col.CompareTag("Enemy"))
-
-        {
-            if (col.gameObject.TryGetComponent(out Enemy mate))
-            {
-                if (mate == EnemyOnBottom)
-                {
-                    isInAir = true;
-                    EnemyOnBottom = null;
-                }
-            }
-        }
-
+            rb.isKinematic = false;
+            rb.velocity = Vector2.zero;
+            canMove = true;
+            EnemyOnBottom.OnMoveBackwardEvent?.Invoke();
+        });
     }
 
-    private void OnTriggerEnter2DBottom(Collider2D col)
+
+    /// <summary>
+    /// Sent when another object enters a trigger collider attached to this
+    /// object (2D physics only).
+    /// </summary>
+    /// <param name="other">The other Collider2D involved in this collision.</param>
+    void OnTriggerEnter2D(Collider2D other)
     {
-        if (col.CompareTag("Ground"))
+        if (other.gameObject.CompareTag("Enemy"))
         {
-            // isInAir = true;
-        }
-        else if (col.CompareTag("Enemy"))
-
-        {
-            if (col.gameObject.TryGetComponent(out Enemy mate))
-            {
-                if (mate == EnemyOnBottom)
-                {
-                    isInAir = false;
-                    EnemyOnBottom = mate;
-                }
-            }
+            MyDebug.Log("Triggerted Enter");
         }
     }
-
-
-    #endregion
 }

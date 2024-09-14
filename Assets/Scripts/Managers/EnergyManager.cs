@@ -56,20 +56,41 @@ public class EnergyManager : MonoBehaviour
             var ButtonObj = Instantiate(AbilityButtonPrefab, AbilityButtonParent);
             if (ButtonObj.TryGetComponent(out AbilityButton abilityButton))
             {
-                abilityButton.Initialize(abilityButtonHolderSO.abilityList[i]);
+                abilityButton.Initialize(abilityButtonHolderSO.abilityList[i], energyGenerator);
                 OnUpdateButtonsAction += abilityButton.OnButtonActiveCheck;
                 abilityButtons.Add(abilityButton);
             }
         }
     }
 
+
+    public void OnClickAbilityButton()
+    {
+
+    }
+
+
+
+
     /// <summary>
     /// Called when an energy button is clicked.
     /// </summary>
     /// <param name="energyUsed">The amount of energy used.</param>
-    public void OnClickEnergyButton(int energyUsed)
+    public void OnClickEnergyButton(int energyUsed, AbilityButton.AbilityButtonType abilityButtonType)
     {
         energyGenerator.OnUseEnergy(energyUsed);
+        switch (abilityButtonType)
+        {
+            case AbilityButton.AbilityButtonType.crate:
+                LevelManager.instance.GetPlayer().SpawnCrate();
+                break;
+            case AbilityButton.AbilityButtonType.fire:
+                LevelManager.instance.GetPlayer().ActivateFirePowerdMode();
+                break;
+            case AbilityButton.AbilityButtonType.granade:
+                LevelManager.instance.GetPlayer().ThrowGrenade();
+                break;
+        }
     }
 
 

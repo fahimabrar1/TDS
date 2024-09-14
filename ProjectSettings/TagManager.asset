@@ -6,16 +6,16 @@ TagManager:
   tags:
   - Enemy
   - Ground
-  - Boundry
+  - Boundary
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - PlayerBorder
   - Water
   - UI
   - Enemy
-  - 
+  - Weapons
   - 
   - 
   - 

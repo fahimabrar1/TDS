@@ -114,7 +114,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 180, y: 200}
+  m_SizeDelta: {x: 140, y: 180}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2160264590869029588
 CanvasRenderer:
@@ -234,12 +234,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75d59b1d9d166c846a0885a99427f8ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  energyGenerator: {fileID: 0}
   button: {fileID: 3561980672968424119}
   contentIcon: {fileID: 6891364706199009944}
   costText: {fileID: 957589640261749491}
   abilityButtonType: 0
   interactable: 0
   cost: 0
+  ActivationDuration: 0
+  canUseAbility: 0
+  coolDown: 0
 --- !u!1001 &5142730107471420683
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1093720701361598128}
   - component: {fileID: 7194241285706110110}
   - component: {fileID: 1065367854812272242}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Automatic Powered Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}

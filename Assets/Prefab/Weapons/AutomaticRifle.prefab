@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7153800994258989841}
   - component: {fileID: 4213709549440813397}
   - component: {fileID: 621809393991410011}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: AutomaticRifle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -102,15 +102,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 2285969427943925864, guid: d7a63631cf99dd84fa039d50483a62ce, type: 3}
   poweredBulletPrefab: {fileID: 2285969427943925864, guid: 908065dda815dd74989016b2deab8e88, type: 3}
   shootingRadius: {fileID: 3990876730353070742}
-  shootingAudio: fire
-  shootingHeavyAudio: fire-heavy
-  bulletsPerBurst: 4
-  delayBetweenBullets: 0.2
-  delayBetweenBursts: 2
-  poweredBulletsPerBurst: 1
-  poweredDelayBetweenBullets: 0
-  poweredDelayBetweenBursts: 0.2
-  poweredModeDuration: 10
+  automaticRifleDataS0: {fileID: 11400000, guid: 2c82865ec7de80846ac1fab855558310, type: 2}
 --- !u!1 &7810827486659020297
 GameObject:
   m_ObjectHideFlags: 0
@@ -121,7 +113,7 @@ GameObject:
   m_Component:
   - component: {fileID: 82020331020554698}
   - component: {fileID: 3990876730353070742}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Shooting Radius
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -204,7 +196,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1164583984679874482}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}

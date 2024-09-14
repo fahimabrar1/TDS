@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2070823346381558641}
   - component: {fileID: 4928943914330967944}
   - component: {fileID: 7077364229940931683}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Grenade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -163,8 +163,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosionDelay: 1
   explosionRadius: 0.7
-  explosionDamage: 150
+  explosionDamage: 30
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
-  explosionEffectPrefab: {fileID: 0}
+  explosionEffectPrefab: {fileID: 823151990901912620, guid: 57f28b2ece813f34d96d0846265bfd49, type: 3}

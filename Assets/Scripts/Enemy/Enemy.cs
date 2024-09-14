@@ -6,11 +6,6 @@ using System;
 public abstract class Enemy : MonoBehaviour, IEnemyDamagable, IAttackable
 {
 
-    [Header("Health Data")]
-    [Tooltip("The initial health of the enemy.")]
-    public int Health = 50;  // Initial zombie health
-
-
     public HealthBar healthBar;
 
     [Header("Assign Data")]
@@ -21,8 +16,9 @@ public abstract class Enemy : MonoBehaviour, IEnemyDamagable, IAttackable
     [SerializeField]
     public Transform jumpPoint;
 
-    // [SerializeField]
-    // protected Transform target;
+    [SerializeField]
+    protected Transform target;
+
 
 
     [Header("Custom Colliders")]
@@ -30,8 +26,8 @@ public abstract class Enemy : MonoBehaviour, IEnemyDamagable, IAttackable
     public BoxCollider2D boxCollider2D;
     public CapsuleCollider2D capsuleCollider2D;
     public MyCollider2D frontCollider;
-    public MyCollider2D backCollfier;
-    public MyCollider2D bottomCollider;
+    // public MyCollider2D backCollfier;
+    // public MyCollider2D bottomCollider;
 
 
 
@@ -116,17 +112,7 @@ public abstract class Enemy : MonoBehaviour, IEnemyDamagable, IAttackable
     public Action OnMoveBackwardEvent;
 
 
-
-
-
-    public EnemyWaveGenerator enemyWaveGenerator;
-
-    public Enemy enemyInFront;  // Enemy directly in front
-    public Enemy enemyBehind;   // Enemy directly behind
-    public Enemy enemyOnTop;    // Enemy stacked on top
-
-
-    public float movementDirection = -1;
+    private EnemyWaveGenerator enemyWaveGenerator;
 
 
     /// <summary>
@@ -147,11 +133,9 @@ public abstract class Enemy : MonoBehaviour, IEnemyDamagable, IAttackable
     /// </summary>
     public virtual void Start()
     {
-        healthBar.InitializeHealthBar(Health);
-
         // // front collider
-        // frontCollier.OnTriggerEnter2DEvent.AddListener((col) => OnTriggerEnterFront2D(col));
-        // frontCollier.OnTriggerExit2DEvent.AddListener(OnTriggerExitFront2D);
+        frontCollider.OnTriggerEnter2DEvent.AddListener((col) => OnTriggerEnterFront2D(col));
+        frontCollider.OnTriggerExit2DEvent.AddListener(OnTriggerExitFront2D);
     }
 
 
@@ -176,18 +160,18 @@ public abstract class Enemy : MonoBehaviour, IEnemyDamagable, IAttackable
 
     public virtual void OnAttack(IDamagable target)
     {
-        int attackDamage = 15;  // Example damage value
-        target.OnTakeDamage(attackDamage);
         MyDebug.Log("Zombie attacked!");
+        target.OnTakeDamage(15);
     }
 
     private void Die()
     {
-        enemyWaveGenerator.EnemyDeathNotify(this);
         MyDebug.Log("Zombie has died!");
-        CurrencyManager.Instance.AddCoins(5);
+
         // Handle zombie death (e.g., despawn, play death animation)
         healthBar.KillHealthTween();
+
+        Destroy(gameObject);  // Destroy the zombie when dead
     }
 
 
@@ -232,20 +216,13 @@ public abstract class Enemy : MonoBehaviour, IEnemyDamagable, IAttackable
         IPlayerDamagable closestTarget = null;
         float closestDistance = Mathf.Infinity;
 
-        for (int i = targetsInRange.Count - 1; i >= 0; i--)
+        foreach (var target in targetsInRange)
         {
-            var target = targetsInRange[i];
-
-            try
+            if (target == null)
             {
-                var t = target.GetTransform();
-            }
-            catch (System.Exception)
-            {
-                targetsInRange.RemoveAt(i); // Safely remove invalid targets
+                targetsInRange.Remove(target);
                 continue;
             }
-
             float distance = Vector2.Distance(transform.position, target.GetTransform().position);
 
             if (distance < closestDistance)
@@ -262,45 +239,11 @@ public abstract class Enemy : MonoBehaviour, IEnemyDamagable, IAttackable
 
 
 
-
     public Transform GetTransform()
     {
         return transform;
     }
 
-    /// <summary>
-    /// Set the enemy directly in front of this one.
-    /// </summary>
-    public void SetEnemyInFront(Enemy enemy)
-    {
-        enemyInFront = enemy;
-    }
-
-    /// <summary>
-    /// Set the enemy directly behind this one.
-    /// </summary>
-    public void SetEnemyBehind(Enemy enemy)
-    {
-        enemyBehind = enemy;
-    }
-
-
-    /// <summary>
-    /// Move this zombie backwards.
-    /// </summary>
-    public void MoveBackward()
-    {
-        movementDirection = 1;
-    }
-
-
-    /// <summary>
-    /// Set the enemy stacked on top of this one.
-    /// </summary>
-    public void SetEnemyOnTop(Enemy enemy)
-    {
-        enemyOnTop = enemy;
-    }
 
     #region Colliders
 
@@ -367,6 +310,11 @@ public abstract class Enemy : MonoBehaviour, IEnemyDamagable, IAttackable
     public virtual void SetEnemyOnTop(Enemy mate)
     {
         EnemyOnTop = mate;
+    }
+
+    public void SetWaveGenerator(EnemyWaveGenerator enemyWaveGenerator)
+    {
+        this.enemyWaveGenerator = enemyWaveGenerator;
     }
 
     #endregion

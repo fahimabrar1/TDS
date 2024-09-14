@@ -24,6 +24,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField]
     private PlayerController playerController;
 
+    public bool isGameStarted = false;
     private void Awake()
     {
         // Singleton pattern to ensure only one instance of LevelManager
@@ -40,6 +41,7 @@ public class LevelManager : MonoBehaviour
         {
             SpawnPlayer();
         }
+        isGameStarted = false;
     }
 
 
@@ -52,6 +54,8 @@ public class LevelManager : MonoBehaviour
 
     public async void OnPlayerDeath()
     {
+        isGameStarted = false;
+
         enemyWaveGenerator.StopGenerateEnemies();
         levelMenuUI.OnShowButtons();
         await Task.Delay(2000);
@@ -73,6 +77,7 @@ public class LevelManager : MonoBehaviour
 
     public void OnStart()
     {
+        isGameStarted = true;
         enemyWaveGenerator.StartGenerateEnemies();
     }
 

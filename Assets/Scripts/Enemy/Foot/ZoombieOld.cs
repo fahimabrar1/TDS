@@ -5,6 +5,8 @@ using System.Collections;
 
 public class ZombieOld : Enemy
 {
+    public ZombieDataSO zombieDataSO;
+
     [Tooltip("The speed at which the zombie moves towards the player or crate.")]
     public float moveSpeed = 2f;
 
@@ -12,8 +14,6 @@ public class ZombieOld : Enemy
     [Tooltip("Time delay between each attack in seconds.")]
     public float attackRange = 1f;
 
-    [Tooltip("Time delay between each attack in seconds.")]
-    public float attackDelay = 1f;
 
     [Header("Shake Effect on Attack")]
     [Tooltip("The duration of the shake effect when the zombie attacks.")]
@@ -53,10 +53,10 @@ public class ZombieOld : Enemy
 
     public override void Start()
     {
-        Health = 100;
+        zombieDataSO.Health = 100;
         canMoveForward = true;
         hasJumped = false;
-        healthBar.InitializeHealthBar(Health);
+        healthBar.InitializeHealthBar(zombieDataSO.Health);
         // Find player position from the LevelManager
         target = LevelManager.instance.playerTransform;
     }
@@ -96,7 +96,7 @@ public class ZombieOld : Enemy
         if (EnemyInFront != null)
         {
             var distance = Vector3.Distance(transform.position, EnemyInFront.transform.position);
-            if (EnemyInFront.EnemyOnTop == null && distance < attackDelay)
+            if (EnemyInFront.EnemyOnTop == null && distance < zombieDataSO.attackDelay)
             {
                 canMoveForward = false;
                 HandleQueue();
@@ -153,7 +153,7 @@ public class ZombieOld : Enemy
                 ShakeOnAttack();
             }
             // Wait for the attack delay before attacking again
-            yield return new WaitForSeconds(attackDelay);
+            yield return new WaitForSeconds(zombieDataSO.attackDelay);
         }
         isAttacking = false;
     }

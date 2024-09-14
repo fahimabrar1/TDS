@@ -45,9 +45,23 @@ public class Bullet : MonoBehaviour
             Destroy(gameObject);  // Destroy bullet after hitting
         }
         else
-        //  if (other.CompareTag("Ground") || other.CompareTag("Boundary"))
+         if (other.CompareTag("Ground"))
         {
             Destroy(gameObject);  // Destroy bullet if it hits the ground or boundary
         }
     }
+
+    /// <summary>
+    /// Sent when another object leaves a trigger collider attached to
+    /// this object (2D physics only).
+    /// </summary>
+    /// <param name="other">The other Collider2D involved in this collision.</param>
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Boundary"))
+        {
+            Destroy(gameObject);  // Destroy bullet if it hits the ground or boundary
+        }
+    }
+
 }

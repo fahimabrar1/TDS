@@ -14,18 +14,10 @@ public class PlayerController : MonoBehaviour, IPlayerDamagable
     public ICrateSpawner crateSpawner;
 
     [Header("Throwable Data")]
-
-    [Tooltip("The prefab for the grenade that the player can throw.")]
-    public GameObject throwablePrefab;
-
-    [Tooltip("The force applied when the grenade is thrown.")]
-    public float throwableThrowForce = 4f;
-    [Tooltip("The force applied when the grenade is thrown to spin.")]
-    public float throwableSpinForce = 0.2f;
+    public ThrowableGranadeDataSO ThrowableGranadeData;
 
     [Tooltip("The point from where the throwables is thrown")]
     public Transform throwingPoint;
-
 
 
     [Header("Weapon Data")]
@@ -39,7 +31,8 @@ public class PlayerController : MonoBehaviour, IPlayerDamagable
 
 
     [Tooltip("A list of all enemies in the scene.")]
-    public List<Enemy> enemies = new List<Enemy>();
+    public List<Enemy> enemies = new();
+    private EnemyWaveGenerator enemyWaveGenerator;
 
 
     /// <summary>
@@ -51,8 +44,8 @@ public class PlayerController : MonoBehaviour, IPlayerDamagable
         {
             this.crateSpawner = crateSpawner;
         }
-
         mainCamera = Camera.main;
+        enemyWaveGenerator = FindAnyObjectByType<EnemyWaveGenerator>();
     }
 
     /// <summary>
@@ -126,8 +119,11 @@ public class PlayerController : MonoBehaviour, IPlayerDamagable
     /// </summary>
     private void HandleTouchInput()
     {
-        if (EventSystem.current.IsPointerOverGameObject())
+        if (EventSystem.current.IsPointerOverGameObject() || !LevelManager.instance.isGameStarted)
             return;
+
+
+
         Vector3 touchPosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
         touchPosition.z = 0; // Keep the z-position at 0 for 2D
 
@@ -166,11 +162,11 @@ public class PlayerController : MonoBehaviour, IPlayerDamagable
     /// </summary>
     public void ThrowGrenade()
     {
-        if (throwablePrefab == null || throwingPoint == null) return;
+        if (ThrowableGranadeData.throwablePrefab == null || throwingPoint == null) return;
         MyDebug.Log($"Throwing Grenade.");
 
         // Instantiate the grenade at the throwing point
-        GameObject grenade = Instantiate(throwablePrefab, throwingPoint.position, Quaternion.identity);
+        GameObject grenade = Instantiate(ThrowableGranadeData.throwablePrefab, throwingPoint.position, Quaternion.identity);
 
         // Get the Rigidbody2D of the grenade to apply force and torque (spin)
         if (grenade.TryGetComponent<Rigidbody2D>(out var rb2d))
@@ -180,10 +176,10 @@ public class PlayerController : MonoBehaviour, IPlayerDamagable
             Vector2 throwDirection = new(Mathf.Cos(angleInRadians), Mathf.Sin(angleInRadians));
 
             // Apply a forward force to throw the grenade
-            rb2d.AddForce(throwDirection * throwableThrowForce, ForceMode2D.Impulse);
+            rb2d.AddForce(throwDirection * ThrowableGranadeData.throwableThrowForce, ForceMode2D.Impulse);
 
             // Apply a random spin to the grenade (adjust the value for more or less spin)
-            float spinForce = Random.Range(-throwableSpinForce, throwableSpinForce);
+            float spinForce = Random.Range(-ThrowableGranadeData.throwableSpinForce, ThrowableGranadeData.throwableSpinForce);
             rb2d.AddTorque(spinForce, ForceMode2D.Impulse);
         }
     }
@@ -199,19 +195,26 @@ public class PlayerController : MonoBehaviour, IPlayerDamagable
         Vector3 closestEnemy = Vector3.zero;
         float closestDistance = Mathf.Infinity;
 
-        foreach (var enemy in enemies)
+        if (enemyWaveGenerator.enemyList.Count > 0)
         {
-            if (enemy == null) continue;
-
-            float distance = Vector2.Distance(transform.position, enemy.transform.position);
-            if (distance < closestDistance)
+            foreach (var enemy in enemyWaveGenerator.enemyList)
             {
-                closestEnemy = enemy.transform.position;
-                closestDistance = distance;
-            }
-        }
+                if (enemy == null) continue;
 
-        return closestEnemy;
+                float distance = Vector2.Distance(transform.position, enemy.transform.position);
+                if (distance < closestDistance)
+                {
+                    closestEnemy = enemy.transform.position;
+                    closestDistance = distance;
+                }
+            }
+            MyDebug.Log($"Closet Enemy Pos:{closestEnemy}");
+            return closestEnemy;
+        }
+        else
+        {
+            return Vector3.zero;
+        }
     }
 
 

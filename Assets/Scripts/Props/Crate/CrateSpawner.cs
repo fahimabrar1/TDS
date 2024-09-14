@@ -49,6 +49,8 @@ public class CrateSpawner : MonoBehaviour, ICrateSpawner
         // Get the spawn position (either below the player or on top of the last crate)
         Vector3 spawnPosition = GetTopPosition(playerFeet);
 
+        transform.DOJump(new(transform.position.x, transform.position.y + 0.1f, transform.position.z), 2, 1, .01f);
+
         // Instantiate the crate at the calculated position with scale 0
         GameObject newCrate = Instantiate(cratePrefab, spawnPosition, Quaternion.identity);
         newCrate.transform.localScale = Vector3.zero;

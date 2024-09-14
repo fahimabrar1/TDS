@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,11 +11,11 @@ public class LevelMenuUI : MonoBehaviour
     public UpgradeButton energyUpgradeButton; // Example button for upgrading
 
 
+    public List<GameObject> UiButtons;
+    public GameObject InGamePanel;
 
     private void OnEnable()
     {
-
-
         // Subscribe to currency change events
         if (CurrencyManager.Instance != null)
         {
@@ -35,10 +38,12 @@ public class LevelMenuUI : MonoBehaviour
     /// Start is called on the frame when a script is enabled just before
     /// any of the Update methods is called the first time.
     /// </summary>
-    void Start()
+    public void InitialzieUI()
     {
+
         healthUpgradeButton.Initialize(GameManager.instance.healthData);
         energyUpgradeButton.Initialize(GameManager.instance.energyGenerateData);
+        CurrencyManager.Instance.OnCurrencyChanged?.Invoke();
     }
 
 
@@ -92,4 +97,26 @@ public class LevelMenuUI : MonoBehaviour
     }
 
 
+    public void OnClickStart()
+    {
+        foreach (var button in UiButtons)
+        {
+            button.SetActive(false);
+        }
+
+        InGamePanel.SetActive(true);
+        EnergyManager.instance.SpawnAbilityButtons();
+
+    }
+
+
+    public void OnShowButtons()
+    {
+        foreach (var button in UiButtons)
+        {
+            button.SetActive(true);
+        }
+        InGamePanel.SetActive(false);
+        EnergyManager.instance.DestroyAbilityButtons();
+    }
 }

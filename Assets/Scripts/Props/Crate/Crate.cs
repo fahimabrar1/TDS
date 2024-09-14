@@ -12,6 +12,24 @@ public class Crate : MonoBehaviour, IPlayerDamagable
 
 
     /// <summary>
+    /// This function is called when the object becomes enabled and active.
+    /// </summary>
+    void OnEnable()
+    {
+        LevelAudioPlayer.instance.OnPlayAudioByName("place");
+    }
+
+
+    /// <summary>
+    /// This function is called when the behaviour becomes disabled or inactive.
+    /// </summary>
+    void OnDisable()
+    {
+        LevelAudioPlayer.instance.OnPlayAudioByName("box-crash");
+    }
+
+
+    /// <summary>
     /// Start is called on the frame when a script is enabled just before
     /// any of the Update methods is called the first time.
     /// </summary>

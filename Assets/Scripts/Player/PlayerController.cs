@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour, IPlayerDamagable
 {
     [Tooltip("The player's initial health.")]
     private int health = 100;
     public HealthBar healthBar;
+    public Transform feetTransform;
 
     [Tooltip("The prefab for the crate that the player can spawn.")]
     public ICrateSpawner crateSpawner;
@@ -33,7 +35,7 @@ public class PlayerController : MonoBehaviour, IPlayerDamagable
     [Tooltip("The main camera in the scene, used for touch input.")]
     public Camera mainCamera;
 
-
+    public bool isPlayerAlive;
 
 
     [Tooltip("A list of all enemies in the scene.")]
@@ -58,6 +60,7 @@ public class PlayerController : MonoBehaviour, IPlayerDamagable
     /// </summary>
     void OnEnable()
     {
+        isPlayerAlive = true;
         StartCoroutine(WaitForHealthData());
     }
 
@@ -111,13 +114,6 @@ public class PlayerController : MonoBehaviour, IPlayerDamagable
 
 
         // Handle grenade throwing logic
-        if (Input.GetKeyUp(KeyCode.G))  // Press 'G' to throw a grenade
-        {
-            ThrowGrenade();
-        }
-
-
-        // Handle grenade throwing logic
         if (Input.GetKeyUp(KeyCode.P))  // Press 'G' to throw a grenade
         {
             currentWeapon.ActivatePoweredMode();
@@ -130,6 +126,8 @@ public class PlayerController : MonoBehaviour, IPlayerDamagable
     /// </summary>
     private void HandleTouchInput()
     {
+        if (EventSystem.current.IsPointerOverGameObject())
+            return;
         Vector3 touchPosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
         touchPosition.z = 0; // Keep the z-position at 0 for 2D
 
@@ -166,7 +164,7 @@ public class PlayerController : MonoBehaviour, IPlayerDamagable
     /// <summary>
     /// Throws a grenade from the player's throwing point at a 45-degree angle with a spin.
     /// </summary>
-    private void ThrowGrenade()
+    public void ThrowGrenade()
     {
         if (throwablePrefab == null || throwingPoint == null) return;
         MyDebug.Log($"Throwing Grenade.");
@@ -233,6 +231,7 @@ public class PlayerController : MonoBehaviour, IPlayerDamagable
     /// <param name="damage">The amount of damage taken.</param>
     public void OnTakeDamage(int damage)
     {
+        if (!isPlayerAlive) return;
         healthBar.DeduceHealth(damage);
 
         healthBar.ShowHealthbar();
@@ -254,9 +253,12 @@ public class PlayerController : MonoBehaviour, IPlayerDamagable
     /// </summary>
     private void Die()
     {
+        isPlayerAlive = false;
         // Handle  death (e.g., despawn, play death animation)
         healthBar.KillHealthTween();
         MyDebug.Log("Player died!");
+        LevelManager.instance.OnPlayerDeath();
+        Destroy(gameObject);
         // Handle player death (respawn or game over logic)
     }
 
@@ -264,5 +266,10 @@ public class PlayerController : MonoBehaviour, IPlayerDamagable
     public Transform GetTransform()
     {
         return transform;
+    }
+
+    public void ActivateFirePowerdMode()
+    {
+        currentWeapon.ActivatePoweredMode();
     }
 }

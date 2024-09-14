@@ -10,7 +10,6 @@ public class BaseUpgradeData : IApplyUpgradable
     public int defaultCost = 0;
     public int costIncrementBy = 0;
     public int level = 1;
-    public int levelIncrementBy = 0;
 
     public Action OnUpdateDDefaultValue;
 

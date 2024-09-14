@@ -9,8 +9,6 @@ public class AudioManager : MonoBehaviour
     public AudioSource musicSource;
     public AudioClip musicClip;
 
-    public bool soundOn = true;
-    public bool musicOn = true;
     private void Awake()
     {
         if (instance == null)
@@ -20,7 +18,6 @@ public class AudioManager : MonoBehaviour
         }
         else
         {
-            instance.MusicSettingsCheck();
             Destroy(gameObject);
         }
 
@@ -35,7 +32,6 @@ public class AudioManager : MonoBehaviour
     /// </summary>
     void Start()
     {
-
         MusicSettingsCheck();
     }
 
@@ -43,19 +39,7 @@ public class AudioManager : MonoBehaviour
 
     public void MusicSettingsCheck()
     {
-
-        // Load sound and music preferences
-        soundOn = PlayerPrefs.GetInt(GameConstants.SoundOnName, 1) == 1; // Default is on
-        musicOn = PlayerPrefs.GetInt(GameConstants.MusicOnName, 1) == 1; // Default is on
-        MyDebug.Log("Calling Setting Check: " + musicOn);
-        if (musicOn)
-        {
-            PlayMusic(musicClip);
-        }
-        else
-        {
-            StopMusic();
-        }
+        PlayMusic(musicClip);
     }
 
 
@@ -66,14 +50,10 @@ public class AudioManager : MonoBehaviour
 
         musicSource.clip = clip;
         musicSource.Play();
-        PlayerPrefs.SetInt("MusicOn", 1);
-        musicOn = true;
     }
 
     public void StopMusic()
     {
-        PlayerPrefs.SetInt("MusicOn", 0);
-        musicOn = false;
         musicSource.Stop();
     }
 }

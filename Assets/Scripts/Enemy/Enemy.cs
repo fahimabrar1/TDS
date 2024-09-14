@@ -121,9 +121,7 @@ public abstract class Enemy : MonoBehaviour, IEnemyDamagable, IAttackable
 
     public EnemyWaveGenerator enemyWaveGenerator;
 
-    public Enemy enemyInFront;  // Enemy directly in front
-    public Enemy enemyBehind;   // Enemy directly behind
-    public Enemy enemyOnTop;    // Enemy stacked on top
+
 
 
     public float movementDirection = -1;
@@ -285,22 +283,6 @@ public abstract class Enemy : MonoBehaviour, IEnemyDamagable, IAttackable
     }
 
 
-    /// <summary>
-    /// Move this zombie backwards.
-    /// </summary>
-    public void MoveBackward()
-    {
-        movementDirection = 1;
-    }
-
-
-    /// <summary>
-    /// Set the enemy stacked on top of this one.
-    /// </summary>
-    public void SetEnemyOnTop(Enemy enemy)
-    {
-        enemyOnTop = enemy;
-    }
 
     #region Colliders
 
@@ -346,6 +328,11 @@ public abstract class Enemy : MonoBehaviour, IEnemyDamagable, IAttackable
 
     }
 
+
+
+    /// <summary>
+    /// Move this zombie backwards.
+    /// </summary>
     public virtual void MoveBackward()
     {
         if (EnemyBehind != null)
@@ -357,13 +344,17 @@ public abstract class Enemy : MonoBehaviour, IEnemyDamagable, IAttackable
 
     public virtual void MoveForwad()
     {
-        if (enemyBehind == null)
+        if (EnemyBehind == null)
         {
             moveDirection = 1;
             canMove = true;
         }
     }
 
+
+    /// <summary>
+    /// Set the enemy stacked on top of this one.
+    /// </summary>
     public virtual void SetEnemyOnTop(Enemy mate)
     {
         EnemyOnTop = mate;

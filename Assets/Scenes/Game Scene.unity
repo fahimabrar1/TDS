@@ -1328,55 +1328,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1003118274
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1003118276}
-  - component: {fileID: 1003118275}
-  m_Layer: 0
-  m_Name: Energy Manager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1003118275
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1003118274}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ef8d783c6a65b44ba2c3cd5a1fddd74, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  energyGenerator: {fileID: 646863608}
-  AbilityButtonPrefab: {fileID: 6597990488566892206, guid: 034b1ad67628417498ef307367e3b90d, type: 3}
-  AbilityButtonParent: {fileID: 554423745}
-  abilityButtonHolderSO: {fileID: 11400000, guid: 49f5eb64a9173b744890577b465cf221, type: 2}
-  abilityButtons: []
---- !u!4 &1003118276
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1003118274}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &1110810197 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5517445797060559755, guid: f8ee0340bcba0234d891631a18866fdf, type: 3}
@@ -2418,6 +2369,71 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9e59f0d4fa7e1694183d6381caa85866, type: 3}
+--- !u!1001 &2875393245788344207
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6777695554181165963, guid: 3162098a019df7243a7865816e245bee, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6777695554181165963, guid: 3162098a019df7243a7865816e245bee, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6777695554181165963, guid: 3162098a019df7243a7865816e245bee, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6777695554181165963, guid: 3162098a019df7243a7865816e245bee, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6777695554181165963, guid: 3162098a019df7243a7865816e245bee, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6777695554181165963, guid: 3162098a019df7243a7865816e245bee, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6777695554181165963, guid: 3162098a019df7243a7865816e245bee, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6777695554181165963, guid: 3162098a019df7243a7865816e245bee, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6777695554181165963, guid: 3162098a019df7243a7865816e245bee, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6777695554181165963, guid: 3162098a019df7243a7865816e245bee, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358327084256678112, guid: 3162098a019df7243a7865816e245bee, type: 3}
+      propertyPath: energyGenerator
+      value: 
+      objectReference: {fileID: 646863608}
+    - target: {fileID: 7358327084256678112, guid: 3162098a019df7243a7865816e245bee, type: 3}
+      propertyPath: AbilityButtonParent
+      value: 
+      objectReference: {fileID: 554423745}
+    - target: {fileID: 7505819759529905296, guid: 3162098a019df7243a7865816e245bee, type: 3}
+      propertyPath: m_Name
+      value: Energy Manager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3162098a019df7243a7865816e245bee, type: 3}
 --- !u!1001 &3122224744352035348
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2764,7 +2780,7 @@ SceneRoots:
   - {fileID: 6747954739983673572}
   - {fileID: 189266433}
   - {fileID: 1994821391}
-  - {fileID: 1003118276}
+  - {fileID: 2875393245788344207}
   - {fileID: 1996368731}
   - {fileID: 412883101}
   - {fileID: 432141504}

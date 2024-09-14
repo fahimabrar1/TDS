@@ -18,7 +18,7 @@ public class EnergyManager : MonoBehaviour
     public Transform AbilityButtonParent;
 
     [Tooltip("The scriptable object that holds the ability list.")]
-    public AbilityButtonHolderrSO abilityButtonHolderSO;
+    public AbilityButtonHolderNewSO abilityButtonHolderNewSO;
 
     [Tooltip("A list of ability buttons.")]
     public List<AbilityButton> abilityButtons;
@@ -51,12 +51,12 @@ public class EnergyManager : MonoBehaviour
     public void SpawnAbilityButtons()
     {
         abilityButtons = new();
-        for (int i = 0; i < abilityButtonHolderSO.abilityList.Count; i++)
+        for (int i = 0; i < abilityButtonHolderNewSO.abilityList.Count; i++)
         {
             var ButtonObj = Instantiate(AbilityButtonPrefab, AbilityButtonParent);
             if (ButtonObj.TryGetComponent(out AbilityButton abilityButton))
             {
-                abilityButton.Initialize(abilityButtonHolderSO.abilityList[i], energyGenerator);
+                abilityButton.Initialize(abilityButtonHolderNewSO.abilityList[i], energyGenerator);
                 OnUpdateButtonsAction += abilityButton.OnButtonActiveCheck;
                 abilityButtons.Add(abilityButton);
             }

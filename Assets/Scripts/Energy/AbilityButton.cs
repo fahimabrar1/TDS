@@ -85,7 +85,7 @@ public class AbilityButton : MonoBehaviour
     /// Initializes the ability button with the given ability button scriptable object.
     /// </summary>
     /// <param name="abilityButtonSO">The ability button scriptable object.</param>
-    internal void Initialize(AbilityButtonSO abilityButtonSO, EnergyGenerator energyGenerator)
+    internal void Initialize(AbilituButtonDataNewSO abilityButtonSO, EnergyGenerator energyGenerator)
     {
         this.energyGenerator = energyGenerator;
         cost = abilityButtonSO.cost;

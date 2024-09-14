@@ -1,6 +1,8 @@
+using System;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "AbilityButtonSO", menuName = "TDS/Ability Buttons Data/AbilityButtonSO", order = 0)]
+[CreateAssetMenu(fileName = "AbilityButtonSO", menuName = "TDS/AbilityButtonsData/AbilityButtonSO", order = 0)]
+[Serializable]
 public class AbilityButtonSO : ScriptableObject
 {
 

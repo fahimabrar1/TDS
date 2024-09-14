@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
+using System;
+using System.Threading.Tasks;
 
 public class EnemyWaveGenerator : MonoBehaviour
 {
@@ -14,15 +16,11 @@ public class EnemyWaveGenerator : MonoBehaviour
     public float waveDelay = 4f;
     public Transform wavePosition;
 
-    private Queue<Zombie> enemyQueue = new(); // Queue to store enemies in a wave
+    private List<Enemy> enemyList = new(); // Queue to store enemies in a wave
 
-    private Zombie currentEnemy;
+    private Enemy currentEnemy;
 
-    // Start spawning waves
-    private void Start()
-    {
-        StartCoroutine(SpawnWavesRoutine());
-    }
+    private bool canGenerateEnemies = false;
 
 
     // Method to spawn enemies in waves
@@ -33,7 +31,8 @@ public class EnemyWaveGenerator : MonoBehaviour
             // Spawn enemy at a random spawn point
             GameObject enemyObj = Instantiate(enemyPrefab, wavePosition.position, Quaternion.identity);
 
-            Zombie enemy = enemyObj.GetComponent<Zombie>();
+            Enemy enemy = enemyObj.GetComponent<Enemy>();
+            enemy.SetWaveGenerator(this);
 
             if (currentEnemy != null)
             {
@@ -43,14 +42,14 @@ public class EnemyWaveGenerator : MonoBehaviour
             currentEnemy = enemy;
 
             // Add to the queue
-            enemyQueue.Enqueue(enemy);
+            enemyList.Add(enemy);
 
             // Assign front and behind relationships
-            if (enemyQueue.Count > 1)
+            if (enemyList.Count > 1)
             {
-                Zombie enemyInFront = enemyQueue.ToArray()[enemyQueue.Count - 2];
+                Enemy enemyInFront = enemyList[enemyList.Count - 2];
+
                 enemy.SetEnemyInFront(enemyInFront);
-                enemyInFront.SetEnemyBehind(enemy);
             }
         }
     }
@@ -60,10 +59,34 @@ public class EnemyWaveGenerator : MonoBehaviour
     // Coroutine to spawn waves with delays
     private IEnumerator SpawnWavesRoutine()
     {
-        while (true)
+        while (canGenerateEnemies)
         {
             SpawnWave(1);  // Spawn 5 enemies per wave (adjust as needed)
             yield return new WaitForSeconds(waveDelay);
         }
+    }
+
+    public async void StartGenerateEnemies()
+    {
+        canGenerateEnemies = true;
+        await Task.Delay(1000);
+        StartCoroutine(SpawnWavesRoutine());
+    }
+
+
+    public void StopGenerateEnemies()
+    {
+        canGenerateEnemies = false;
+        for (int i = enemyList.Count - 1; i >= 0; i--)
+        {
+            Destroy(enemyList[i].gameObject);
+        }
+    }
+
+
+    public void EnemyDeathNotify(Enemy enemy)
+    {
+        enemyList.Remove(enemy);
+        Destroy(enemy.gameObject);
     }
 }

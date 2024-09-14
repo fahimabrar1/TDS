@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TMPro;
@@ -11,6 +12,7 @@ public class LevelMenuUI : MonoBehaviour
     public UpgradeButton energyUpgradeButton; // Example button for upgrading
 
 
+    public Button StartMatch;
     public List<GameObject> UiButtons;
     public GameObject InGamePanel;
 
@@ -118,5 +120,12 @@ public class LevelMenuUI : MonoBehaviour
         }
         InGamePanel.SetActive(false);
         EnergyManager.instance.DestroyAbilityButtons();
+    }
+
+
+
+    public void SetStartButtonIntereactable(bool value)
+    {
+        StartMatch.interactable = value;
     }
 }

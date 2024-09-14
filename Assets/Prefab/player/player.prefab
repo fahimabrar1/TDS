@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7287438719349238183}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Throwing Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5648240827396750837}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Feet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -76,7 +76,7 @@ GameObject:
   - component: {fileID: 3271433860789895392}
   - component: {fileID: 7065267188856928867}
   - component: {fileID: 2751702698146447319}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -169,7 +169,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -197,7 +197,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.31, y: 0.85333335}
+  m_Size: {x: 1.5, y: 0.85333335}
   m_EdgeRadius: 0
 --- !u!50 &3271433860789895392
 Rigidbody2D:
@@ -277,6 +277,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: AutomaticRifle
       objectReference: {fileID: 0}
+    - target: {fileID: 6181710699624384378, guid: 2fc5c92ed6a77d74f9d10071eb5b329a, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 7153800994258989841, guid: 2fc5c92ed6a77d74f9d10071eb5b329a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.088
@@ -317,6 +321,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7810827486659020297, guid: 2fc5c92ed6a77d74f9d10071eb5b329a, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8650744879139830140, guid: 2fc5c92ed6a77d74f9d10071eb5b329a, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -346,9 +358,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3554930196717512276}
     m_Modifications:
+    - target: {fileID: 837782857351771690, guid: 8a6397c5662aba2408f3c5944c4e8dd0, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1278730027940109002, guid: 8a6397c5662aba2408f3c5944c4e8dd0, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4355118287087458721, guid: 8a6397c5662aba2408f3c5944c4e8dd0, type: 3}
       propertyPath: m_Name
       value: Health Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 4355118287087458721, guid: 8a6397c5662aba2408f3c5944c4e8dd0, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5684649543316075129, guid: 8a6397c5662aba2408f3c5944c4e8dd0, type: 3}
       propertyPath: m_Pivot.x
@@ -429,6 +453,10 @@ PrefabInstance:
     - target: {fileID: 5684649543316075129, guid: 8a6397c5662aba2408f3c5944c4e8dd0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8734048491275149629, guid: 8a6397c5662aba2408f3c5944c4e8dd0, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

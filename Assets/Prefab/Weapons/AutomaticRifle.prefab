@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7153800994258989841}
   - component: {fileID: 4213709549440813397}
   - component: {fileID: 621809393991410011}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: AutomaticRifle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -121,7 +121,7 @@ GameObject:
   m_Component:
   - component: {fileID: 82020331020554698}
   - component: {fileID: 3990876730353070742}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Shooting Radius
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -204,7 +204,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1164583984679874482}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}

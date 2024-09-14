@@ -251,7 +251,7 @@ public class Zombie : Enemy
     public override IEnumerator AttackRoutine(IDamagable damagableTarget)
     {
         isAttacking = true;
-        while (target != null && targetsInRange.Count != 0)
+        while (targetsInRange.Count != 0)
         {
             if (damagableTarget != null)
             {

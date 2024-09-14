@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
+using System.Threading.Tasks;
 
 public class LevelManager : MonoBehaviour
 {
@@ -8,6 +9,10 @@ public class LevelManager : MonoBehaviour
 
     [Tooltip("The player gameobject")]
     public GameObject plaeyrObj;
+
+    public EnemyWaveGenerator enemyWaveGenerator;
+    public LevelMenuUI levelMenuUI;
+
     public Transform playerSpawnPoint;
 
     [Tooltip("The player in the level.")]
@@ -44,9 +49,28 @@ public class LevelManager : MonoBehaviour
 
 
 
+    public async void OnPlayerDeath()
+    {
+        enemyWaveGenerator.StopGenerateEnemies();
+        levelMenuUI.OnShowButtons();
+        await Task.Delay(2000);
+        if (GameObject.FindGameObjectWithTag("Player") == null)
+        {
+            SpawnPlayer();
+        }
+    }
+
     public void SpawnPlayer()
     {
         var obj = Instantiate(plaeyrObj, playerSpawnPoint.position, Quaternion.identity, playerSpawnPoint);
         playerTransform = obj.transform;
+    }
+
+
+
+
+    public void OnStart()
+    {
+        enemyWaveGenerator.StartGenerateEnemies();
     }
 }

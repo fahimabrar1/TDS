@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour, IPlayerDamagable
     [Tooltip("The main camera in the scene, used for touch input.")]
     public Camera mainCamera;
 
-
+    public bool isPlayerAlive;
 
 
     [Tooltip("A list of all enemies in the scene.")]
@@ -59,6 +59,7 @@ public class PlayerController : MonoBehaviour, IPlayerDamagable
     /// </summary>
     void OnEnable()
     {
+        isPlayerAlive = true;
         StartCoroutine(WaitForHealthData());
     }
 
@@ -236,6 +237,7 @@ public class PlayerController : MonoBehaviour, IPlayerDamagable
     /// <param name="damage">The amount of damage taken.</param>
     public void OnTakeDamage(int damage)
     {
+        if (!isPlayerAlive) return;
         healthBar.DeduceHealth(damage);
 
         healthBar.ShowHealthbar();
@@ -257,9 +259,12 @@ public class PlayerController : MonoBehaviour, IPlayerDamagable
     /// </summary>
     private void Die()
     {
+        isPlayerAlive = false;
         // Handle  death (e.g., despawn, play death animation)
         healthBar.KillHealthTween();
         MyDebug.Log("Player died!");
+        LevelManager.instance.OnPlayerDeath();
+        Destroy(gameObject);
         // Handle player death (respawn or game over logic)
     }
 

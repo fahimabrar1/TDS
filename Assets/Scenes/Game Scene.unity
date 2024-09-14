@@ -122,6 +122,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &166860671 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2749674346698350096, guid: 5dd688135ae76f444acf501efee7bb8f, type: 3}
+  m_PrefabInstance: {fileID: 3122224744352035348}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &189266431
 GameObject:
   m_ObjectHideFlags: 0
@@ -773,6 +778,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthUpgradeButton: {fileID: 1521639205}
   energyUpgradeButton: {fileID: 1110810202}
+  UiButtons:
+  - {fileID: 1309672204}
+  - {fileID: 2024301063}
+  - {fileID: 166860671}
+  InGamePanel: {fileID: 1736141462}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1455,7 +1465,7 @@ GameObject:
   - component: {fileID: 1309672207}
   - component: {fileID: 1309672206}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Start Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1535,6 +1545,30 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: click
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1994821390}
+        m_TargetAssemblyTypeName: LevelManager, Assembly-CSharp
+        m_MethodName: OnStart
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 518612834}
+        m_TargetAssemblyTypeName: LevelMenuUI, Assembly-CSharp
+        m_MethodName: OnClickStart
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1309672207
@@ -1660,7 +1694,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8255181822944725734, guid: 5dd688135ae76f444acf501efee7bb8f, type: 3}
   m_PrefabInstance: {fileID: 3122224744352035348}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 166860671}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 61df9c7463f4a3f478a86d6794e607fb, type: 3}
@@ -1745,7 +1779,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1724841975
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1979,6 +2013,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plaeyrObj: {fileID: 9008869840025711098, guid: 949bd2f5e978de24a83eb7e902b20ef3, type: 3}
+  enemyWaveGenerator: {fileID: 1724841975}
+  levelMenuUI: {fileID: 518612834}
   playerSpawnPoint: {fileID: 432141504}
   playerTransform: {fileID: 0}
   crates: []

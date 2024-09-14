@@ -74,6 +74,9 @@ public class Zombie : Enemy
         }
     }
 
+    // Store previous positions to calculate movement direction
+    private Dictionary<Enemy, Vector2> previousPositions = new Dictionary<Enemy, Vector2>();
+
     /// <summary>
     /// Performs raycasts to detect enemies in front, behind, and below using RaycastAll.
     /// </summary>
@@ -83,16 +86,22 @@ public class Zombie : Enemy
         RaycastHit2D[] hitsFront = Physics2D.RaycastAll(transform.position, Vector2.left, raycastDistance, LayerMask.GetMask("Enemy"));
         Debug.DrawRay(transform.position, Vector3.left * raycastDistance, Color.white);
 
-        // Filter out self and find the closest enemy in front
         foreach (RaycastHit2D hit in hitsFront)
         {
-
             if (hit.collider.TryGetComponent(out Enemy mate))
             {
                 if (mate != this)
                 {
-                    MyDebug.Log("Detected Enemy in Front: " + mate.name);
-                    HandleFrontEnemy(mate);
+                    // Determine if the enemy is moving towards or away from this object
+                    if (IsMovingInRaycastDirection(mate, Vector2.left))
+                    {
+                        MyDebug.Log("Detected Enemy in Front moving in the same direction: " + mate.name);
+                        HandleFrontEnemy(mate);
+                    }
+                    else
+                    {
+                        MyDebug.Log("Detected Enemy in Front moving in the opposite direction: " + mate.name);
+                    }
                 }
             }
         }
@@ -103,13 +112,19 @@ public class Zombie : Enemy
 
         foreach (RaycastHit2D hit in hitsBack)
         {
-
             if (hit.collider.TryGetComponent(out Enemy mateBehind))
             {
                 if (mateBehind != this)
                 {
-                    MyDebug.Log("Detected Enemy Behind: " + mateBehind.name);
-                    HandleBackEnemy(mateBehind);
+                    if (IsMovingInRaycastDirection(mateBehind, Vector2.right))
+                    {
+                        MyDebug.Log("Detected Enemy Behind moving in the same direction: " + mateBehind.name);
+                        HandleBackEnemy(mateBehind);
+                    }
+                    else
+                    {
+                        MyDebug.Log("Detected Enemy Behind moving in the opposite direction: " + mateBehind.name);
+                    }
                 }
             }
         }
@@ -131,8 +146,13 @@ public class Zombie : Enemy
             {
                 if (mateBelow != this)
                 {
-                    MyDebug.Log("Detected Enemy Below: " + mateBelow.name);
-                    HandleBottomEnemy(mateBelow);
+                    if (IsMovingInRaycastDirection(mateBelow, Vector2.down))
+                    {
+                        isInAir = false;
+                        foundGround = true;
+                        MyDebug.Log("Detected Enemy Below moving in the same direction: " + mateBelow.name);
+                        HandleBottomEnemy(mateBelow);
+                    }
                 }
             }
         }
@@ -143,6 +163,38 @@ public class Zombie : Enemy
         }
     }
 
+    /// <summary>
+    /// Determines if the enemy is moving in the same direction as the raycast direction.
+    /// </summary>
+    /// <param name="enemy">The enemy to check</param>
+    /// <param name="raycastDirection">The direction of the raycast</param>
+    /// <returns>True if moving in the same direction, false otherwise</returns>
+    private bool IsMovingInRaycastDirection(Enemy enemy, Vector2 raycastDirection)
+    {
+        Vector2 enemyCurrentPosition = enemy.transform.position;
+
+        // Check if we've stored the previous position of this enemy
+        if (previousPositions.TryGetValue(enemy, out Vector2 enemyPreviousPosition))
+        {
+            // Calculate the direction of movement (normalized direction vector)
+            Vector2 movementDirection = (enemyCurrentPosition - enemyPreviousPosition).normalized;
+
+            // Compare movement direction with the raycast direction
+            float dotProduct = Vector2.Dot(movementDirection, raycastDirection);
+
+            // Update the previous position
+            previousPositions[enemy] = enemyCurrentPosition;
+
+            // If dotProduct > 0, it means the enemy is moving in the same direction as the raycast
+            return dotProduct > 0;
+        }
+        else
+        {
+            // If no previous position exists, store the current position for future checks
+            previousPositions[enemy] = enemyCurrentPosition;
+            return false; // No movement information yet
+        }
+    }
 
     private void HandleFrontEnemy(Enemy mate)
     {

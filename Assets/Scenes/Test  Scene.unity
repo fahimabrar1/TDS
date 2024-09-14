@@ -3878,6 +3878,10 @@ PrefabInstance:
       value: Zoombie_V2 (1)
       objectReference: {fileID: 0}
     - target: {fileID: 1490093560872303066, guid: 6e2eb09af015a2447bd187d0cc2b1501, type: 3}
+      propertyPath: canMove
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1490093560872303066, guid: 6e2eb09af015a2447bd187d0cc2b1501, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
@@ -18808,18 +18812,6 @@ PrefabInstance:
     - target: {fileID: 1401084200506636997, guid: 6e2eb09af015a2447bd187d0cc2b1501, type: 3}
       propertyPath: m_Name
       value: Zoombie_V2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3100521164379004447, guid: 6e2eb09af015a2447bd187d0cc2b1501, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4622385574905980481, guid: 6e2eb09af015a2447bd187d0cc2b1501, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6826619422637181984, guid: 6e2eb09af015a2447bd187d0cc2b1501, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7160326026306526056, guid: 6e2eb09af015a2447bd187d0cc2b1501, type: 3}
       propertyPath: m_LocalPosition.x

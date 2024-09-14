@@ -163,8 +163,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosionDelay: 1
   explosionRadius: 0.7
-  explosionDamage: 150
+  explosionDamage: 30
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
-  explosionEffectPrefab: {fileID: 0}
+  explosionEffectPrefab: {fileID: 823151990901912620, guid: 57f28b2ece813f34d96d0846265bfd49, type: 3}

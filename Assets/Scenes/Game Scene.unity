@@ -1452,7 +1452,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1309672207}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 9079183510299553091, guid: bcc8857df5570fd48a65f074fe8f2e7b, type: 3}
+        m_TargetAssemblyTypeName: LevelAudioPlayer, Assembly-CSharp
+        m_MethodName: OnPlayAudioByName
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: click
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1309672207
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1640,6 +1652,17 @@ MonoBehaviour:
     costIncrementBy: 50
     level: 1
     levelIncrementBy: 0
+--- !u!114 &1579237147 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6037154067211828057, guid: bc0b12dba278e884fb29052fa80c5273, type: 3}
+  m_PrefabInstance: {fileID: 6747954739983673572}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f1b2c040c6ea5348a729d5bb7edb5e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1579956451 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3554930196717512276, guid: 949bd2f5e978de24a83eb7e902b20ef3, type: 3}
@@ -2412,38 +2435,75 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8684332577865972702, guid: 5dd688135ae76f444acf501efee7bb8f, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8684332577865972702, guid: 5dd688135ae76f444acf501efee7bb8f, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8684332577865972702, guid: 5dd688135ae76f444acf501efee7bb8f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 518612834}
-    - target: {fileID: 8684332577865972702, guid: 5dd688135ae76f444acf501efee7bb8f, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8684332577865972702, guid: 5dd688135ae76f444acf501efee7bb8f, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnUpgradeHealthButton
-      objectReference: {fileID: 0}
-    - target: {fileID: 8684332577865972702, guid: 5dd688135ae76f444acf501efee7bb8f, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: LevelMenuUI, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 8684332577865972702, guid: 5dd688135ae76f444acf501efee7bb8f, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5dd688135ae76f444acf501efee7bb8f, type: 3}
+--- !u!1001 &4219011890063504311
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5299282020165544358, guid: bcc8857df5570fd48a65f074fe8f2e7b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.0050032
+      objectReference: {fileID: 0}
+    - target: {fileID: 5299282020165544358, guid: bcc8857df5570fd48a65f074fe8f2e7b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.2202947
+      objectReference: {fileID: 0}
+    - target: {fileID: 5299282020165544358, guid: bcc8857df5570fd48a65f074fe8f2e7b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.0055747745
+      objectReference: {fileID: 0}
+    - target: {fileID: 5299282020165544358, guid: bcc8857df5570fd48a65f074fe8f2e7b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5299282020165544358, guid: bcc8857df5570fd48a65f074fe8f2e7b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5299282020165544358, guid: bcc8857df5570fd48a65f074fe8f2e7b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5299282020165544358, guid: bcc8857df5570fd48a65f074fe8f2e7b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5299282020165544358, guid: bcc8857df5570fd48a65f074fe8f2e7b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5299282020165544358, guid: bcc8857df5570fd48a65f074fe8f2e7b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5299282020165544358, guid: bcc8857df5570fd48a65f074fe8f2e7b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7171638289862788573, guid: bcc8857df5570fd48a65f074fe8f2e7b, type: 3}
+      propertyPath: m_Name
+      value: LevelAudioPlayer
+      objectReference: {fileID: 0}
+    - target: {fileID: 9079183510299553091, guid: bcc8857df5570fd48a65f074fe8f2e7b, type: 3}
+      propertyPath: audioManager
+      value: 
+      objectReference: {fileID: 1579237147}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: bcc8857df5570fd48a65f074fe8f2e7b, type: 3}
 --- !u!1001 &6744607041789547988
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2457,33 +2517,9 @@ PrefabInstance:
       value: Enegy Upgrade Button
       objectReference: {fileID: 0}
     - target: {fileID: 2616182841765776512, guid: f8ee0340bcba0234d891631a18866fdf, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2616182841765776512, guid: f8ee0340bcba0234d891631a18866fdf, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2616182841765776512, guid: f8ee0340bcba0234d891631a18866fdf, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 518612834}
-    - target: {fileID: 2616182841765776512, guid: f8ee0340bcba0234d891631a18866fdf, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2616182841765776512, guid: f8ee0340bcba0234d891631a18866fdf, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnUpgradeEnergyButton
-      objectReference: {fileID: 0}
-    - target: {fileID: 2616182841765776512, guid: f8ee0340bcba0234d891631a18866fdf, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: LevelMenuUI, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 2616182841765776512, guid: f8ee0340bcba0234d891631a18866fdf, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     - target: {fileID: 5517445797060559755, guid: f8ee0340bcba0234d891631a18866fdf, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2569,16 +2605,75 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f8ee0340bcba0234d891631a18866fdf, type: 3}
+--- !u!1001 &6747954739983673572
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 7298047219460093548, guid: bc0b12dba278e884fb29052fa80c5273, type: 3}
+      propertyPath: m_Name
+      value: Audio Manager
+      objectReference: {fileID: 0}
+    - target: {fileID: 8416892224175893591, guid: bc0b12dba278e884fb29052fa80c5273, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.0050032
+      objectReference: {fileID: 0}
+    - target: {fileID: 8416892224175893591, guid: bc0b12dba278e884fb29052fa80c5273, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.2202947
+      objectReference: {fileID: 0}
+    - target: {fileID: 8416892224175893591, guid: bc0b12dba278e884fb29052fa80c5273, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.0055747745
+      objectReference: {fileID: 0}
+    - target: {fileID: 8416892224175893591, guid: bc0b12dba278e884fb29052fa80c5273, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8416892224175893591, guid: bc0b12dba278e884fb29052fa80c5273, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8416892224175893591, guid: bc0b12dba278e884fb29052fa80c5273, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8416892224175893591, guid: bc0b12dba278e884fb29052fa80c5273, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8416892224175893591, guid: bc0b12dba278e884fb29052fa80c5273, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8416892224175893591, guid: bc0b12dba278e884fb29052fa80c5273, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8416892224175893591, guid: bc0b12dba278e884fb29052fa80c5273, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: bc0b12dba278e884fb29052fa80c5273, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 519420032}
+  - {fileID: 4219011890063504311}
   - {fileID: 994296528}
   - {fileID: 312578682}
   - {fileID: 501996680}
   - {fileID: 676029850}
   - {fileID: 1551568648}
+  - {fileID: 6747954739983673572}
   - {fileID: 189266433}
   - {fileID: 1994821391}
   - {fileID: 1003118276}

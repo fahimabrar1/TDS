@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections;
 
 public class EnergyGenerator : MonoBehaviour
 {
@@ -27,6 +28,49 @@ public class EnergyGenerator : MonoBehaviour
         timeRemaining = energyGenerationTime;
         UpdateEnergyText();
     }
+
+
+
+    /// <summary>
+    /// This function is called when the object becomes enabled and active.
+    /// </summary>
+    void OnEnable()
+    {
+        StartCoroutine(WaitForHealthData());
+    }
+
+
+    IEnumerator WaitForHealthData()
+    {
+        while (GameManager.instance == null || GameManager.instance.energyGenerateData == null)
+        {
+            yield return null; // Wait until healthData is assigned
+        }
+        GameManager.instance.energyGenerateData.OnUpdateDDefaultValue += OnUpddateDelay;
+        OnUpddateDelay();
+    }
+
+
+    private void OnUpddateDelay()
+    {
+        energyGenerationTime = 1 / GameManager.instance.energyGenerateData.DefaultValue;
+    }
+
+
+
+    /// <summary>
+    /// This function is called when the behaviour becomes disabled or inactive.
+    /// </summary>
+    void OnDisable()
+    {
+        if (GameManager.instance != null && GameManager.instance.energyGenerateData != null)
+        {
+            GameManager.instance.energyGenerateData.OnUpdateDDefaultValue -= OnUpddateDelay;
+        }
+    }
+
+
+
 
     /// <summary>
     /// Update is called once per frame.

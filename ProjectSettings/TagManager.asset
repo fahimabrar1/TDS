@@ -6,16 +6,17 @@ TagManager:
   tags:
   - Enemy
   - Ground
+  - Boundry
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Ground
+  - 
   - Water
   - UI
   - Enemy
-  - PlayerType
-  - IgnorableEnemyCollider
+  - 
+  - 
   - 
   - 
   - 

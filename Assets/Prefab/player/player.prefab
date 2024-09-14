@@ -240,9 +240,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBar: {fileID: 6201194975426267886}
   feetTransform: {fileID: 0}
-  throwablePrefab: {fileID: 2500419892296461657, guid: 920a81343c2589340a04f5e69268a14d, type: 3}
-  throwableThrowForce: 2
-  throwableSpinForce: 0.06
+  ThrowableGranadeData: {fileID: 11400000, guid: c9766573a9dc6f54eb1e7a52553c30a5, type: 2}
   throwingPoint: {fileID: 7287438719349238183}
   currentWeapon: {fileID: 733131479274192465}
   mainCamera: {fileID: 0}

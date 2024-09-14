@@ -14,18 +14,10 @@ public class PlayerController : MonoBehaviour, IPlayerDamagable
     public ICrateSpawner crateSpawner;
 
     [Header("Throwable Data")]
-
-    [Tooltip("The prefab for the grenade that the player can throw.")]
-    public GameObject throwablePrefab;
-
-    [Tooltip("The force applied when the grenade is thrown.")]
-    public float throwableThrowForce = 4f;
-    [Tooltip("The force applied when the grenade is thrown to spin.")]
-    public float throwableSpinForce = 0.2f;
+    public ThrowableGranadeDataSO ThrowableGranadeData;
 
     [Tooltip("The point from where the throwables is thrown")]
     public Transform throwingPoint;
-
 
 
     [Header("Weapon Data")]
@@ -169,11 +161,11 @@ public class PlayerController : MonoBehaviour, IPlayerDamagable
     /// </summary>
     public void ThrowGrenade()
     {
-        if (throwablePrefab == null || throwingPoint == null) return;
+        if (ThrowableGranadeData.throwablePrefab == null || throwingPoint == null) return;
         MyDebug.Log($"Throwing Grenade.");
 
         // Instantiate the grenade at the throwing point
-        GameObject grenade = Instantiate(throwablePrefab, throwingPoint.position, Quaternion.identity);
+        GameObject grenade = Instantiate(ThrowableGranadeData.throwablePrefab, throwingPoint.position, Quaternion.identity);
 
         // Get the Rigidbody2D of the grenade to apply force and torque (spin)
         if (grenade.TryGetComponent<Rigidbody2D>(out var rb2d))
@@ -183,10 +175,10 @@ public class PlayerController : MonoBehaviour, IPlayerDamagable
             Vector2 throwDirection = new(Mathf.Cos(angleInRadians), Mathf.Sin(angleInRadians));
 
             // Apply a forward force to throw the grenade
-            rb2d.AddForce(throwDirection * throwableThrowForce, ForceMode2D.Impulse);
+            rb2d.AddForce(throwDirection * ThrowableGranadeData.throwableThrowForce, ForceMode2D.Impulse);
 
             // Apply a random spin to the grenade (adjust the value for more or less spin)
-            float spinForce = Random.Range(-throwableSpinForce, throwableSpinForce);
+            float spinForce = Random.Range(-ThrowableGranadeData.throwableSpinForce, ThrowableGranadeData.throwableSpinForce);
             rb2d.AddTorque(spinForce, ForceMode2D.Impulse);
         }
     }

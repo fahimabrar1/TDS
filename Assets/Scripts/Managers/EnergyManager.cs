@@ -18,7 +18,7 @@ public class EnergyManager : MonoBehaviour
     public Transform AbilityButtonParent;
 
     [Tooltip("The scriptable object that holds the ability list.")]
-    public AbilityButtonHolderSO abilityButtonHolderSO;
+    public AbilityButtonHolderrSO abilityButtonHolderSO;
 
     [Tooltip("A list of ability buttons.")]
     public List<AbilityButton> abilityButtons;

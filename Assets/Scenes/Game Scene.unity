@@ -1360,7 +1360,7 @@ MonoBehaviour:
   energyGenerator: {fileID: 646863608}
   AbilityButtonPrefab: {fileID: 6597990488566892206, guid: 034b1ad67628417498ef307367e3b90d, type: 3}
   AbilityButtonParent: {fileID: 554423745}
-  abilityButtonHolderSO: {fileID: 11400000, guid: edd58411fcaacbe4d853a0436a60c70f, type: 2}
+  abilityButtonHolderSO: {fileID: 11400000, guid: 49f5eb64a9173b744890577b465cf221, type: 2}
   abilityButtons: []
 --- !u!4 &1003118276
 Transform:
@@ -1814,9 +1814,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 1401084200506636997, guid: 6e2eb09af015a2447bd187d0cc2b1501, type: 3}
-  spawnPoints: []
   waveDelay: 4
   wavePosition: {fileID: 595318939}
+  enemyList: []
 --- !u!4 &1724841976
 Transform:
   m_ObjectHideFlags: 0

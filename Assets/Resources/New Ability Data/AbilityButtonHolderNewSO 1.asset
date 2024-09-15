@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dacefa08ff0af0448b9a29ca9fda104, type: 3}
+  m_Name: AbilityButtonHolderNewSO 1
+  m_EditorClassIdentifier: Assembly-CSharp::AbilityButtonHolderNewSO
+  abilityList:
+  - {fileID: 11400000, guid: 1831081394208e34abec9a5e328278f6, type: 2}
+  - {fileID: 11400000, guid: 31f11722801e6ab4b82b0d09956eb122, type: 2}
+  - {fileID: 11400000, guid: 8fb980eee0aeb264495b2dc7abdc24e9, type: 2}

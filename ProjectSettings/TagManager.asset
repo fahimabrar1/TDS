@@ -3,16 +3,19 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Enemy
+  - Ground
+  - Boundary
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - PlayerBorder
   - Water
   - UI
-  - 
-  - 
+  - Enemy
+  - Weapons
   - 
   - 
   - 
